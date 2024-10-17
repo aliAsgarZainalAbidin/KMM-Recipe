@@ -1,0 +1,80 @@
+[versions]
+agp = "8.2.2"
+android-compileSdk = "34"
+android-minSdk = "24"
+android-targetSdk = "34"
+androidx-activityCompose = "1.9.2"
+androidx-appcompat = "1.7.0"
+androidx-constraintlayout = "2.1.4"
+androidx-core-ktx = "1.13.1"
+androidx-espresso-core = "3.6.1"
+androidx-lifecycle = "2.8.2"
+androidx-material = "1.12.0"
+androidx-material3 = "1.3.0"
+androidx-test-junit = "1.2.1"
+compose-plugin = "1.6.11"
+junit = "4.13.2"
+kotlin = "2.0.20"
+kotlinx-coroutines = "1.9.0"
+navigation-compose = "2.7.0-alpha07"
+androidx-navigation-compose = "2.8.2"
+kodein = "7.22.0"
+compose-coil = "2.4.1"
+kermit-logger = "2.0.4"
+constraintlayout-compose = "1.0.1"
+common-constraintlayout-compose = "0.5.0-alpha03-shaded-core"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+
+#Navigation Compose
+navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose"}
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation-compose"}
+
+#Material3
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidx-material3"}
+androidx-compose-material3-window = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "androidx-material3"}
+androidx-compose-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "androidx-material3" }
+
+#ConstraintLayout Compose for Android
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose"}
+
+#ConstraintLayout CommonMain
+#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.4.0")
+#/// Compose 1.7.0-alpha03
+#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.5.0-alpha03")
+#/// Compose 1.7.0-alpha03 with different tech.annexflow.constraintlayout.core package
+#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.5.0-alpha03-shaded-core")
+#/// Compose 1.7.0-alpha03 with different tech.annexflow.constraintlayout package
+#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.5.0-alpha03-shaded")
+common-constraintlayout-compose = { group = "tech.annexflow.compose", name = "constraintlayout-compose-multiplatform", version.ref = "common-constraintlayout-compose"}
+
+#Kodein
+kodein = { group = "org.kodein.di", name = "kodein-di", version.ref = "kodein"}
+
+#Compose Coil
+compose-coil = { group = "com.github.skydoves", name = "landscapist-coil", version.ref = "compose-coil"}
+
+#Logger KMP
+#co.touchlab:kermit:
+kermit-logger = { group = "co.touchlab", name = "kermit", version.ref = "kermit-logger"}
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

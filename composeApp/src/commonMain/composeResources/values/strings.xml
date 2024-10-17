@@ -1,0 +1,38 @@
+<resources>
+    <string name="welcome_title">Start Cooking</string>
+    <string name="welcome_subtitle">Let's join our community \n to cook better food</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="or_with_google">Or Continue with Google</string>
+    <string name="Google">Google</string>
+    <string name="dont_have_account">Don't have any account ?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="get_started">Get Started</string>
+
+    <string name="welcome">Welcome!</string>
+    <string name="enter_account">Please enter your account here</string>
+    <string name="email_phone_hint">Email or phone number</string>
+    <string name="password_hint">Password</string>
+    <string name="password_requirement_title">Your Password must contain:</string>
+    <string name="requirement_6_chars">At least 6 characters</string>
+    <string name="requirement_number">Contains a number</string>
+
+    <string name="check_email">Check your email</string>
+    <string name="email_code_sent">We’ve sent the code to your email</string>
+    <string name="code_expires_in">code expires in:</string>
+    <string name="verify">Verify</string>
+    <string name="send_again">Send again</string>
+
+    <string name="password_recovery">Password recovery</string>
+    <string name="enter_email_recovery">Enter your email to recover your password</string>
+    <string name="email_hint">Email</string>
+    <string name="sign_in">Sign In</string>
+
+    <string name="check_email_recovery">Check your email</string>
+    <string name="email_sent_recovery">We’ve sent the code to your email</string>
+
+    <string name="reset_your_password">Reset your password</string>
+    <string name="enter_new_password">Please enter your new password</string>
+    <string name="done">Done</string>
+</resources>
