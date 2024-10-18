@@ -5,7 +5,7 @@ import id.deval.recipe.ui.welcome.WelcomeViewModel
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 
-//val viewModelModule = DI.Module("viewModelModule"){
-//    bindSingleton { LoginViewModel() }
-//    bindSingleton { WelcomeViewModel() }
-//}
+val viewModelModule = DI.Module("viewModelModule"){
+    bindSingleton { LoginViewModel() }
+    bindSingleton { WelcomeViewModel() }
+}

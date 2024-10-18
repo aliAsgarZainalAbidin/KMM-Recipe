@@ -58,19 +58,19 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.androidx.compose.material3.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.material)
+//            implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(compose.material3)
 
             //Navigation Compose
             implementation(libs.navigation.compose)
@@ -88,13 +88,11 @@ kotlin {
             implementation(libs.kermit.logger)
 
             //ConstraintLayout
-            implementation(libs.common.constraintlayout.compose)
+//            implementation(libs.common.constraintlayout.compose)
         }
         desktopMain.dependencies {
-            implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
-            implementation(libs.androidx.compose.material3.window)
         }
     }
 }
@@ -131,7 +129,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-    implementation(libs.kodein)
+//    implementation(libs.kodein)
 }
 
 compose.desktop {

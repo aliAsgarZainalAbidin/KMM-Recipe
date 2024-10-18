@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import id.deval.recipe.Greeting
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.theme.RecipeAppTheme
+import id.deval.recipe.ui.login.LoginScreen
 import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.welcome.WelcomeScreen
 import org.jetbrains.compose.resources.painterResource
@@ -46,7 +47,7 @@ fun App() {
 
                 }
                 composable(AppNavigation.Login.route){
-
+                    LoginScreen(navigator)
                 }
                 composable(AppNavigation.Main.route){
 

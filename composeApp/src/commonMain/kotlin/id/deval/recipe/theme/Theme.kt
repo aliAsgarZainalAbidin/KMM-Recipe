@@ -15,7 +15,7 @@ private val darkColorPalette = darkColorScheme(
     onError = white,
     error = secondaryColor,
     surface = white,
-    onSurface = secondaryText
+    onSurface = secondaryTextColor
 )
 
 private val lightColorPalette = lightColorScheme(
@@ -26,7 +26,7 @@ private val lightColorPalette = lightColorScheme(
     onError = white,
     error = secondaryColor,
     surface = white,
-    onSurface = secondaryText
+    onSurface = secondaryTextColor
 )
 
 @Composable
@@ -39,10 +39,11 @@ fun RecipeAppTheme(
     } else {
         lightColorPalette
     }
+    val recipeFontFamily = getRecipeFontFamilty()
 
     MaterialTheme(
         colorScheme = colors,
-        typography = typography,
+        typography = getTypography(recipeFontFamily),
         shapes = shapes,
         content = content
     )

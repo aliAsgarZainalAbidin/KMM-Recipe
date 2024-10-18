@@ -3,6 +3,7 @@ package id.deval.recipe.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -45,7 +46,8 @@ object RecipeButton {
     ) {
         Button(
             onClick = onClick,
-            modifier = modifier,
+            modifier = modifier
+                .height(56.dp),
             colors = color,
             enabled = enabled,
             shape = shape,

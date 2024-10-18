@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlin.coroutines.CoroutineContext
 
 class LoginViewModel : ViewModel() {
@@ -38,6 +39,7 @@ class LoginViewModel : ViewModel() {
             is LoginScreenEvent.OnLoginClicked -> {
                 onLoginClicked(event.email, event.password)
             }
+
             is LoginScreenEvent.OnGoogleLoginClicked -> {}
             is LoginScreenEvent.OnSignUpClicked -> {}
             is LoginScreenEvent.OnForgotPasswordClicked -> {}
@@ -45,22 +47,27 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun onEmailChanged(email: String) {
-        _loginScreenState.value = _loginScreenState.value.copy(email = email)
+        _loginScreenState.update {
+            it.copy(email = email)
+        }
     }
 
     private fun onPasswordChanged(password: String) {
-        _loginScreenState.value = _loginScreenState.value.copy(password = password)
+        _loginScreenState.update {
+            it.copy(password = password)
+        }
     }
 
     private fun onShowPasswordClicked() {
-        _loginScreenState.value =
-            _loginScreenState.value.copy(showPassword = !_loginScreenState.value.showPassword)
+        _loginScreenState.update {
+            it.copy(showPassword = !_loginScreenState.value.showPassword)
+        }
     }
 
     private fun onLoginClicked(
         email: String,
         password: String
-    ){
+    ) {
         CoroutineScope(Dispatchers.Default).launchCatchError(
             block = {
                 //TODO()
@@ -68,7 +75,7 @@ class LoginViewModel : ViewModel() {
                 * request login API
                 * */
 
-                if(email == "admin" && password == "admin"){
+                if (email == "admin" && password == "admin") {
                     _loginScreenEffect.emit(LoginScreenEffect.NavigateToMain)
                 } else {
                     _loginScreenEffect.emit(
