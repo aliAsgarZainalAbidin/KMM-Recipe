@@ -42,7 +42,7 @@ fun App() {
             * */
             NavHost(
                 navController = navigator,
-                startDestination = AppNavigation.Welcome.route,
+                startDestination = AppNavigation.Otp.route,
                 modifier = Modifier.fillMaxSize()
             ){
                 composable(AppNavigation.Splash.route){

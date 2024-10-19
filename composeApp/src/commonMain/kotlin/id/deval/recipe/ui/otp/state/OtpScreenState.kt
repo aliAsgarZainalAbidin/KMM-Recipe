@@ -5,5 +5,5 @@ data class OtpScreenState(
     val isError: Boolean = false,
     val time : String = "",
     val isEnabledVerifyButton : Boolean = false,
-    val isEnabledResendButton : Boolean = false
+    val isEnabledResendButton : Boolean = false,
 )

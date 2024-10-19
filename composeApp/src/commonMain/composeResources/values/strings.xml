@@ -29,7 +29,6 @@
     <string name="email_hint">Email</string>
     <string name="sign_in">Sign In</string>
 
-    <string name="check_email_recovery">Check your email</string>
     <string name="email_sent_recovery">We’ve sent the code to your email</string>
 
     <string name="reset_your_password">Reset your password</string>

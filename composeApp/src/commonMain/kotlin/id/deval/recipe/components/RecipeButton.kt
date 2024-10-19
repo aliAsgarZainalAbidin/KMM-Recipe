@@ -97,7 +97,9 @@ object RecipeButton {
     ) {
         Button(
             onClick = onClick,
-            modifier = modifier,
+            modifier = modifier
+                .fillMaxWidth()
+                .height(56.dp),
             colors = color,
             enabled = enabled,
             shape = shape,
@@ -115,7 +117,7 @@ object RecipeButton {
             if (text != null) {
                 Text(
                     text = text,
-                    color = color.contentColor,
+                    color = if(enabled) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -145,7 +147,9 @@ object RecipeButton {
     ) {
         Button(
             onClick = onClick,
-            modifier = modifier,
+            modifier = modifier
+                .fillMaxWidth()
+                .height(56.dp),
             colors = color,
             enabled = enabled,
             shape = shape,
@@ -163,7 +167,7 @@ object RecipeButton {
             if (text != null) {
                 Text(
                     text = text,
-                    color = color.contentColor,
+                    color = if(enabled) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold
                 )
             }
