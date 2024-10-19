@@ -165,7 +165,6 @@ fun LoginScreenContent(
             RecipeButton.DefaultFilledButton(
                 onClick = {},
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(horizontal = 24.dp),
                 text = stringResource(Res.string.login),
             )
@@ -177,7 +176,6 @@ fun LoginScreenContent(
             RecipeButton.DefaultFilledButton(
                 onClick = {},
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(top = 24.dp, start = 24.dp, end = 24.dp),
                 text = stringResource(Res.string.Google),
                 startIcon = painterResource(Res.drawable.google),

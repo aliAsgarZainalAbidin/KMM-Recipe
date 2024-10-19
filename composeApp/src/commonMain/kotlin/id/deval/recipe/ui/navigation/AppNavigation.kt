@@ -12,4 +12,5 @@ sealed class AppNavigation(
     data object Welcome : AppNavigation("welcome", emptyList())
     data object SignUp : AppNavigation("signup", emptyList())
     data object Otp : AppNavigation("otp", emptyList())
+    data object ForgotPassword : AppNavigation("forgot_password", emptyList())
 }

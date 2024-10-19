@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import id.deval.recipe.Greeting
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.theme.RecipeAppTheme
+import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreen
 import id.deval.recipe.ui.login.LoginScreen
 import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.otp.OtpScreen
@@ -42,7 +43,7 @@ fun App() {
             * */
             NavHost(
                 navController = navigator,
-                startDestination = AppNavigation.Otp.route,
+                startDestination = AppNavigation.ForgotPassword.route,
                 modifier = Modifier.fillMaxSize()
             ){
                 composable(AppNavigation.Splash.route){
@@ -64,6 +65,10 @@ fun App() {
 
                 composable(AppNavigation.Otp.route){
                     OtpScreen(navigator)
+                }
+
+                composable(AppNavigation.ForgotPassword.route){
+                    ForgotPasswordScreen(navigator)
                 }
             }
         }
