@@ -1,5 +1,6 @@
 package id.deval.recipe.ui.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,8 +32,12 @@ import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.primaryColor
 import id.deval.recipe.theme.secondaryColor
 import id.deval.recipe.theme.secondaryTextColor
+import id.deval.recipe.ui.login.effect.LoginScreenEffect
 import id.deval.recipe.ui.login.event.LoginScreenEvent
 import id.deval.recipe.ui.login.state.LoginScreenState
+import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.ui.signup.event.SignupScreenEvent
+import id.deval.recipe.util.safeNavigate
 import kmm_recipe.composeapp.generated.resources.Google
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.dont_have_account
@@ -46,6 +52,7 @@ import kmm_recipe.composeapp.generated.resources.or_with_google
 import kmm_recipe.composeapp.generated.resources.password_hint
 import kmm_recipe.composeapp.generated.resources.sign_up
 import kmm_recipe.composeapp.generated.resources.welcome_back
+import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
@@ -57,6 +64,17 @@ fun LoginScreen(
 ) {
     val loginViewModel by appRecipeModule.instance<LoginViewModel>()
     val loginScreenState by loginViewModel.loginScreenState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit){
+        loginViewModel.loginScreenEffect.collectLatest { effect ->
+            when(effect){
+                is LoginScreenEffect.NavigateToSignUp -> {
+                    navController.safeNavigate(AppNavigation.SignUp.route)
+                }
+                else -> {}
+            }
+        }
+    }
 
     LoginScreenContent(
         loginScreenState,
@@ -150,10 +168,6 @@ fun LoginScreenContent(
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
                 text = stringResource(Res.string.login),
-                textStyle = MaterialTheme.typography.headlineSmall.copy(
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontWeight = FontWeight.Bold
-                )
             )
             Text(
                 text = stringResource(Res.string.or_with_google),
@@ -166,10 +180,6 @@ fun LoginScreenContent(
                     .fillMaxWidth()
                     .padding(top = 24.dp, start = 24.dp, end = 24.dp),
                 text = stringResource(Res.string.Google),
-                textStyle = MaterialTheme.typography.headlineSmall.copy(
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontWeight = FontWeight.Bold
-                ),
                 startIcon = painterResource(Res.drawable.google),
                 color = DefaultRedFilledButtonStyle()
             )
@@ -190,7 +200,10 @@ fun LoginScreenContent(
                         .copy(
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
-                        )
+                        ),
+                    modifier = Modifier.clickable {
+                        onEvent(LoginScreenEvent.OnSignUpClicked)
+                    }
                 )
             }
         }

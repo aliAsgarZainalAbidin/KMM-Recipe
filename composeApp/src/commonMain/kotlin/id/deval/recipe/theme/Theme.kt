@@ -15,7 +15,8 @@ private val darkColorPalette = darkColorScheme(
     onError = white,
     error = secondaryColor,
     surface = white,
-    onSurface = secondaryTextColor
+    onSurface = secondaryTextColor,
+    tertiary = form
 )
 
 private val lightColorPalette = lightColorScheme(
@@ -26,7 +27,8 @@ private val lightColorPalette = lightColorScheme(
     onError = white,
     error = secondaryColor,
     surface = white,
-    onSurface = secondaryTextColor
+    onSurface = secondaryTextColor,
+    tertiary = form
 )
 
 @Composable

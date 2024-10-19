@@ -1,6 +1,7 @@
 package id.deval.recipe.ui.login
 
 import androidx.lifecycle.ViewModel
+import co.touchlab.kermit.Logger
 import id.deval.recipe.ui.login.effect.LoginScreenEffect
 import id.deval.recipe.ui.login.event.LoginScreenEvent
 import id.deval.recipe.ui.login.state.LoginScreenState
@@ -41,7 +42,9 @@ class LoginViewModel : ViewModel() {
             }
 
             is LoginScreenEvent.OnGoogleLoginClicked -> {}
-            is LoginScreenEvent.OnSignUpClicked -> {}
+            is LoginScreenEvent.OnSignUpClicked -> {
+                onSignUpClicked()
+            }
             is LoginScreenEvent.OnForgotPasswordClicked -> {}
         }
     }
@@ -87,5 +90,23 @@ class LoginViewModel : ViewModel() {
                 _loginScreenEffect.emit(LoginScreenEffect.ShowSnackbar("Error"))
             }
         )
+    }
+
+    private fun onSignUpClicked(){
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _loginScreenEffect.emit(LoginScreenEffect.NavigateToSignUp)
+            },
+            onError = {
+                Logger.e(
+                    TAG,
+                    it
+                )
+            }
+        )
+    }
+
+    companion object {
+        const val TAG = "LoginViewModel"
     }
 }

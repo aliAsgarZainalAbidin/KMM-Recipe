@@ -2,7 +2,7 @@ package id.deval.recipe.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -10,22 +10,19 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import id.deval.recipe.theme.DefaultFilledButtonStyle
 import id.deval.recipe.theme.DefaultOutlineButtonStyle
-import id.deval.recipe.theme.DefaultRedFilledButtonStyle
-import id.deval.recipe.theme.DefaultRedOutlineButtonStyle
-import id.deval.recipe.theme.DefaultRedTextButtonStyle
 import id.deval.recipe.theme.DefaultTextButtonStyle
+import id.deval.recipe.theme.secondaryTextColor
 
 object RecipeButton {
 
@@ -41,12 +38,16 @@ object RecipeButton {
         startIcon: Painter? = null,
         endIcon: Painter? = null,
         text: String? = null,
-        textStyle: TextStyle = LocalTextStyle.current,
+        textStyle: TextStyle =  MaterialTheme.typography.headlineSmall.copy(
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.Bold
+        ),
         color : ButtonColors = DefaultFilledButtonStyle()
     ) {
         Button(
             onClick = onClick,
             modifier = modifier
+                .fillMaxWidth()
                 .height(56.dp),
             colors = color,
             enabled = enabled,
@@ -65,7 +66,7 @@ object RecipeButton {
             if (text != null) {
                 Text(
                     text = text,
-                    color = color.contentColor,
+                    color = if(enabled) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold,
                     style = textStyle
                 )

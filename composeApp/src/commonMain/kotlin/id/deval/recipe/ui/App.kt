@@ -18,6 +18,8 @@ import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.theme.RecipeAppTheme
 import id.deval.recipe.ui.login.LoginScreen
 import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.ui.otp.OtpScreen
+import id.deval.recipe.ui.signup.SignupScreen
 import id.deval.recipe.ui.welcome.WelcomeScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -54,6 +56,14 @@ fun App() {
                 }
                 composable(AppNavigation.Welcome.route){
                     WelcomeScreen(navigator)
+                }
+
+                composable(AppNavigation.SignUp.route){
+                    SignupScreen(navigator)
+                }
+
+                composable(AppNavigation.Otp.route){
+                    OtpScreen(navigator)
                 }
             }
         }

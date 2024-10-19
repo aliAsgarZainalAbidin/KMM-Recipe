@@ -25,48 +25,48 @@ val shapes = Shapes(
 fun DefaultFilledButtonStyle() = buttonColors(
     containerColor = MaterialTheme.colorScheme.primary,
     contentColor = MaterialTheme.colorScheme.onPrimary,
-    disabledContainerColor = MaterialTheme.colorScheme.surface,
-    disabledContentColor = MaterialTheme.colorScheme.surface
+    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+    disabledContentColor = MaterialTheme.colorScheme.tertiary
 )
 
 @Composable
 fun DefaultOutlineButtonStyle() = buttonColors(
     containerColor = MaterialTheme.colorScheme.onPrimary,
     contentColor = MaterialTheme.colorScheme.primary,
-    disabledContainerColor = MaterialTheme.colorScheme.surface,
-    disabledContentColor = MaterialTheme.colorScheme.surface
+    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+    disabledContentColor = MaterialTheme.colorScheme.tertiary
 )
 
 @Composable
 fun DefaultTextButtonStyle() = buttonColors(
     containerColor = Color.Transparent,
     contentColor = MaterialTheme.colorScheme.primary,
-    disabledContainerColor = MaterialTheme.colorScheme.surface,
-    disabledContentColor = MaterialTheme.colorScheme.surface
+    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+    disabledContentColor = MaterialTheme.colorScheme.tertiary
 )
 
 @Composable
 fun DefaultRedFilledButtonStyle() = buttonColors(
     containerColor = MaterialTheme.colorScheme.secondary,
     contentColor = MaterialTheme.colorScheme.onPrimary,
-    disabledContainerColor = MaterialTheme.colorScheme.surface,
-    disabledContentColor = MaterialTheme.colorScheme.surface
+    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+    disabledContentColor = MaterialTheme.colorScheme.tertiary
 )
 
 @Composable
 fun DefaultRedOutlineButtonStyle() = buttonColors(
     containerColor = MaterialTheme.colorScheme.onPrimary,
     contentColor = MaterialTheme.colorScheme.secondary,
-    disabledContainerColor = MaterialTheme.colorScheme.surface,
-    disabledContentColor = MaterialTheme.colorScheme.surface
+    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+    disabledContentColor = MaterialTheme.colorScheme.tertiary
 )
 
 @Composable
 fun DefaultRedTextButtonStyle() = buttonColors(
     containerColor = Color.Transparent,
     contentColor = MaterialTheme.colorScheme.secondary,
-    disabledContainerColor = MaterialTheme.colorScheme.surface,
-    disabledContentColor = MaterialTheme.colorScheme.surface
+    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+    disabledContentColor = MaterialTheme.colorScheme.tertiary
 )
 
 

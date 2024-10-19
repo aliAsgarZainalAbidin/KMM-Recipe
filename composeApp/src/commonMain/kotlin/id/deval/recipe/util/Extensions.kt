@@ -62,3 +62,13 @@ fun NavController.safeNavigate(
         Logger.e(e.toString())
     }
 }
+
+fun String.isEmailValid(): Boolean {
+    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+    return emailRegex.toRegex().matches(this)
+}
+
+fun String.isPhoneNumberValid(): Boolean {
+    val phoneRegex = "^\\d{10}$"
+    return phoneRegex.toRegex().matches(this)
+}
