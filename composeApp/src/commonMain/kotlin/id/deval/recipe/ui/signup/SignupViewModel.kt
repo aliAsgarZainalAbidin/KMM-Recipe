@@ -8,6 +8,7 @@ import id.deval.recipe.ui.signup.state.SignupScreenState
 import id.deval.recipe.util.isEmailValid
 import id.deval.recipe.util.isPhoneNumberValid
 import id.deval.recipe.util.launchCatchError
+import id.deval.recipe.util.rules.PasswordRules
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class SignupViewModel : ViewModel() {
+class SignupViewModel : ViewModel(), PasswordRules {
     private var _signupScreenState: MutableStateFlow<SignupScreenState> = MutableStateFlow(
         SignupScreenState()
     )
@@ -50,24 +51,13 @@ class SignupViewModel : ViewModel() {
     }
 
     private fun onPasswordChanged(password: String) {
+        val authState = validatePassword(password)
         _signupScreenState.update {
-            it.copy(password = password)
-        }
-        atleastSixCharacter(password)
-        containsNumber(password)
-    }
-
-    private fun atleastSixCharacter(password: String) {
-        _signupScreenState.update {
-            it.copy(isPassAtleastSix = password.length >= 6)
-        }
-    }
-
-    private fun containsNumber(password: String) {
-        _signupScreenState.update {
-            it.copy(isPassContaintNumber = password.any {
-                it.isDigit()
-            })
+            it.copy(
+                password = password,
+                isPassContaintNumber = authState.isPassContaintNumber,
+                isPassAtleastSix = authState.isPassAtleastSix
+            )
         }
     }
 

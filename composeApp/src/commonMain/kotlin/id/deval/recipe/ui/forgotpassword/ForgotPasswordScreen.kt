@@ -110,6 +110,7 @@ fun ForgotPasswordContent(
                     onEvent(ForgotPasswordEvent.SignInClicked)
                 },
                 text = stringResource(Res.string.sign_in),
+                enabled = state.isEnabledSignIn
             )
         }
     }

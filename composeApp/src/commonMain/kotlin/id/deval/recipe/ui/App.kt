@@ -20,6 +20,7 @@ import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreen
 import id.deval.recipe.ui.login.LoginScreen
 import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.otp.OtpScreen
+import id.deval.recipe.ui.resetpassword.ResetPasswordScreen
 import id.deval.recipe.ui.signup.SignupScreen
 import id.deval.recipe.ui.welcome.WelcomeScreen
 import org.jetbrains.compose.resources.painterResource
@@ -36,14 +37,13 @@ fun App() {
         Box(
             modifier = Modifier.fillMaxSize()
         ){
-            //TODO()
-            /*
-            * startDestination base on already login or not
-            * please make DataStorage or SharedPreference account to check
+            /*TODO()
+            *   startDestination base on already login or not
+            *   please make DataStorage or SharedPreference account to check
             * */
             NavHost(
                 navController = navigator,
-                startDestination = AppNavigation.ForgotPassword.route,
+                startDestination = AppNavigation.ResetPassword.route,
                 modifier = Modifier.fillMaxSize()
             ){
                 composable(AppNavigation.Splash.route){
@@ -69,6 +69,10 @@ fun App() {
 
                 composable(AppNavigation.ForgotPassword.route){
                     ForgotPasswordScreen(navigator)
+                }
+
+                composable(AppNavigation.ResetPassword.route){
+                    ResetPasswordScreen(navigator)
                 }
             }
         }
