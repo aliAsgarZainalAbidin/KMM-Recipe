@@ -1,4 +1,4 @@
-package id.deval.recipe
+package id.deval.recipe.shared
 
 class Greeting {
     private val platform = getPlatform()

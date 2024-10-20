@@ -1,4 +1,4 @@
-package id.deval.recipe
+package id.deval.recipe.shared
 
 class WasmPlatform: Platform {
     override val name: String = "Web with Kotlin/Wasm"

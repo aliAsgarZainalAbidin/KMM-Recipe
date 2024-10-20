@@ -20,12 +20,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
 import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.ui.resetpassword.effect.ResetPasswordEffect
 import id.deval.recipe.ui.resetpassword.event.ResetPasswordEvent
 import id.deval.recipe.ui.resetpassword.state.ResetPasswordState
@@ -46,138 +48,141 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-@Composable
-fun ResetPasswordScreen(
-    navController : NavController
-){
-    val resetPasswordViewModel by appRecipeModule.instance<ResetPasswordViewModel>()
-    val resetPasswordState by resetPasswordViewModel.resetPasswordState.collectAsStateWithLifecycle()
+data class ResetPasswordScreenNavigator(
+    val navigate : (Navigation) -> Unit
+) : Screen {
 
-    LaunchedEffect(Unit){
-        resetPasswordViewModel.resetPasswordEffect.collectLatest { effect ->
-            when(effect){
-                is ResetPasswordEffect.ShowToast -> {
+    @Composable
+    override fun Content() {
+        val resetPasswordViewModel by appRecipeModule.instance<ResetPasswordViewModel>()
+        val resetPasswordState by resetPasswordViewModel.resetPasswordState.collectAsStateWithLifecycle()
 
-                }
-                is ResetPasswordEffect.NavigateToMain -> {
-                    navController.safeNavigate(AppNavigation.Main.route)
+        LaunchedEffect(Unit){
+            resetPasswordViewModel.resetPasswordEffect.collectLatest { effect ->
+                when(effect){
+                    is ResetPasswordEffect.ShowToast -> {
+
+                    }
+                    is ResetPasswordEffect.NavigateToMain -> {
+                        navigate(AppNavigation.Main)
+                    }
                 }
             }
         }
+
+        ResetPasswordContent(
+            state = resetPasswordState,
+            onEvent = resetPasswordViewModel::onEvent
+        )
     }
 
-    ResetPasswordContent(
-        state = resetPasswordState,
-        onEvent = resetPasswordViewModel::onEvent
-    )
-}
-
-@Composable
-fun ResetPasswordContent(
-    state : ResetPasswordState,
-    onEvent : (ResetPasswordEvent) -> Unit
-){
-    Scaffold {
-        Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Text(
-                text = stringResource(Res.string.reset_your_password),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(top = 55.dp)
-            )
-            Text(
-                text = stringResource(Res.string.enter_new_password),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-
-            RecipeTextField.Outlined(
-                value = state.password,
-                placeholder = {
-                    Text(
-                        text = stringResource(Res.string.password_hint),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
-                prefix = {
-                    Icon(
-                        painter = painterResource(Res.drawable.lock),
-                        contentDescription = "password icon"
-                    )
-                },
-                onValueChange = {
-                    onEvent(ResetPasswordEvent.OnPasswordChanged(it))
-                },
-                modifier = Modifier
-                    .padding(top = 24.dp)
-            )
-            Text(
-                text = stringResource(Res.string.password_requirement_title),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    color = mainTextColor
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-                textAlign = TextAlign.Start
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
+    @Composable
+    fun ResetPasswordContent(
+        state : ResetPasswordState,
+        onEvent : (ResetPasswordEvent) -> Unit
+    ){
+        Scaffold {
+            Column(
+                modifier = Modifier.fillMaxSize()
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Icon(
-                    painter = painterResource(Res.drawable.baseline_check_24),
-                    contentDescription = "checklist",
-                    tint = if(state.isPassAtleastSix) MaterialTheme.colorScheme.primary else secondaryTextColor
+                Text(
+                    text = stringResource(Res.string.reset_your_password),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(top = 55.dp)
                 )
                 Text(
-                    text = stringResource(Res.string.requirement_6_chars),
+                    text = stringResource(Res.string.enter_new_password),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+
+                RecipeTextField.Outlined(
+                    value = state.password,
+                    placeholder = {
+                        Text(
+                            text = stringResource(Res.string.password_hint),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    prefix = {
+                        Icon(
+                            painter = painterResource(Res.drawable.lock),
+                            contentDescription = "password icon"
+                        )
+                    },
+                    onValueChange = {
+                        onEvent(ResetPasswordEvent.OnPasswordChanged(it))
+                    },
+                    modifier = Modifier
+                        .padding(top = 24.dp)
+                )
+                Text(
+                    text = stringResource(Res.string.password_requirement_title),
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = if(state.isPassAtleastSix) mainTextColor else secondaryTextColor
+                        color = mainTextColor
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 8.dp),
-                    textAlign = TextAlign.Start,
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
-            ){
-                Icon(
-                    painter = painterResource(Res.drawable.baseline_check_24),
-                    contentDescription = "checklist",
-                    tint = if(state.isPassContaintNumber) MaterialTheme.colorScheme.primary else secondaryTextColor
-                )
-                Text(
-                    text = stringResource(Res.string.requirement_number),
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = if(state.isPassContaintNumber) mainTextColor else secondaryTextColor
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 8.dp),
+                        .padding(top = 24.dp),
                     textAlign = TextAlign.Start
                 )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ){
+                    Icon(
+                        painter = painterResource(Res.drawable.baseline_check_24),
+                        contentDescription = "checklist",
+                        tint = if(state.isPassAtleastSix) MaterialTheme.colorScheme.primary else secondaryTextColor
+                    )
+                    Text(
+                        text = stringResource(Res.string.requirement_6_chars),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = if(state.isPassAtleastSix) mainTextColor else secondaryTextColor
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp),
+                        textAlign = TextAlign.Start,
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ){
+                    Icon(
+                        painter = painterResource(Res.drawable.baseline_check_24),
+                        contentDescription = "checklist",
+                        tint = if(state.isPassContaintNumber) MaterialTheme.colorScheme.primary else secondaryTextColor
+                    )
+                    Text(
+                        text = stringResource(Res.string.requirement_number),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = if(state.isPassContaintNumber) mainTextColor else secondaryTextColor
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp),
+                        textAlign = TextAlign.Start
+                    )
+                }
+                Spacer(
+                    modifier = Modifier.weight(1.0f)
+                )
+                RecipeButton.DefaultFilledButton(
+                    text = stringResource(Res.string.done),
+                    enabled = state.isEnabledButton,
+                    onClick = {
+                        onEvent(ResetPasswordEvent.OnDoneClicked)
+                    },
+                )
             }
-            Spacer(
-                modifier = Modifier.weight(1.0f)
-            )
-            RecipeButton.DefaultFilledButton(
-                text = stringResource(Res.string.done),
-                enabled = state.isEnabledButton,
-                onClick = {
-                    onEvent(ResetPasswordEvent.OnDoneClicked)
-                },
-            )
         }
     }
 }

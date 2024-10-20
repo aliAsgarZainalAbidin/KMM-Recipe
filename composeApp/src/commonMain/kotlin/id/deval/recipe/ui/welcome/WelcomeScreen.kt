@@ -22,10 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import co.touchlab.kermit.Logger
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.ui.welcome.effect.WelcomeScreenEffect
 import id.deval.recipe.ui.welcome.event.WelcomeScreenEvent
 import id.deval.recipe.ui.welcome.state.WelcomeScreenState
@@ -40,82 +43,85 @@ import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 import org.kodein.di.newInstance
 
+data class WelcomeScreenNavigator(
+    val navigate : (Navigation) -> Unit
+) : Screen {
 
-@Composable
-fun WelcomeScreen(
-    navController: NavController = rememberNavController()
-) {
-    val welcomeScreenViewModel by appRecipeModule.instance<WelcomeViewModel>()
-    val welcomeScreenState by welcomeScreenViewModel.welcomeScreenState.collectAsStateWithLifecycle()
+    @Composable
+    override fun Content() {
+        val welcomeScreenViewModel by appRecipeModule.instance<WelcomeViewModel>()
+        val welcomeScreenState by welcomeScreenViewModel.welcomeScreenState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        welcomeScreenViewModel.welcomeScreenEffect.collect { latestEffect ->
-            when (latestEffect) {
-                is WelcomeScreenEffect.NavigateToMain -> {
-                    navController.safeNavigate(AppNavigation.Main.route)
-                }
+        LaunchedEffect(Unit) {
+            welcomeScreenViewModel.welcomeScreenEffect.collect { latestEffect ->
+                when (latestEffect) {
+                    is WelcomeScreenEffect.NavigateToMain -> {
+                        navigate(AppNavigation.Main)
+                    }
 
-                is WelcomeScreenEffect.NavigateToLogin -> {
-                    navController.safeNavigate(AppNavigation.Login.route)
+                    is WelcomeScreenEffect.NavigateToLogin -> {
+                        navigate(AppNavigation.Login)
+                    }
                 }
             }
         }
+
+        WelcomeScreenContent(
+            welcomeScreenState,
+            welcomeScreenViewModel::onEvent
+        )
     }
 
-    WelcomeScreenContent(
-        welcomeScreenState,
-        welcomeScreenViewModel::onEvent
-    )
-}
 
-@Composable
-fun WelcomeScreenContent(
-    state: WelcomeScreenState,
-    onEvent : (WelcomeScreenEvent) -> Unit = {}
-) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize()
-            .padding(bottom = 72.dp)
+    @Composable
+    fun WelcomeScreenContent(
+        state: WelcomeScreenState,
+        onEvent : (WelcomeScreenEvent) -> Unit = {}
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Scaffold(
+            modifier = Modifier.fillMaxSize()
+                .padding(bottom = 72.dp)
         ) {
-            Image(
-                painter = painterResource(Res.drawable.Onboarding),
-                contentDescription = "onboarding image",
-                modifier = Modifier.size(width = 420.dp, height = 406.dp),
-            )
-            Text(
-                text = stringResource(Res.string.welcome_title),
-                modifier = Modifier.padding(
-                    top = 48.dp
-                ),
-                style = MaterialTheme.typography.headlineLarge,
-                textAlign = TextAlign.Center
-            )
-            Text(
-                text = stringResource(Res.string.welcome_subtitle),
-                modifier = Modifier.padding(
-                    top = 16.dp
-                ),
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center
-            )
-            Spacer(
-                modifier = Modifier.weight(1.0f)
-            )
-            RecipeButton.DefaultFilledButton(
-                onClick = {
-                    onEvent(WelcomeScreenEvent.OnGetStartedClicked(false))
-                },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp),
-                text = stringResource(Res.string.get_started),
-                textStyle = MaterialTheme.typography.headlineSmall.copy(
-                    color = MaterialTheme.colorScheme.onPrimary
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(Res.drawable.Onboarding),
+                    contentDescription = "onboarding image",
+                    modifier = Modifier.size(width = 420.dp, height = 406.dp),
                 )
-            )
+                Text(
+                    text = stringResource(Res.string.welcome_title),
+                    modifier = Modifier.padding(
+                        top = 48.dp
+                    ),
+                    style = MaterialTheme.typography.headlineLarge,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = stringResource(Res.string.welcome_subtitle),
+                    modifier = Modifier.padding(
+                        top = 16.dp
+                    ),
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(
+                    modifier = Modifier.weight(1.0f)
+                )
+                RecipeButton.DefaultFilledButton(
+                    onClick = {
+                        onEvent(WelcomeScreenEvent.OnGetStartedClicked(false))
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 24.dp, end = 24.dp),
+                    text = stringResource(Res.string.get_started),
+                    textStyle = MaterialTheme.typography.headlineSmall.copy(
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                )
+            }
         }
     }
 }

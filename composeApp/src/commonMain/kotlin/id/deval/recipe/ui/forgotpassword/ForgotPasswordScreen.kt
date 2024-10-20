@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -25,6 +26,7 @@ import id.deval.recipe.ui.forgotpassword.effect.ForgotPasswordEffect
 import id.deval.recipe.ui.forgotpassword.event.ForgotPasswordEvent
 import id.deval.recipe.ui.forgotpassword.state.ForgotPasswordState
 import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.util.safeNavigate
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.email_phone_hint
@@ -37,81 +39,84 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-@Composable
-fun ForgotPasswordScreen(
-    navController: NavController
-) {
-    val forgotPasswordViewModel by appRecipeModule.instance<ForgotPasswordViewModel>()
-    val forgotPasswordState by forgotPasswordViewModel.forgotPasswordState.collectAsStateWithLifecycle()
+data class ForgotPasswordScreenNavigator(
+    val navigate : (Navigation) -> Unit
+) : Screen {
 
-    LaunchedEffect(Unit) {
-        forgotPasswordViewModel.forgotPasswordEffect.collectLatest { effect ->
-            when (effect) {
-                is ForgotPasswordEffect.NavigateToOtp -> {
-                    navController.safeNavigate(AppNavigation.Otp.route)
+    @Composable
+    override fun Content() {
+        val forgotPasswordViewModel by appRecipeModule.instance<ForgotPasswordViewModel>()
+        val forgotPasswordState by forgotPasswordViewModel.forgotPasswordState.collectAsStateWithLifecycle()
+
+        LaunchedEffect(Unit) {
+            forgotPasswordViewModel.forgotPasswordEffect.collectLatest { effect ->
+                when (effect) {
+                    is ForgotPasswordEffect.NavigateToOtp -> {
+                        navigate(AppNavigation.Otp)
+                    }
                 }
             }
         }
+
+        ForgotPasswordContent(
+            forgotPasswordState,
+            forgotPasswordViewModel::onEvent
+        )
     }
 
-    ForgotPasswordContent(
-        forgotPasswordState,
-        forgotPasswordViewModel::onEvent
-    )
-}
-
-@Composable
-fun ForgotPasswordContent(
-    state: ForgotPasswordState,
-    onEvent: (ForgotPasswordEvent) -> Unit
-) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize()
+    @Composable
+    fun ForgotPasswordContent(
+        state: ForgotPasswordState,
+        onEvent: (ForgotPasswordEvent) -> Unit
     ) {
-        Column(
+        Scaffold(
             modifier = Modifier.fillMaxSize()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(Res.string.password_recovery),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(top = 83.dp)
-            )
-            Text(
-                text = stringResource(Res.string.enter_email_recovery),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            RecipeTextField.Outlined(
-                value = state.email,
-                onValueChange = {
-                    onEvent(ForgotPasswordEvent.OnEmailChanged(it))
-                },
-                placeholder = {
-                    Text(
-                        text = stringResource(Res.string.email_phone_hint),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
-                prefix = {
-                    Icon(
-                        painter = painterResource(Res.drawable.message),
-                        contentDescription = "email icon"
-                    )
-                },
-                modifier = Modifier.padding(top = 32.dp)
-            )
-            Spacer(
-                modifier = Modifier.weight(1.0f)
-            )
-            RecipeButton.DefaultFilledButton(
-                onClick = {
-                    onEvent(ForgotPasswordEvent.SignInClicked)
-                },
-                text = stringResource(Res.string.sign_in),
-                enabled = state.isEnabledSignIn
-            )
+            Column(
+                modifier = Modifier.fillMaxSize()
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(Res.string.password_recovery),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(top = 83.dp)
+                )
+                Text(
+                    text = stringResource(Res.string.enter_email_recovery),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                RecipeTextField.Outlined(
+                    value = state.email,
+                    onValueChange = {
+                        onEvent(ForgotPasswordEvent.OnEmailChanged(it))
+                    },
+                    placeholder = {
+                        Text(
+                            text = stringResource(Res.string.email_phone_hint),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    prefix = {
+                        Icon(
+                            painter = painterResource(Res.drawable.message),
+                            contentDescription = "email icon"
+                        )
+                    },
+                    modifier = Modifier.padding(top = 32.dp)
+                )
+                Spacer(
+                    modifier = Modifier.weight(1.0f)
+                )
+                RecipeButton.DefaultFilledButton(
+                    onClick = {
+                        onEvent(ForgotPasswordEvent.SignInClicked)
+                    },
+                    text = stringResource(Res.string.sign_in),
+                    enabled = state.isEnabledSignIn
+                )
+            }
         }
     }
 }

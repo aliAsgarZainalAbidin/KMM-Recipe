@@ -3,9 +3,9 @@ package id.deval.recipe.ui.navigation
 import androidx.navigation.NamedNavArgument
 
 sealed class AppNavigation(
-    val route : String,
+    override val route : String,
     val arguments : List<NamedNavArgument>
-){
+) : Navigation {
     data object Splash : AppNavigation("splash", emptyList())
     data object Login : AppNavigation("login", emptyList())
     data object Main : AppNavigation("main", emptyList())

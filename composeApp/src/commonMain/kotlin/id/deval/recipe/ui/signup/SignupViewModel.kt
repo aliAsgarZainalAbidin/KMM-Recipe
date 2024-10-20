@@ -48,6 +48,7 @@ class SignupViewModel : ViewModel(), PasswordRules {
         _signupScreenState.update {
             it.copy(email = email)
         }
+        enabledButton()
     }
 
     private fun onPasswordChanged(password: String) {
@@ -59,6 +60,7 @@ class SignupViewModel : ViewModel(), PasswordRules {
                 isPassAtleastSix = authState.isPassAtleastSix
             )
         }
+        enabledButton()
     }
 
     private fun enabledButton() {

@@ -58,11 +58,14 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            //Desktop + Android Voyager
+//            implementation(libs.desktop.android.voyager.kodein)
+//            implementation(libs.desktop.android.voyager.rxjava)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-//            implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -87,12 +90,21 @@ kotlin {
             //Kermit Logger
             implementation(libs.kermit.logger)
 
-            //ConstraintLayout
-//            implementation(libs.common.constraintlayout.compose)
+            //Multiplatform Voyager
+            implementation(libs.kmp.voyager.navigator)
+            implementation(libs.kmp.voyager.screenmodel)
+            implementation(libs.kmp.voyager.bottomsheet.navigator)
+            implementation(libs.kmp.voyager.tab.navigator)
+            implementation(libs.kmp.voyager.transitions)
+
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+
+            //Desktop + Android Voyager
+//            implementation(libs.desktop.android.voyager.kodein)
+//            implementation(libs.desktop.android.voyager.rxjava)
         }
     }
 }

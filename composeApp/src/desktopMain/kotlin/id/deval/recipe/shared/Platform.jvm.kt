@@ -1,4 +1,5 @@
-package id.deval.recipe
+package id.deval.recipe.shared
+
 
 class JVMPlatform: Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"

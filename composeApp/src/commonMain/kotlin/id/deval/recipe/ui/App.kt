@@ -13,16 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import id.deval.recipe.Greeting
+import cafe.adriel.voyager.navigator.Navigator
+import id.deval.recipe.shared.Greeting
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.theme.RecipeAppTheme
-import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreen
-import id.deval.recipe.ui.login.LoginScreen
+import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreenNavigator
+import id.deval.recipe.ui.login.LoginScreenNavigator
+import id.deval.recipe.ui.main.MainScreenNavigator
 import id.deval.recipe.ui.navigation.AppNavigation
-import id.deval.recipe.ui.otp.OtpScreen
-import id.deval.recipe.ui.resetpassword.ResetPasswordScreen
-import id.deval.recipe.ui.signup.SignupScreen
-import id.deval.recipe.ui.welcome.WelcomeScreen
+import id.deval.recipe.ui.otp.OtpScreenNavigator
+import id.deval.recipe.ui.resetpassword.ResetPasswordScreenNavigator
+import id.deval.recipe.ui.signup.SignUpScreenNavigator
+import id.deval.recipe.ui.welcome.WelcomeScreenNavigator
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kmm_recipe.composeapp.generated.resources.Res
@@ -32,47 +34,103 @@ import kmm_recipe.composeapp.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
+
+    var currentScreen by remember { mutableStateOf(AppNavigation.Welcome.route) }
     RecipeAppTheme {
-        val navigator = rememberNavController()
         Box(
             modifier = Modifier.fillMaxSize()
-        ){
+        ) {
             /*TODO()
             *   startDestination base on already login or not
             *   please make DataStorage or SharedPreference account to check
             * */
-            NavHost(
-                navController = navigator,
-                startDestination = AppNavigation.ResetPassword.route,
-                modifier = Modifier.fillMaxSize()
-            ){
-                composable(AppNavigation.Splash.route){
+//            NavHost(
+//                navController = navigator,
+//                startDestination = AppNavigation.Main.route,
+//                modifier = Modifier.fillMaxSize()
+//            ){
+//                composable(AppNavigation.Splash.route){
+//
+//                }
+//                composable(AppNavigation.Login.route){
+//                    LoginScreen(navigator)
+//                }
+//                composable(AppNavigation.Main.route){
+//                    SampleCompose()
+//                }
+//                composable(AppNavigation.Welcome.route){
+//                    WelcomeScreen(navigator)
+//                }
+//                composable(AppNavigation.SignUp.route){
+//                    SignupScreen(navigator)
+//                }
+//                composable(AppNavigation.Otp.route){
+//                    OtpScreen(navigator)
+//                }
+//                composable(AppNavigation.ForgotPassword.route){
+//                    ForgotPasswordScreen(navigator)
+//                }
+//                composable(AppNavigation.ResetPassword.route){
+//                    ResetPasswordScreen(navigator)
+//                }
+//            }
+            when (currentScreen) {
+                AppNavigation.Splash.route -> {}
+                AppNavigation.Login.route -> {
+                    Navigator(
+                        LoginScreenNavigator{
+                            currentScreen = it.route
+                        }
+                    )
+                }
+                AppNavigation.Main.route -> {
+                    Navigator(
+                        MainScreenNavigator{
+                            currentScreen = it.route
+                        }
+                    )
+                }
 
-                }
-                composable(AppNavigation.Login.route){
-                    LoginScreen(navigator)
-                }
-                composable(AppNavigation.Main.route){
-
-                }
-                composable(AppNavigation.Welcome.route){
-                    WelcomeScreen(navigator)
-                }
-
-                composable(AppNavigation.SignUp.route){
-                    SignupScreen(navigator)
+                AppNavigation.Welcome.route -> {
+                    Navigator(
+                        WelcomeScreenNavigator(
+                            navigate = {
+                                currentScreen = it.route
+                            }
+                        )
+                    )
                 }
 
-                composable(AppNavigation.Otp.route){
-                    OtpScreen(navigator)
+                AppNavigation.SignUp.route -> {
+                    Navigator(
+                        SignUpScreenNavigator{
+                            currentScreen = it.route
+                        }
+                    )
                 }
 
-                composable(AppNavigation.ForgotPassword.route){
-                    ForgotPasswordScreen(navigator)
+                AppNavigation.Otp.route -> {
+                    Navigator(
+                        OtpScreenNavigator{
+                            currentScreen = it.route
+                        }
+                    )
                 }
 
-                composable(AppNavigation.ResetPassword.route){
-                    ResetPasswordScreen(navigator)
+                AppNavigation.ForgotPassword.route -> {
+                    Navigator(
+                        ForgotPasswordScreenNavigator{
+                            currentScreen = it.route
+                        }
+                    )
+                }
+
+                AppNavigation.ResetPassword.route -> {
+                    Navigator(
+                        ResetPasswordScreenNavigator{
+                            currentScreen = it.route
+                        }
+                    )
                 }
             }
         }
@@ -80,7 +138,7 @@ fun App() {
 }
 
 @Composable
-fun SampleCompose(){
+fun SampleCompose() {
     var showContent by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         RecipeButton.DefaultFilledButton(

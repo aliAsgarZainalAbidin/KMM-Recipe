@@ -22,7 +22,7 @@ kodein = "7.22.0"
 compose-coil = "2.4.1"
 kermit-logger = "2.0.4"
 constraintlayout-compose = "1.0.1"
-common-constraintlayout-compose = "0.5.0-alpha03-shaded-core"
+voyagerVersion = "1.1.0-beta02"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -52,15 +52,57 @@ androidx-compose-material3-android = { group = "androidx.compose.material3", nam
 #ConstraintLayout Compose for Android
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose"}
 
-#ConstraintLayout CommonMain
-#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.4.0")
-#/// Compose 1.7.0-alpha03
-#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.5.0-alpha03")
-#/// Compose 1.7.0-alpha03 with different tech.annexflow.constraintlayout.core package
-#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.5.0-alpha03-shaded-core")
-#/// Compose 1.7.0-alpha03 with different tech.annexflow.constraintlayout package
-#implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.5.0-alpha03-shaded")
-common-constraintlayout-compose = { group = "tech.annexflow.compose", name = "constraintlayout-compose-multiplatform", version.ref = "common-constraintlayout-compose"}
+#// Multiplatform
+#
+#// Navigator
+#implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+#
+#// Screen Model
+#implementation("cafe.adriel.voyager:voyager-screenmodel:$voyagerVersion")
+#
+#// BottomSheetNavigator
+#implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
+#
+#// TabNavigator
+#implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
+#
+#// Transitions
+#implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
+#
+#// Android
+#
+#// Koin integration
+#implementation("cafe.adriel.voyager:voyager-koin:$voyagerVersion")
+#
+#// Hilt integration
+#implementation("cafe.adriel.voyager:voyager-hilt:$voyagerVersion")
+#
+#// LiveData integration
+#implementation("cafe.adriel.voyager:voyager-livedata:$voyagerVersion")
+#
+#// Desktop + Android
+#
+#// Kodein integration
+#implementation("cafe.adriel.voyager:voyager-kodein:$voyagerVersion")
+#
+#// RxJava integration
+#implementation("cafe.adriel.voyager:voyager-rxjava:$voyagerVersion")
+
+#Multiplatform Voyager
+kmp-voyager-navigator = { group ="cafe.adriel.voyager", name = "voyager-navigator", version.ref ="voyagerVersion"}
+kmp-voyager-screenmodel = { group = "cafe.adriel.voyager", name = "voyager-screenmodel", version.ref = "voyagerVersion"}
+kmp-voyager-bottomsheet-navigator = { group = "cafe.adriel.voyager", name = "voyager-bottom-sheet-navigator", version.ref = "voyagerVersion"}
+kmp-voyager-tab-navigator = { group = "cafe.adriel.voyager", name = "voyager-tab-navigator", version.ref = "voyagerVersion"}
+kmp-voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyagerVersion"}
+
+#Android Voyager
+android-voyager-koin = { group = "cafe.adriel.voyager", name = "voyager-koin", version.ref = "voyagerVersion"}
+android-voyager-hilt = { group = "cafe.adriel.voyager", name = "voyager-hilt", version.ref = "voyagerVersion"}
+android-voyager-livedata = { group = "cafe.adriel.voyager", name = "voyager-livedata", version.ref = "voyagerVersion"}
+
+#Desktop + Android Voyager
+desktop-android-voyager-kodein = { group = "cafe.adriel.voyager", name = "voyager-kodein", version.ref = "voyagerVersion"}
+desktop-android-voyager-rxjava = { group = "cafe.adriel.voyager", name = "voyager-rxjava", version.ref = "voyagerVersion"}
 
 #Kodein
 kodein = { group = "org.kodein.di", name = "kodein-di", version.ref = "kodein"}

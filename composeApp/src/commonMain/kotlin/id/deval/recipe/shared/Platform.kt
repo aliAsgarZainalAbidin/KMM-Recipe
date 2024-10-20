@@ -1,4 +1,4 @@
-package id.deval.recipe
+package id.deval.recipe.shared
 
 interface Platform {
     val name: String

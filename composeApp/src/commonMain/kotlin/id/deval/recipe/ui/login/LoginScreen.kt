@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -57,152 +58,154 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 import org.kodein.di.newInstance
+data class LoginScreenNavigator(
+    val navigate : (AppNavigation) -> Unit
+) : Screen {
 
-@Composable
-fun LoginScreen(
-    navController: NavController
-) {
-    val loginViewModel by appRecipeModule.instance<LoginViewModel>()
-    val loginScreenState by loginViewModel.loginScreenState.collectAsStateWithLifecycle()
+    @Composable
+    override fun Content() {
+        val loginViewModel by appRecipeModule.instance<LoginViewModel>()
+        val loginScreenState by loginViewModel.loginScreenState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit){
-        loginViewModel.loginScreenEffect.collectLatest { effect ->
-            when(effect){
-                is LoginScreenEffect.NavigateToSignUp -> {
-                    navController.safeNavigate(AppNavigation.SignUp.route)
+        LaunchedEffect(Unit){
+            loginViewModel.loginScreenEffect.collectLatest { effect ->
+                when(effect){
+                    is LoginScreenEffect.NavigateToSignUp -> {
+                        navigate(AppNavigation.SignUp)
+                    }
+                    else -> {}
                 }
-                else -> {}
             }
         }
+
+        LoginScreenContent(
+            loginScreenState,
+            loginViewModel::onEvent
+        )
     }
 
-    LoginScreenContent(
-        loginScreenState,
-        loginViewModel::onEvent
-    )
-}
-
-@Composable
-fun LoginScreenContent(
-    state: LoginScreenState,
-    onEvent: (LoginScreenEvent) -> Unit = {}
-) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize()
+    @Composable
+    fun LoginScreenContent(
+        state: LoginScreenState,
+        onEvent: (LoginScreenEvent) -> Unit = {}
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Scaffold(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Text(
-                text = stringResource(Res.string.welcome_back),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(top = 107.dp)
-            )
-            Text(
-                text = stringResource(Res.string.enter_account),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            RecipeTextField.Outlined(
-                value = state.email,
-                placeholder = {
-                    Text(
-                        text = stringResource(Res.string.email_phone_hint),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
-                prefix = {
-                    Icon(
-                        painter = painterResource(Res.drawable.message),
-                        contentDescription = "email icon"
-                    )
-                },
-                onValueChange = {
-                    onEvent(LoginScreenEvent.OnEmailChanged(it))
-                },
-                modifier = Modifier
-                    .padding(top = 32.dp, start = 24.dp, end = 24.dp)
-            )
-            RecipeTextField.Outlined(
-                value = state.password,
-                placeholder = {
-                    Text(
-                        text = stringResource(Res.string.password_hint),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
-                prefix = {
-                    Icon(
-                        painter = painterResource(Res.drawable.lock),
-                        contentDescription = "password icon"
-                    )
-                },
-                onValueChange = {
-                    onEvent(LoginScreenEvent.OnPasswordChanged(it))
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp, start = 24.dp, end = 24.dp)
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text(
+                    text = stringResource(Res.string.welcome_back),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(top = 107.dp)
+                )
+                Text(
+                    text = stringResource(Res.string.enter_account),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                RecipeTextField.Outlined(
+                    value = state.email,
+                    placeholder = {
+                        Text(
+                            text = stringResource(Res.string.email_phone_hint),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    prefix = {
+                        Icon(
+                            painter = painterResource(Res.drawable.message),
+                            contentDescription = "email icon"
+                        )
+                    },
+                    onValueChange = {
+                        onEvent(LoginScreenEvent.OnEmailChanged(it))
+                    },
+                    modifier = Modifier
+                        .padding(top = 32.dp, start = 24.dp, end = 24.dp)
+                )
+                RecipeTextField.Outlined(
+                    value = state.password,
+                    placeholder = {
+                        Text(
+                            text = stringResource(Res.string.password_hint),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    prefix = {
+                        Icon(
+                            painter = painterResource(Res.drawable.lock),
+                            contentDescription = "password icon"
+                        )
+                    },
+                    onValueChange = {
+                        onEvent(LoginScreenEvent.OnPasswordChanged(it))
+                    },
+                    modifier = Modifier
+                        .padding(top = 16.dp, start = 24.dp, end = 24.dp)
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Spacer(
+                        modifier = Modifier.weight(1.0f)
+                    )
+                    Text(
+                        text = stringResource(Res.string.forgot_password),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = mainTextColor
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(end = 24.dp, top = 24.dp)
+                    )
+                }
                 Spacer(
                     modifier = Modifier.weight(1.0f)
                 )
-                Text(
-                    text = stringResource(Res.string.forgot_password),
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = mainTextColor
-                    ),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(end = 24.dp, top = 24.dp)
-                )
-            }
-            Spacer(
-                modifier = Modifier.weight(1.0f)
-            )
-            RecipeButton.DefaultFilledButton(
-                onClick = {},
-                modifier = Modifier
-                    .padding(horizontal = 24.dp),
-                text = stringResource(Res.string.login),
-            )
-            Text(
-                text = stringResource(Res.string.or_with_google),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 24.dp)
-            )
-            RecipeButton.DefaultFilledButton(
-                onClick = {},
-                modifier = Modifier
-                    .padding(top = 24.dp, start = 24.dp, end = 24.dp),
-                text = stringResource(Res.string.Google),
-                startIcon = painterResource(Res.drawable.google),
-                color = DefaultRedFilledButtonStyle()
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = 24.dp, bottom = 12.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = stringResource(Res.string.dont_have_account),
-                    style = MaterialTheme.typography.bodyMedium
-                        .copy(color = mainTextColor),
-                    modifier = Modifier.padding(end = 8.dp)
+                RecipeButton.DefaultFilledButton(
+                    onClick = {},
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp),
+                    text = stringResource(Res.string.login),
                 )
                 Text(
-                    text = stringResource(Res.string.sign_up),
-                    style = MaterialTheme.typography.bodyMedium
-                        .copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        ),
-                    modifier = Modifier.clickable {
-                        onEvent(LoginScreenEvent.OnSignUpClicked)
-                    }
+                    text = stringResource(Res.string.or_with_google),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 24.dp)
                 )
+                RecipeButton.DefaultFilledButton(
+                    onClick = {},
+                    modifier = Modifier
+                        .padding(top = 24.dp, start = 24.dp, end = 24.dp),
+                    text = stringResource(Res.string.Google),
+                    startIcon = painterResource(Res.drawable.google),
+                    color = DefaultRedFilledButtonStyle()
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 24.dp, bottom = 12.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = stringResource(Res.string.dont_have_account),
+                        style = MaterialTheme.typography.bodyMedium
+                            .copy(color = mainTextColor),
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = stringResource(Res.string.sign_up),
+                        style = MaterialTheme.typography.bodyMedium
+                            .copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            ),
+                        modifier = Modifier.clickable {
+                            onEvent(LoginScreenEvent.OnSignUpClicked)
+                        }
+                    )
+                }
             }
         }
     }
