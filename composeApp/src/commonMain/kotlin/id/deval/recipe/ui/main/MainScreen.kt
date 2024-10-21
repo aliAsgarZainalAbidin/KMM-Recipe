@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.ui.navigation.Navigation
 
-data class MainScreenNavigator(
+data class MainScreen(
     val navigate : (Navigation) -> Unit
 ) : Screen {
 

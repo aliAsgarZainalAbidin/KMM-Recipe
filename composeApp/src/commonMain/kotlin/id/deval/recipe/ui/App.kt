@@ -10,21 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.shared.Greeting
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.theme.RecipeAppTheme
-import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreenNavigator
-import id.deval.recipe.ui.login.LoginScreenNavigator
-import id.deval.recipe.ui.main.MainScreenNavigator
+import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreen
+import id.deval.recipe.ui.login.LoginScreen
+import id.deval.recipe.ui.main.MainScreen
 import id.deval.recipe.ui.navigation.AppNavigation
-import id.deval.recipe.ui.otp.OtpScreenNavigator
-import id.deval.recipe.ui.resetpassword.ResetPasswordScreenNavigator
-import id.deval.recipe.ui.signup.SignUpScreenNavigator
-import id.deval.recipe.ui.welcome.WelcomeScreenNavigator
+import id.deval.recipe.ui.otp.OtpScreen
+import id.deval.recipe.ui.resetpassword.ResetPasswordScreen
+import id.deval.recipe.ui.signup.SignUpScreen
+import id.deval.recipe.ui.welcome.WelcomeScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kmm_recipe.composeapp.generated.resources.Res
@@ -78,14 +75,14 @@ fun App() {
                 AppNavigation.Splash.route -> {}
                 AppNavigation.Login.route -> {
                     Navigator(
-                        LoginScreenNavigator{
+                        LoginScreen{
                             currentScreen = it.route
                         }
                     )
                 }
                 AppNavigation.Main.route -> {
                     Navigator(
-                        MainScreenNavigator{
+                        MainScreen{
                             currentScreen = it.route
                         }
                     )
@@ -93,7 +90,7 @@ fun App() {
 
                 AppNavigation.Welcome.route -> {
                     Navigator(
-                        WelcomeScreenNavigator(
+                        WelcomeScreen(
                             navigate = {
                                 currentScreen = it.route
                             }
@@ -103,7 +100,7 @@ fun App() {
 
                 AppNavigation.SignUp.route -> {
                     Navigator(
-                        SignUpScreenNavigator{
+                        SignUpScreen{
                             currentScreen = it.route
                         }
                     )
@@ -111,7 +108,7 @@ fun App() {
 
                 AppNavigation.Otp.route -> {
                     Navigator(
-                        OtpScreenNavigator{
+                        OtpScreen{
                             currentScreen = it.route
                         }
                     )
@@ -119,7 +116,7 @@ fun App() {
 
                 AppNavigation.ForgotPassword.route -> {
                     Navigator(
-                        ForgotPasswordScreenNavigator{
+                        ForgotPasswordScreen{
                             currentScreen = it.route
                         }
                     )
@@ -127,7 +124,7 @@ fun App() {
 
                 AppNavigation.ResetPassword.route -> {
                     Navigator(
-                        ResetPasswordScreenNavigator{
+                        ResetPasswordScreen{
                             currentScreen = it.route
                         }
                     )
@@ -137,6 +134,7 @@ fun App() {
     }
 }
 
+@Preview
 @Composable
 fun SampleCompose() {
     var showContent by remember { mutableStateOf(false) }

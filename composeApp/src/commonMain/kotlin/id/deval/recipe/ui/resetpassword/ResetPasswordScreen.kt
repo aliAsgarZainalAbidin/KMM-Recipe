@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
@@ -31,7 +30,6 @@ import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.ui.resetpassword.effect.ResetPasswordEffect
 import id.deval.recipe.ui.resetpassword.event.ResetPasswordEvent
 import id.deval.recipe.ui.resetpassword.state.ResetPasswordState
-import id.deval.recipe.util.safeNavigate
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.baseline_check_24
 import kmm_recipe.composeapp.generated.resources.done
@@ -42,13 +40,12 @@ import kmm_recipe.composeapp.generated.resources.password_requirement_title
 import kmm_recipe.composeapp.generated.resources.requirement_6_chars
 import kmm_recipe.composeapp.generated.resources.requirement_number
 import kmm_recipe.composeapp.generated.resources.reset_your_password
-import kmm_recipe.composeapp.generated.resources.sign_up
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-data class ResetPasswordScreenNavigator(
+data class ResetPasswordScreen(
     val navigate : (Navigation) -> Unit
 ) : Screen {
 

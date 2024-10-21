@@ -1,10 +1,8 @@
 package id.deval.recipe.ui.forgotpassword
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
@@ -27,7 +24,6 @@ import id.deval.recipe.ui.forgotpassword.event.ForgotPasswordEvent
 import id.deval.recipe.ui.forgotpassword.state.ForgotPasswordState
 import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.navigation.Navigation
-import id.deval.recipe.util.safeNavigate
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.email_phone_hint
 import kmm_recipe.composeapp.generated.resources.enter_email_recovery
@@ -39,7 +35,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-data class ForgotPasswordScreenNavigator(
+data class ForgotPasswordScreen(
     val navigate : (Navigation) -> Unit
 ) : Screen {
 

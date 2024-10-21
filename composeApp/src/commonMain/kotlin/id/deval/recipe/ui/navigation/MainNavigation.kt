@@ -4,7 +4,7 @@ import androidx.navigation.NamedNavArgument
 
 sealed class MainNavigation(
     override val route : String,
-    val NavArguments : List<NamedNavArgument>
+    override val navArguments : List<NamedNavArgument>
 ) : Navigation {
     data object Home : MainNavigation("home", emptyList())
     data object Upload : MainNavigation("upload", emptyList())

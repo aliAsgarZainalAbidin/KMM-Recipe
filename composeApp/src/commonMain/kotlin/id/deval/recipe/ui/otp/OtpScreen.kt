@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
@@ -30,7 +29,6 @@ import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.ui.otp.effect.OtpScreenEffect
 import id.deval.recipe.ui.otp.event.OtpScreenEvent
 import id.deval.recipe.ui.otp.state.OtpScreenState
-import id.deval.recipe.util.safeNavigate
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.check_email
 import kmm_recipe.composeapp.generated.resources.code_expires_in
@@ -42,7 +40,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
 
-data class OtpScreenNavigator(
+data class OtpScreen(
     val navigate : (Navigation) -> Unit
 ) : Screen {
 

@@ -4,7 +4,7 @@ import androidx.navigation.NamedNavArgument
 
 sealed class AppNavigation(
     override val route : String,
-    val arguments : List<NamedNavArgument>
+    override val navArguments : List<NamedNavArgument>
 ) : Navigation {
     data object Splash : AppNavigation("splash", emptyList())
     data object Login : AppNavigation("login", emptyList())

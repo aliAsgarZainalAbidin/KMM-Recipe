@@ -1,5 +1,11 @@
 {
-    "configurations": [
-        
+    "configurations": [{
+            "type": "android-app",
+            "name": "Android-app configuration",
+            "module": "KMM-Recipe.composeApp.main",
+            "workingDir": "$PROJECT_DIR$",
+            "dependsOn": [],
+        },
+
     ]
 }
