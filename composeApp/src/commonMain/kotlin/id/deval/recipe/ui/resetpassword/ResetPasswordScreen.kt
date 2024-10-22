@@ -20,6 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -45,14 +47,13 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-data class ResetPasswordScreen(
-    val navigate : (Navigation) -> Unit
-) : Screen {
+class ResetPasswordScreen : Screen {
 
     @Composable
     override fun Content() {
         val resetPasswordViewModel by appRecipeModule.instance<ResetPasswordViewModel>()
         val resetPasswordState by resetPasswordViewModel.resetPasswordState.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.current
 
         LaunchedEffect(Unit){
             resetPasswordViewModel.resetPasswordEffect.collectLatest { effect ->
@@ -61,7 +62,7 @@ data class ResetPasswordScreen(
 
                     }
                     is ResetPasswordEffect.NavigateToMain -> {
-                        navigate(AppNavigation.Main)
+                        navigator?.replaceAll(AppNavigation.Main.screen)
                     }
                 }
             }

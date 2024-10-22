@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -35,20 +37,19 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-data class ForgotPasswordScreen(
-    val navigate : (Navigation) -> Unit
-) : Screen {
+class ForgotPasswordScreen : Screen {
 
     @Composable
     override fun Content() {
         val forgotPasswordViewModel by appRecipeModule.instance<ForgotPasswordViewModel>()
         val forgotPasswordState by forgotPasswordViewModel.forgotPasswordState.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.current
 
         LaunchedEffect(Unit) {
             forgotPasswordViewModel.forgotPasswordEffect.collectLatest { effect ->
                 when (effect) {
                     is ForgotPasswordEffect.NavigateToOtp -> {
-                        navigate(AppNavigation.Otp)
+                        navigator?.push(AppNavigation.Otp.screen)
                     }
                 }
             }

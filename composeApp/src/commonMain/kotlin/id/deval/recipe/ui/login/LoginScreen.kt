@@ -21,6 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -49,20 +52,22 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-data class LoginScreen(
-    val navigate : (AppNavigation) -> Unit
-) : Screen {
+class LoginScreen : Screen {
 
     @Composable
     override fun Content() {
         val loginViewModel by appRecipeModule.instance<LoginViewModel>()
         val loginScreenState by loginViewModel.loginScreenState.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit){
             loginViewModel.loginScreenEffect.collectLatest { effect ->
                 when(effect){
                     is LoginScreenEffect.NavigateToSignUp -> {
-                        navigate(AppNavigation.SignUp)
+                        navigator.push(AppNavigation.SignUp.screen)
+                    }
+                    is LoginScreenEffect.NavigateToForgotPassword -> {
+                        navigator.push(AppNavigation.ForgotPassword.screen)
                     }
                     else -> {}
                 }
@@ -150,6 +155,9 @@ data class LoginScreen(
                         ),
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(end = 24.dp, top = 24.dp)
+                            .clickable {
+                                onEvent(LoginScreenEvent.OnForgotPasswordClicked)
+                            }
                     )
                 }
                 Spacer(

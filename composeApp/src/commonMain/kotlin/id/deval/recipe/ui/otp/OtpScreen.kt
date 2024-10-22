@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -40,20 +42,19 @@ import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
 
-data class OtpScreen(
-    val navigate : (Navigation) -> Unit
-) : Screen {
+class OtpScreen : Screen {
 
     @Composable
     override fun Content() {
         val otpViewModel by appRecipeModule.instance<OtpViewModel>()
         val otpScreenState by otpViewModel.otpScreenState.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.current
 
         LaunchedEffect(Unit) {
             otpViewModel.otpScreenEffect.collectLatest { effect ->
                 when (effect) {
                     is OtpScreenEffect.NavigateToMain -> {
-                        navigate(AppNavigation.Main)
+                        navigator?.replaceAll(AppNavigation.Main.screen)
                     }
 
                     is OtpScreenEffect.ShowToast -> {
@@ -62,6 +63,10 @@ data class OtpScreen(
 
                     is OtpScreenEffect.OnResendOtp -> {
 
+                    }
+
+                    is OtpScreenEffect.NavigateToResetPassword -> {
+                        navigator?.push(AppNavigation.ResetPassword.screen)
                     }
                 }
             }

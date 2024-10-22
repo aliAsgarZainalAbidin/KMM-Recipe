@@ -19,6 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.ui.navigation.AppNavigation
@@ -35,24 +38,23 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-data class WelcomeScreen(
-    val navigate : (Navigation) -> Unit
-) : Screen {
+class WelcomeScreen : Screen {
 
     @Composable
     override fun Content() {
         val welcomeScreenViewModel by appRecipeModule.instance<WelcomeViewModel>()
         val welcomeScreenState by welcomeScreenViewModel.welcomeScreenState.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit) {
             welcomeScreenViewModel.welcomeScreenEffect.collect { latestEffect ->
                 when (latestEffect) {
                     is WelcomeScreenEffect.NavigateToMain -> {
-                        navigate(AppNavigation.Main)
+                        navigator.replaceAll(AppNavigation.Main.screen)
                     }
 
                     is WelcomeScreenEffect.NavigateToLogin -> {
-                        navigate(AppNavigation.Login)
+                        navigator.replaceAll(AppNavigation.Login.screen)
                     }
                 }
             }

@@ -3,6 +3,7 @@ package id.deval.recipe.theme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
@@ -23,6 +24,14 @@ val shapes = Shapes(
 
 @Composable
 fun DefaultFilledButtonStyle() = buttonColors(
+    containerColor = MaterialTheme.colorScheme.primary,
+    contentColor = MaterialTheme.colorScheme.onPrimary,
+    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+    disabledContentColor = MaterialTheme.colorScheme.tertiary
+)
+
+@Composable
+fun DefaultCircleFilledButtonStyle() = IconButtonDefaults.iconButtonColors(
     containerColor = MaterialTheme.colorScheme.primary,
     contentColor = MaterialTheme.colorScheme.onPrimary,
     disabledContainerColor = MaterialTheme.colorScheme.tertiary,

@@ -19,6 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -46,14 +48,14 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kodein.di.instance
 
-data class SignUpScreen(
-    val navigate : (Navigation) -> Unit
-) : Screen{
+class SignUpScreen : Screen{
 
     @Composable
     override fun Content() {
         val signupViewModel by appRecipeModule.instance<SignupViewModel>()
         val state = signupViewModel.signupScreenState.collectAsStateWithLifecycle()
+
+        val navigator = LocalNavigator.current
 
         LaunchedEffect(Unit){
             signupViewModel.signupScreenEffect.collectLatest { effect ->
@@ -62,7 +64,7 @@ data class SignUpScreen(
 
                     }
                     is SignupScreenEffect.NavigateToOtp -> {
-                        navigate(AppNavigation.Otp)
+                        navigator?.push(AppNavigation.Otp.screen)
                     }
                 }
             }

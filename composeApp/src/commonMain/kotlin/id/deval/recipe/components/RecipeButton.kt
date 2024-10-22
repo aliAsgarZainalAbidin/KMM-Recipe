@@ -5,15 +5,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
@@ -26,6 +31,7 @@ import id.deval.recipe.theme.secondaryTextColor
 
 object RecipeButton {
 
+    //<editor-fold desc="Description">
     @Composable
     fun DefaultFilledButton(
         onClick: () -> Unit,
@@ -38,11 +44,11 @@ object RecipeButton {
         startIcon: Painter? = null,
         endIcon: Painter? = null,
         text: String? = null,
-        textStyle: TextStyle =  MaterialTheme.typography.headlineSmall.copy(
+        textStyle: TextStyle = MaterialTheme.typography.headlineSmall.copy(
             color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.Bold
         ),
-        color : ButtonColors = DefaultFilledButtonStyle()
+        color: ButtonColors = DefaultFilledButtonStyle()
     ) {
         Button(
             onClick = onClick,
@@ -66,7 +72,7 @@ object RecipeButton {
             if (text != null) {
                 Text(
                     text = text,
-                    color = if(enabled) color.contentColor else secondaryTextColor,
+                    color = if (enabled) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold,
                     style = textStyle
                 )
@@ -88,7 +94,7 @@ object RecipeButton {
         enabled: Boolean = true,
         shape: Shape = ButtonDefaults.shape,
         elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
-        color : ButtonColors = DefaultOutlineButtonStyle(),
+        color: ButtonColors = DefaultOutlineButtonStyle(),
         border: BorderStroke? = BorderStroke(2.dp, color.contentColor),
         padding: PaddingValues = ButtonDefaults.ContentPadding,
         startIcon: Painter? = null,
@@ -117,7 +123,7 @@ object RecipeButton {
             if (text != null) {
                 Text(
                     text = text,
-                    color = if(enabled) color.contentColor else secondaryTextColor,
+                    color = if (enabled) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -139,7 +145,7 @@ object RecipeButton {
         shape: Shape = ButtonDefaults.textShape,
         elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
         border: BorderStroke? = null,
-        color : ButtonColors = DefaultTextButtonStyle(),
+        color: ButtonColors = DefaultTextButtonStyle(),
         padding: PaddingValues = ButtonDefaults.ContentPadding,
         startIcon: Painter? = null,
         endIcon: Painter? = null,
@@ -167,7 +173,7 @@ object RecipeButton {
             if (text != null) {
                 Text(
                     text = text,
-                    color = if(enabled) color.contentColor else secondaryTextColor,
+                    color = if (enabled) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -178,6 +184,34 @@ object RecipeButton {
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
             }
+        }
+    }
+    //</editor-fold>
+
+    @Composable
+    fun DefaultCircleFilledButton(
+        icon : Painter,
+        onClick: () -> Unit,
+        modifier: Modifier = Modifier,
+        enabled: Boolean = true,
+        color : IconButtonColors = IconButtonDefaults.iconButtonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            disabledContainerColor = MaterialTheme.colorScheme.tertiary,
+            disabledContentColor = MaterialTheme.colorScheme.tertiary
+        )
+    ){
+        IconButton(
+            onClick = onClick,
+            modifier = modifier.size(56.dp),
+            colors= color,
+            enabled = enabled
+        ){
+            Icon(
+                painter = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.shared.Greeting
 import id.deval.recipe.components.RecipeButton
@@ -33,6 +34,7 @@ import kmm_recipe.composeapp.generated.resources.compose_multiplatform
 fun App() {
 
     var currentScreen by remember { mutableStateOf(AppNavigation.Welcome.route) }
+
     RecipeAppTheme {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -75,58 +77,42 @@ fun App() {
                 AppNavigation.Splash.route -> {}
                 AppNavigation.Login.route -> {
                     Navigator(
-                        LoginScreen{
-                            currentScreen = it.route
-                        }
+                        LoginScreen()
                     )
                 }
                 AppNavigation.Main.route -> {
                     Navigator(
-                        MainScreen{
-                            currentScreen = it.route
-                        }
+                        MainScreen()
                     )
                 }
 
                 AppNavigation.Welcome.route -> {
                     Navigator(
-                        WelcomeScreen(
-                            navigate = {
-                                currentScreen = it.route
-                            }
-                        )
+                        WelcomeScreen()
                     )
                 }
 
                 AppNavigation.SignUp.route -> {
                     Navigator(
-                        SignUpScreen{
-                            currentScreen = it.route
-                        }
+                        SignUpScreen()
                     )
                 }
 
                 AppNavigation.Otp.route -> {
                     Navigator(
-                        OtpScreen{
-                            currentScreen = it.route
-                        }
+                        OtpScreen()
                     )
                 }
 
                 AppNavigation.ForgotPassword.route -> {
                     Navigator(
-                        ForgotPasswordScreen{
-                            currentScreen = it.route
-                        }
+                        ForgotPasswordScreen()
                     )
                 }
 
                 AppNavigation.ResetPassword.route -> {
                     Navigator(
-                        ResetPasswordScreen{
-                            currentScreen = it.route
-                        }
+                        ResetPasswordScreen()
                     )
                 }
             }
