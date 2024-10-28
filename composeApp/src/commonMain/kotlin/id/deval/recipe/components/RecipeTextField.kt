@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
+import kmm_recipe.composeapp.generated.resources.Res
 
 object RecipeTextField {
 
@@ -115,7 +116,7 @@ object RecipeTextField {
         )
 
         Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
             repeat(totalOtpCode) { index ->
@@ -123,6 +124,7 @@ object RecipeTextField {
                     value.isEmpty() || index >= value.length -> ""
                     else -> value[index].toString()
                 }
+
 
                 OutlinedTextField(
                     value = char,
@@ -136,7 +138,7 @@ object RecipeTextField {
                     ),
                     shape = RoundedCornerShape(20.dp),
                     keyboardOptions = keyboardOptions,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(0.3f),
                     onValueChange = { s ->
                         if (value.isEmpty() || index >= value.length) {
                             onValueChange(value + s)
@@ -148,7 +150,7 @@ object RecipeTextField {
                 )
                 if(index < totalOtpCode - 1) {
                     Spacer(
-                        modifier = Modifier.weight(0.2f)
+                        modifier = Modifier.weight(0.1f)
                     )
                 }
             }

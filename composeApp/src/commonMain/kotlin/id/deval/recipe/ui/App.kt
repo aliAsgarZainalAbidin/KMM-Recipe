@@ -33,7 +33,7 @@ import kmm_recipe.composeapp.generated.resources.compose_multiplatform
 @Preview
 fun App() {
 
-    var currentScreen by remember { mutableStateOf(AppNavigation.Welcome.route) }
+    val currentScreen by remember { mutableStateOf(AppNavigation.Main.route) }
 
     RecipeAppTheme {
         Box(

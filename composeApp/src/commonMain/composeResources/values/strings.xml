@@ -34,4 +34,55 @@
     <string name="reset_your_password">Reset your password</string>
     <string name="enter_new_password">Please enter your new password</string>
     <string name="done">Done</string>
+
+    <!-- Common -->
+    <string name="cancel">Cancel</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+
+    <!-- Step 1 -->
+    <string name="add_cover_photo">Add Cover Photo</string>
+    <string name="food_name">Food Name</string>
+    <string name="enter_food_name">Enter food name</string>
+    <string name="description">Description</string>
+    <string name="enter_description">Tell a little about your food</string>
+    <string name="cooking_duration">Cooking Duration (in minutes)</string>
+    <string name="less_than_10"> &lt;10 </string>
+    <string name="more_than_60"> &gt;60 </string>
+
+    <!-- Step 2 -->
+    <string name="ingredients">Ingredients</string>
+    <string name="group">Group</string>
+    <string name="enter_ingredient">Enter ingredient</string>
+    <string name="add_ingredient">+ Ingredient</string>
+    <string name="steps">Steps</string>
+    <string name="add_step_instruction">Tell a little about your food</string>
+
+    <!-- Success Screen -->
+    <string name="recipe_uploaded">Your recipe has been uploaded, you can see it on your profile</string>
+    <string name="back_to_home">Back to Home</string>
+
+    <!-- Common -->
+    <string name="search">Search</string>
+    <string name="category">Category</string>
+    <string name="all">All</string>
+    <string name="food">Food</string>
+    <string name="drink">Drink</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+
+    <!-- Search Suggestions -->
+    <string name="search_suggestions">Search suggestions</string>
+    <string name="sushi">sushi</string>
+    <string name="sandwich">sandwich</string>
+    <string name="seafood">seafood</string>
+    <string name="fried_rice">fried rice</string>
+
+    <!-- Add a Filter -->
+    <string name="add_filter">Add a Filter</string>
+
+    <!-- Time Descriptions -->
+    <string name="more_than_60_mins"> &gt;60 mins </string>
+    <string name="less_than_10_mins"> &lt;10 mins </string>
+    <string name="30_mins">30 mins</string>
 </resources>
