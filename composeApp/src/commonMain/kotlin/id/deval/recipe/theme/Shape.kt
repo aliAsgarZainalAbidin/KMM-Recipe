@@ -78,6 +78,14 @@ fun DefaultRedTextButtonStyle() = buttonColors(
     disabledContentColor = MaterialTheme.colorScheme.tertiary
 )
 
+@Composable
+fun DefaultIconButtonColors() = IconButtonDefaults.iconButtonColors(
+    containerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
+    contentColor = MaterialTheme.colorScheme.onPrimary,
+    disabledContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
+    disabledContentColor = MaterialTheme.colorScheme.onPrimary
+)
+
 
 @Composable
 @Preview

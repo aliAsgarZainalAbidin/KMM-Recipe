@@ -9,3 +9,4 @@ val secondaryTextColor = Color(0xFF9FA5C0)
 val outline = Color(0xFFD0DBEA)
 val form = Color(0xFFF4F5F7)
 val white = Color(0xFFFFFFFF)
+val red = Color.Red

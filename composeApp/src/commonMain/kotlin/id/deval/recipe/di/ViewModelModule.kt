@@ -1,6 +1,7 @@
 package id.deval.recipe.di
 
 import id.deval.recipe.ui.forgotpassword.ForgotPasswordViewModel
+import id.deval.recipe.ui.home.HomeScreenViewModel
 import id.deval.recipe.ui.login.LoginViewModel
 import id.deval.recipe.ui.main.MainScreenViewModel
 import id.deval.recipe.ui.otp.OtpViewModel
@@ -18,4 +19,5 @@ val viewModelModule = DI.Module("viewModelModule"){
     bindSingleton { ForgotPasswordViewModel() }
     bindSingleton { ResetPasswordViewModel() }
     bindSingleton { MainScreenViewModel() }
+    bindSingleton { HomeScreenViewModel() }
 }

@@ -15,23 +15,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.secondaryTextColor
+import id.deval.recipe.ui.home.HomeScreen
+import id.deval.recipe.ui.main.effect.MainScreenEffect
 import id.deval.recipe.ui.main.event.MainScreenEvent
 import id.deval.recipe.ui.main.state.MainScreenState
 import id.deval.recipe.ui.navigation.MainNavigation
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.scan
+import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.painterResource
 import org.kodein.di.instance
 
@@ -41,6 +43,15 @@ class MainScreen : Screen {
     override fun Content() {
         val mainScreenViewModel by appRecipeModule.instance<MainScreenViewModel>()
         val mainScreenState by mainScreenViewModel.mainScreenState.collectAsStateWithLifecycle()
+
+        LaunchedEffect(Unit){
+            mainScreenViewModel.mainScreenEffect.collectLatest { effect ->
+                when(effect){
+                    is MainScreenEffect.OnMenuSelected -> {}
+                    is MainScreenEffect.OnScanSelected -> {}
+                }
+            }
+        }
 
         MainScreenContent(
             mainScreenState,
@@ -84,7 +95,15 @@ class MainScreen : Screen {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-
+                when (state.selectedMenu) {
+                    MainNavigation.Home -> {
+                        Navigator(HomeScreen())
+                    }
+                    MainNavigation.Upload -> {}
+                    MainNavigation.Scan -> {}
+                    MainNavigation.Notification -> {}
+                    MainNavigation.Profile -> {}
+                }
             }
         }
     }
