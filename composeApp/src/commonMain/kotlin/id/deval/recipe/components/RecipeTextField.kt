@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -73,6 +74,74 @@ object RecipeTextField {
             value = value,
             onValueChange,
             modifier.fillMaxWidth(),
+            enabled,
+            readOnly,
+            textStyle,
+            label,
+            placeholder,
+            leadingIcon,
+            trailingIcon,
+            prefix,
+            suffix,
+            supportingText,
+            isError,
+            visualTransformation,
+            keyboardOptions,
+            keyboardActions,
+            singleLine,
+            maxLines,
+            minLines,
+            interactionSource,
+            shape,
+            colors
+        )
+    }
+
+    @Composable
+    fun Filled(
+        value: String,
+        onValueChange: (String) -> Unit,
+        modifier: Modifier = Modifier,
+        enabled: Boolean = true,
+        readOnly: Boolean = false,
+        textStyle: TextStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = mainTextColor
+        ),
+        label: @Composable (() -> Unit)? = null,
+        placeholder: @Composable (() -> Unit)? = null,
+        leadingIcon: @Composable (() -> Unit)? = null,
+        trailingIcon: @Composable (() -> Unit)? = null,
+        prefix: @Composable (() -> Unit)? = null,
+        suffix: @Composable (() -> Unit)? = null,
+        supportingText: @Composable (() -> Unit)? = null,
+        isError: Boolean = false,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+        keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+        keyboardActions: KeyboardActions = KeyboardActions.Default,
+        interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+        shape: Shape = RoundedCornerShape(100),
+        colors: TextFieldColors = TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+            focusedTextColor = mainTextColor,
+            unfocusedTextColor = mainTextColor,
+            focusedPlaceholderColor = secondaryTextColor,
+            unfocusedPlaceholderColor = secondaryTextColor,
+            unfocusedPrefixColor = secondaryTextColor,
+            focusedPrefixColor = mainTextColor,
+            unfocusedLeadingIconColor = mainTextColor,
+            focusedLeadingIconColor = secondaryTextColor,
+            focusedTrailingIconColor = mainTextColor
+        ),
+    ) {
+        val singleLine = false
+        val maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE
+        val minLines = 1
+
+        OutlinedTextField(
+            value = value,
+            onValueChange,
+            modifier,
             enabled,
             readOnly,
             textStyle,

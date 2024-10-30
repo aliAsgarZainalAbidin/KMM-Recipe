@@ -8,11 +8,12 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 
 sealed class FilterCategory(
-    val name : StringResource
+    val name : StringResource,
+    val plainName : String,
 ) {
-    data class All(val isSelected : Boolean): FilterCategory(Res.string.all)
-    data class Food(val isSelected: Boolean): FilterCategory(Res.string.food)
-    data class Drink(val isSelected: Boolean): FilterCategory(Res.string.drink)
+    data class All(val isSelected : Boolean): FilterCategory(Res.string.all, "")
+    data class Food(val isSelected: Boolean): FilterCategory(Res.string.food, "Food")
+    data class Drink(val isSelected: Boolean): FilterCategory(Res.string.drink, "Drink")
 
     companion object{
         val default = All(true)

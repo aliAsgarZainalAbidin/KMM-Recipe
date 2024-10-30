@@ -81,8 +81,4 @@
     <!-- Add a Filter -->
     <string name="add_filter">Add a Filter</string>
 
-    <!-- Time Descriptions -->
-    <string name="more_than_60_mins"> &gt;60 mins </string>
-    <string name="less_than_10_mins"> &lt;10 mins </string>
-    <string name="30_mins">30 mins</string>
 </resources>

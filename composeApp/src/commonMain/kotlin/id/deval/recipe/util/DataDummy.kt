@@ -9,7 +9,7 @@ object DataDummy {
         Recipe(
             id = "1",
             name = "Spaghetti Bolognese",
-            category = "Italian",
+            category = "Food",
             times = "30 mins",
             recipeOwner = "John Doe",
             idRecipeOwner = "101",
@@ -28,7 +28,7 @@ object DataDummy {
         Recipe(
             id = "2",
             name = "Chicken Curry",
-            category = "Asian",
+            category = "Food",
             times = "45 mins",
             recipeOwner = "Jane Smith",
             idRecipeOwner = "102",
@@ -46,7 +46,7 @@ object DataDummy {
         Recipe(
             id = "3",
             name = "Pancakes",
-            category = "Breakfast",
+            category = "Drink",
             times = "20 mins",
             recipeOwner = "Emily Brown",
             idRecipeOwner = "103",
@@ -64,7 +64,7 @@ object DataDummy {
         Recipe(
             id = "4",
             name = "Beef Tacos",
-            category = "Mexican",
+            category = "Drink",
             times = "25 mins",
             recipeOwner = "Carlos Diaz",
             idRecipeOwner = "104",
@@ -81,7 +81,7 @@ object DataDummy {
         Recipe(
             id = "5",
             name = "Caesar Salad",
-            category = "Salad",
+            category = "Food",
             times = "15 mins",
             recipeOwner = "Anna Lee",
             idRecipeOwner = "105",
@@ -98,7 +98,7 @@ object DataDummy {
         Recipe(
             id = "6",
             name = "Chocolate Cake",
-            category = "Dessert",
+            category = "Drink",
             times = "1 hr",
             recipeOwner = "Lucy Nguyen",
             idRecipeOwner = "106",
@@ -116,7 +116,7 @@ object DataDummy {
         Recipe(
             id = "7",
             name = "Vegetable Stir Fry",
-            category = "Vegetarian",
+            category = "Drink",
             times = "20 mins",
             recipeOwner = "Tom Green",
             idRecipeOwner = "107",

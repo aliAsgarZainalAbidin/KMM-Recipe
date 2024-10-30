@@ -8,4 +8,5 @@ sealed interface HomeScreenEvent {
     data class OnSearchQueryChanged(val query: String) : HomeScreenEvent
     data class OnRecipeClicked(val recipe: Recipe) : HomeScreenEvent
     data class OnLikeClicked(val recipe: Recipe) : HomeScreenEvent
+    data object OnCloseSearchField : HomeScreenEvent
 }
