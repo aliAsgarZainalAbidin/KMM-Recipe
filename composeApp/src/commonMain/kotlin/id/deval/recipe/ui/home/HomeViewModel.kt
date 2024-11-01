@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class HomeScreenViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
     private var _homeScreenState: MutableStateFlow<HomeScreenState> = MutableStateFlow(
         HomeScreenState(recipes = DataDummy.dummyRecipes, filteredRecipes = DataDummy.dummyRecipes)
     )

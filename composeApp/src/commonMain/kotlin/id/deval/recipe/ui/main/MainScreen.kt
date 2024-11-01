@@ -22,7 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import co.touchlab.kermit.Logger
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.secondaryTextColor
@@ -31,6 +34,7 @@ import id.deval.recipe.ui.main.effect.MainScreenEffect
 import id.deval.recipe.ui.main.event.MainScreenEvent
 import id.deval.recipe.ui.main.state.MainScreenState
 import id.deval.recipe.ui.navigation.MainNavigation
+import id.deval.recipe.ui.upload.UploadScreenFirstStep
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.scan
 import kotlinx.coroutines.flow.collectLatest
@@ -41,13 +45,23 @@ class MainScreen : Screen {
 
     @Composable
     override fun Content() {
-        val mainScreenViewModel by appRecipeModule.instance<MainScreenViewModel>()
+        val mainScreenViewModel by appRecipeModule.instance<MainViewModel>()
         val mainScreenState by mainScreenViewModel.mainScreenState.collectAsStateWithLifecycle()
+        val localNavigator = LocalNavigator.currentOrThrow
 
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             mainScreenViewModel.mainScreenEffect.collectLatest { effect ->
-                when(effect){
-                    is MainScreenEffect.OnMenuSelected -> {}
+                when (effect) {
+                    is MainScreenEffect.OnMenuSelected -> {
+                        when (effect.menu) {
+                            MainNavigation.Upload -> {
+                                localNavigator.push(MainNavigation.Upload.screen)
+                            }
+
+                            else -> {}
+                        }
+                    }
+
                     is MainScreenEffect.OnScanSelected -> {}
                 }
             }
@@ -55,6 +69,7 @@ class MainScreen : Screen {
 
         MainScreenContent(
             mainScreenState,
+            localNavigator,
             mainScreenViewModel::onEvent
         )
     }
@@ -62,9 +77,9 @@ class MainScreen : Screen {
     @Composable
     fun MainScreenContent(
         state: MainScreenState,
+        navigator: Navigator,
         onEvent: (MainScreenEvent) -> Unit = {}
     ) {
-
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
@@ -97,12 +112,22 @@ class MainScreen : Screen {
             ) {
                 when (state.selectedMenu) {
                     MainNavigation.Home -> {
-                        Navigator(HomeScreen())
+                        Navigator(MainNavigation.Home.screen)
                     }
-                    MainNavigation.Upload -> {}
-                    MainNavigation.Scan -> {}
-                    MainNavigation.Notification -> {}
-                    MainNavigation.Profile -> {}
+
+                    MainNavigation.Scan -> {
+                        navigator.parent?.push(MainNavigation.Scan.screen)
+                    }
+
+                    MainNavigation.Notification -> {
+                        Navigator(MainNavigation.Notification.screen)
+                    }
+
+                    MainNavigation.Profile -> {
+                        Navigator(MainNavigation.Profile.screen)
+                    }
+
+                    else -> {}
                 }
             }
         }
@@ -128,7 +153,7 @@ class MainScreen : Screen {
                 menu = MainNavigation.Upload, currentState = bottomAppBarState,
                 contentDescription = "upload icon", modifier = Modifier.weight(1f),
                 onClick = {
-                    onEvent(MainScreenEvent.OnMenuSelected(it))
+                    onEvent(MainScreenEvent.OnUploadSelected)
                 }
             )
             Column(

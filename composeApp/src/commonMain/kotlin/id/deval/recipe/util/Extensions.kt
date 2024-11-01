@@ -1,5 +1,16 @@
 package id.deval.recipe.util
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawOutline
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
@@ -71,4 +82,30 @@ fun String.isEmailValid(): Boolean {
 fun String.isPhoneNumberValid(): Boolean {
     val phoneRegex = "^\\d{10}$"
     return phoneRegex.toRegex().matches(this)
+}
+
+fun Modifier.dashedBorder(
+    color : Color = Color.Unspecified,
+    shape : Shape = RoundedCornerShape(0.dp),
+    strokeWidth : Dp = 1.dp,
+    dashLength : Dp = 4.dp,
+    gapLength : Dp = 4.dp,
+    cap : StrokeCap = StrokeCap.Round
+) = this.drawWithContent {
+
+    val outline = shape.createOutline(size, layoutDirection, density = this)
+    val dashedStroke = Stroke(
+        cap = cap,
+        width = strokeWidth.toPx(),
+        pathEffect = PathEffect.dashPathEffect(
+            intervals = floatArrayOf(dashLength.toPx(), gapLength.toPx())
+        )
+    )
+
+    drawContent()
+    drawOutline(
+        outline = outline,
+        style = dashedStroke,
+        color = color
+    )
 }

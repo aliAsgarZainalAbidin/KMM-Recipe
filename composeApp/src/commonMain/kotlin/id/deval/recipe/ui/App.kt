@@ -10,35 +10,48 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
+import co.touchlab.kermit.Logger
 import id.deval.recipe.shared.Greeting
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.RecipeAppTheme
 import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreen
 import id.deval.recipe.ui.login.LoginScreen
 import id.deval.recipe.ui.main.MainScreen
+import id.deval.recipe.ui.main.MainViewModel
+import id.deval.recipe.ui.main.event.MainScreenEvent
 import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.ui.navigation.MainNavigation
+import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.ui.otp.OtpScreen
 import id.deval.recipe.ui.resetpassword.ResetPasswordScreen
 import id.deval.recipe.ui.signup.SignUpScreen
+import id.deval.recipe.ui.upload.UploadScreenFirstStep
 import id.deval.recipe.ui.welcome.WelcomeScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.category
 import kmm_recipe.composeapp.generated.resources.compose_multiplatform
+import org.kodein.di.instance
 
 @Composable
 @Preview
 fun App() {
 
-    val currentScreen by remember { mutableStateOf(AppNavigation.Main.route) }
+    val currentScreen by remember { mutableStateOf<Navigation>(AppNavigation.Main) }
 
     RecipeAppTheme {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
+            val mainScreenViewModel by appRecipeModule.instance<MainViewModel>()
+            val mainScreenState by mainScreenViewModel.mainScreenState.collectAsStateWithLifecycle()
+
             /*TODO()
             *   startDestination base on already login or not
             *   please make DataStorage or SharedPreference account to check
@@ -73,47 +86,38 @@ fun App() {
 //                    ResetPasswordScreen(navigator)
 //                }
 //            }
-            when (currentScreen) {
+            when (currentScreen.route) {
                 AppNavigation.Splash.route -> {}
                 AppNavigation.Login.route -> {
-                    Navigator(
-                        LoginScreen()
-                    )
+                    Navigator(AppNavigation.Login.screen)
                 }
+
                 AppNavigation.Main.route -> {
-                    Navigator(
-                        MainScreen()
-                    )
+                    Navigator(AppNavigation.Main.screen)
+                }
+
+                MainNavigation.Upload.route -> {
+                    Navigator(MainNavigation.Upload.screen)
                 }
 
                 AppNavigation.Welcome.route -> {
-                    Navigator(
-                        WelcomeScreen()
-                    )
+                    Navigator(AppNavigation.Welcome.screen)
                 }
 
                 AppNavigation.SignUp.route -> {
-                    Navigator(
-                        SignUpScreen()
-                    )
+                    Navigator(AppNavigation.SignUp.screen)
                 }
 
                 AppNavigation.Otp.route -> {
-                    Navigator(
-                        OtpScreen()
-                    )
+                    Navigator(AppNavigation.Otp.screen)
                 }
 
                 AppNavigation.ForgotPassword.route -> {
-                    Navigator(
-                        ForgotPasswordScreen()
-                    )
+                    Navigator(AppNavigation.ForgotPassword.screen)
                 }
 
                 AppNavigation.ResetPassword.route -> {
-                    Navigator(
-                        ResetPasswordScreen()
-                    )
+                    Navigator(AppNavigation.ResetPassword.screen)
                 }
             }
         }

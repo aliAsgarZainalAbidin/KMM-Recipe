@@ -39,11 +39,15 @@
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
     <string name="back">Back</string>
+    <string name="first_step">1</string>
+    <string name="second_step">2</string>
+    <string name="separator_step">/</string>
 
     <!-- Step 1 -->
     <string name="add_cover_photo">Add Cover Photo</string>
     <string name="food_name">Food Name</string>
     <string name="enter_food_name">Enter food name</string>
+    <string name="up_to_mb">(up to 12 Mb)</string>
     <string name="description">Description</string>
     <string name="enter_description">Tell a little about your food</string>
     <string name="cooking_duration">Cooking Duration (in minutes)</string>

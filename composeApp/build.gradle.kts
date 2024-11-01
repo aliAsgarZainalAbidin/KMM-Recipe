@@ -72,15 +72,17 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-
             implementation(libs.androidx.lifecycle.viewmodel.compose)
-            implementation(compose.material3)
 
             //Navigation Compose
             implementation(libs.navigation.compose)
 
             //Material3
-//            implementation(libs.androidx.compose.material3)
+            implementation(compose.material3)
+            implementation(libs.common.material3.window.size)
+            implementation(libs.common.material3.adaptive)
+            implementation(libs.common.material3.adaptive.layout)
+            implementation(libs.common.material3.adaptive.navigation)
 
             //Kodein
             implementation(libs.kodein)

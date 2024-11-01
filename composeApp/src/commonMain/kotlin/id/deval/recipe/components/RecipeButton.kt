@@ -122,8 +122,7 @@ object RecipeButton {
 
         Button(
             onClick = onClick,
-            modifier = modifier
-                .height(56.dp),
+            modifier = modifier,
             colors = color,
             shape = shape,
             elevation = elevation,
@@ -141,7 +140,7 @@ object RecipeButton {
                 Text(
                     text = stringResource(text),
                     color = if (enabled) color.contentColor else secondaryTextColor,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Normal,
                     style = textStyle
                 )
             }

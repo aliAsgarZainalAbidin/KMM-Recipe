@@ -13,7 +13,7 @@ import id.deval.recipe.ui.welcome.WelcomeScreen
 sealed class AppNavigation(
     override val route : String,
     override val navArguments : List<NamedNavArgument>,
-    val screen : Screen
+    override val screen : Screen
 ) : Navigation {
     data object Splash : AppNavigation("splash", emptyList(), LoginScreen())
     data object Login : AppNavigation("login", emptyList(), LoginScreen())

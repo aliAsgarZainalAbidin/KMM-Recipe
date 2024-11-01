@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -19,7 +18,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -49,7 +47,6 @@ import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.back
 import kmm_recipe.composeapp.generated.resources.category
 import kmm_recipe.composeapp.generated.resources.circle_close
-import kmm_recipe.composeapp.generated.resources.close
 import kmm_recipe.composeapp.generated.resources.filter
 import kmm_recipe.composeapp.generated.resources.search
 import kotlinx.coroutines.flow.collectLatest
@@ -61,7 +58,7 @@ class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
-        val homeScreenViewModel by appRecipeModule.instance<HomeScreenViewModel>()
+        val homeScreenViewModel by appRecipeModule.instance<HomeViewModel>()
         val homeScreenState by homeScreenViewModel.homeScreenState.collectAsStateWithLifecycle()
 
         LaunchedEffect(Unit) {
@@ -86,7 +83,7 @@ class HomeScreen : Screen {
         state: HomeScreenState,
         onEvent: (HomeScreenEvent) -> Unit
     ) {
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+        val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
         val isShowNavFilterIcon = state.searchQuery.isNotEmpty() && state.isSearching
 
         Scaffold(
@@ -94,7 +91,7 @@ class HomeScreen : Screen {
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
                 CenterAlignedTopAppBar(
-                    modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
+                    modifier = Modifier.padding(top = 16.dp, start = 24.dp, end = 24.dp),
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
                         containerColor = Color.Transparent,
                         scrolledContainerColor = Color.Transparent,
@@ -224,7 +221,7 @@ class HomeScreen : Screen {
     ) {
         Row(
             modifier = modifier.fillMaxWidth()
-                .padding(top = 16.dp, bottom = 24.dp)
+                .padding(top = 8.dp, bottom = 8.dp)
         ) {
             repeat(categories.size) { index ->
                 RecipeButton.DefaultFilledChipButton(
@@ -233,7 +230,7 @@ class HomeScreen : Screen {
                     },
                     modifier = Modifier.wrapContentSize()
                         .padding(end = 8.dp)
-                        .defaultMinSize(minWidth = 64.dp),
+                        .defaultMinSize(minWidth = 56.dp),
                     text = categories[index].name,
                     textStyle = MaterialTheme.typography.headlineSmall.copy(
                         color = MaterialTheme.colorScheme.onPrimary,

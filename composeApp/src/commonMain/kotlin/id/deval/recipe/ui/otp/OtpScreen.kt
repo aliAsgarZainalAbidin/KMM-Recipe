@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -27,7 +26,6 @@ import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryColor
 import id.deval.recipe.theme.secondaryTextColor
 import id.deval.recipe.ui.navigation.AppNavigation
-import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.ui.otp.effect.OtpScreenEffect
 import id.deval.recipe.ui.otp.event.OtpScreenEvent
 import id.deval.recipe.ui.otp.state.OtpScreenState

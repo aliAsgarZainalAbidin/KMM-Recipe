@@ -1,17 +1,21 @@
 package id.deval.recipe.ui.main
 
 import androidx.lifecycle.ViewModel
+import co.touchlab.kermit.Logger
 import id.deval.recipe.ui.main.effect.MainScreenEffect
 import id.deval.recipe.ui.main.event.MainScreenEvent
 import id.deval.recipe.ui.main.state.MainScreenState
 import id.deval.recipe.ui.navigation.MainNavigation
+import id.deval.recipe.util.launchCatchError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class MainScreenViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
     private var  _mainScreenState : MutableStateFlow<MainScreenState> = MutableStateFlow(
         MainScreenState()
     )
@@ -25,6 +29,9 @@ class MainScreenViewModel : ViewModel() {
             is MainScreenEvent.OnMenuSelected -> {
                 onMenuSelected(event.menu)
             }
+            is MainScreenEvent.OnUploadSelected -> {
+                onUploadSelected()
+            }
             is MainScreenEvent.OnScanSelected -> {
                 onScanSelected(event.state)
             }
@@ -36,7 +43,7 @@ class MainScreenViewModel : ViewModel() {
 
     private fun onMenuSelected(menu : MainNavigation){
         _mainScreenState.update {
-            it.copy(selectedMenu = menu)
+            it.copy(selectedMenu = menu, lastMenu = it.copy().selectedMenu)
         }
     }
 
@@ -48,5 +55,21 @@ class MainScreenViewModel : ViewModel() {
 
     private fun onNavigateBack(){
 
+    }
+
+    private fun onUploadSelected(){
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _mainScreenEffect.emit(
+                    MainScreenEffect.OnMenuSelected(MainNavigation.Upload)
+                )
+            },
+            onError = {
+                Logger.d(
+                    tag = "Error",
+                    messageString = "${it.message}"
+                )
+            }
+        )
     }
 }
