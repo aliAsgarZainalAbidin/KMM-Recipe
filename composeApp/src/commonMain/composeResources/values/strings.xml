@@ -50,7 +50,8 @@
     <string name="up_to_mb">(up to 12 Mb)</string>
     <string name="description">Description</string>
     <string name="enter_description">Tell a little about your food</string>
-    <string name="cooking_duration">Cooking Duration (in minutes)</string>
+    <string name="cooking_duration">Cooking Duration </string>
+    <string name="cooking_duration_in_minutes">(in minutes)</string>
     <string name="less_than_10"> &lt;10 </string>
     <string name="equal_30"> 30 </string>
     <string name="more_than_60"> &gt;60 </string>

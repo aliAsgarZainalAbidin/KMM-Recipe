@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class UploadViewModel : ViewModel() {
 
@@ -27,10 +28,35 @@ class UploadViewModel : ViewModel() {
             is UploadScreenEvent.OnNextClicked -> {}
             is UploadScreenEvent.OnBackClicked -> {}
             is UploadScreenEvent.OnNavigateToHome -> {}
-            is UploadScreenEvent.OnFoodNameChanged -> {}
-            is UploadScreenEvent.OnDescriptionChanged -> {}
+            is UploadScreenEvent.OnFoodNameChanged -> {
+                onFoodNameChanged(event.foodName)
+            }
+            is UploadScreenEvent.OnDescriptionChanged -> {
+                onDescriptionChanged(event.description)
+            }
             is UploadScreenEvent.OnIngredientChanged -> {}
             is UploadScreenEvent.OnStepChanged -> {}
+            is UploadScreenEvent.OnDurationChanged -> {
+                onDurationChanged(event.duration)
+            }
+        }
+    }
+
+    private fun onFoodNameChanged(foodName : String){
+        _uploadScreenState.update {
+            it.copy(foodName = foodName)
+        }
+    }
+
+    private fun onDescriptionChanged(description : String){
+        _uploadScreenState.update {
+            it.copy(description = description)
+        }
+    }
+
+    private fun onDurationChanged(duration : String){
+        _uploadScreenState.update {
+            it.copy(duration = duration)
         }
     }
 }

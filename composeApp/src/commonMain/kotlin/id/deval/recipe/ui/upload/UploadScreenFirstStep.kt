@@ -36,6 +36,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SliderState
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -70,6 +71,7 @@ import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
 import id.deval.recipe.ui.upload.event.UploadScreenEvent
 import id.deval.recipe.ui.upload.state.UploadScreenState
+import id.deval.recipe.util.RecipeSliderValue
 import id.deval.recipe.util.dashedBorder
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.add_cover_photo
@@ -77,7 +79,10 @@ import kmm_recipe.composeapp.generated.resources.baseline_image_24
 import kmm_recipe.composeapp.generated.resources.camera
 import kmm_recipe.composeapp.generated.resources.cancel
 import kmm_recipe.composeapp.generated.resources.cooking_duration
+import kmm_recipe.composeapp.generated.resources.cooking_duration_in_minutes
 import kmm_recipe.composeapp.generated.resources.description
+import kmm_recipe.composeapp.generated.resources.enter_description
+import kmm_recipe.composeapp.generated.resources.enter_food_name
 import kmm_recipe.composeapp.generated.resources.equal_30
 import kmm_recipe.composeapp.generated.resources.first_step
 import kmm_recipe.composeapp.generated.resources.food_name
@@ -161,8 +166,23 @@ class UploadScreenFirstStep : Screen {
                             SliderState(
                                 value = 0f,
                                 steps = 1,
-                                valueRange = startSliderValue..endSliderValue
+                                valueRange = startSliderValue..endSliderValue,
                             )
+                        )
+                    }
+                    sliderState.onValueChangeFinished = {
+                        val sliderValueInMinutes = when(sliderState.value){
+                            RecipeSliderValue.LESS_THAN_10.value -> RecipeSliderValue.LESS_THAN_10.inMinutesValue
+                            RecipeSliderValue.EQUAL_30.value -> RecipeSliderValue.EQUAL_30.inMinutesValue
+                            RecipeSliderValue.MORE_THAN_60.value -> RecipeSliderValue.MORE_THAN_60.inMinutesValue
+                            else -> RecipeSliderValue.LESS_THAN_10.inMinutesValue
+                        }
+                        onEvent(UploadScreenEvent.OnDurationChanged(sliderValueInMinutes))
+
+
+                        Logger.d(
+                            tag = "SLIDER-STATE",
+                            messageString = "${sliderValueInMinutes}"
                         )
                     }
 
@@ -182,10 +202,6 @@ class UploadScreenFirstStep : Screen {
                                 shape = RoundedCornerShape(16.dp)
                             )
                     )
-                    Logger.d(
-                        tag = "SLIDER-STATE",
-                        messageString = "${sliderState.value}"
-                    )
                     Column(
                         modifier = customModifier.onSizeChanged {
                             heightSectionFoodDescription = with(localDensity) {
@@ -201,6 +217,12 @@ class UploadScreenFirstStep : Screen {
                         )
                         RecipeTextField.Outlined(
                             value = state.foodName,
+                            placeholder = {
+                                Text(
+                                    text = stringResource(Res.string.enter_food_name),
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            },
                             onValueChange = {
                                 onEvent(UploadScreenEvent.OnFoodNameChanged(it))
                             },
@@ -214,6 +236,12 @@ class UploadScreenFirstStep : Screen {
                         RecipeTextField.Outlined(
                             value = state.description,
                             shape = RoundedCornerShape(8.dp),
+                            placeholder = {
+                                Text(
+                                    text = stringResource(Res.string.enter_description),
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            },
                             onValueChange = {
                                 onEvent(UploadScreenEvent.OnDescriptionChanged(it))
                             },
@@ -228,7 +256,14 @@ class UploadScreenFirstStep : Screen {
                         verticalArrangement = Arrangement.Top,
                     ) {
                         Text(
-                            text = stringResource(Res.string.cooking_duration),
+                            text = buildAnnotatedString {
+                                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = mainTextColor)) {
+                                    append(stringResource(Res.string.cooking_duration))
+                                }
+                                withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = secondaryTextColor)) {
+                                    append(stringResource(Res.string.cooking_duration_in_minutes))
+                                }
+                            },
                             style = MaterialTheme.typography.headlineMedium,
                             modifier = Modifier.padding(top = 24.dp)
                         )

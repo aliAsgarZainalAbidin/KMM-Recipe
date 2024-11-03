@@ -12,5 +12,6 @@ sealed interface UploadScreenEvent {
     data class OnFoodNameChanged(val foodName: String) : UploadScreenEvent
     data class OnDescriptionChanged(val description: String) : UploadScreenEvent
     data class OnIngredientChanged(val ingredient: String) : UploadScreenEvent
+    data class OnDurationChanged(val duration : String) : UploadScreenEvent
     data class OnStepChanged(val step: String) : UploadScreenEvent
 }
