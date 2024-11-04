@@ -17,15 +17,20 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -83,8 +88,11 @@ class HomeScreen : Screen {
         state: HomeScreenState,
         onEvent: (HomeScreenEvent) -> Unit
     ) {
-        val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+        val scrollBehavior =
+            TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
         val isShowNavFilterIcon = state.searchQuery.isNotEmpty() && state.isSearching
+
+        val stateFilterCategory = remember { mutableStateOf<FilterCategory>(FilterCategory.default) }
 
         Scaffold(
             modifier = Modifier.fillMaxSize()
@@ -176,6 +184,12 @@ class HomeScreen : Screen {
                     stateCategory = state.selectedCategory,
                     onEvent = onEvent
                 )
+//                ChipCategory(
+//                    modifier = Modifier.padding(horizontal = 24.dp),
+//                    categories = FilterCategory.values,
+//                    stateCategory = stateFilterCategory.value,
+//                    onEvent = onEvent
+//                )
                 Spacer(
                     modifier = Modifier.height(8.dp)
                         .fillMaxWidth()
@@ -237,6 +251,42 @@ class HomeScreen : Screen {
                         fontWeight = FontWeight.Normal
                     ),
                     enabled = stateCategory == categories[index]
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun ChipCategory(
+        modifier: Modifier,
+        categories: List<FilterCategory>,
+        stateCategory: FilterCategory,
+        onEvent: (HomeScreenEvent) -> Unit
+    ) {
+        Row(
+            modifier = modifier.fillMaxWidth()
+                .padding(top = 8.dp, bottom = 8.dp)
+        ) {
+            repeat(categories.size) { index ->
+                val isSelected = stateCategory == categories[index]
+                FilterChip(
+                    modifier = Modifier.padding(end = if (index <= categories.size) 4.dp else 0.dp),
+                    selected = isSelected,
+                    onClick = {
+                        onEvent(HomeScreenEvent.OnCategorySelected(categories[index]))
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(categories[index].name),
+                            style = MaterialTheme.typography.headlineSmall.copy(
+                                color = if(isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+                            )
+                        )
+                    },
+                    colors = FilterChipDefaults.filterChipColors().copy(
+                        selectedContainerColor = MaterialTheme.colorScheme.primary,
+                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                    )
                 )
             }
         }

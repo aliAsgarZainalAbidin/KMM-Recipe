@@ -41,7 +41,6 @@ import org.jetbrains.compose.resources.stringResource
 
 object RecipeButton {
 
-    //<editor-fold desc="Description">
     @Composable
     fun DefaultFilledButton(
         onClick: () -> Unit,
@@ -254,7 +253,6 @@ object RecipeButton {
             }
         }
     }
-    //</editor-fold>
 
     @Composable
     fun DefaultCircleFilledButton(

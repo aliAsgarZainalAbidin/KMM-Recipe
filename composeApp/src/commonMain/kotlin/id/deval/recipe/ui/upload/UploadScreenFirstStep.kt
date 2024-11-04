@@ -171,19 +171,13 @@ class UploadScreenFirstStep : Screen {
                         )
                     }
                     sliderState.onValueChangeFinished = {
-                        val sliderValueInMinutes = when(sliderState.value){
+                        val sliderValueInMinutes = when (sliderState.value) {
                             RecipeSliderValue.LESS_THAN_10.value -> RecipeSliderValue.LESS_THAN_10.inMinutesValue
                             RecipeSliderValue.EQUAL_30.value -> RecipeSliderValue.EQUAL_30.inMinutesValue
                             RecipeSliderValue.MORE_THAN_60.value -> RecipeSliderValue.MORE_THAN_60.inMinutesValue
                             else -> RecipeSliderValue.LESS_THAN_10.inMinutesValue
                         }
                         onEvent(UploadScreenEvent.OnDurationChanged(sliderValueInMinutes))
-
-
-                        Logger.d(
-                            tag = "SLIDER-STATE",
-                            messageString = "${sliderValueInMinutes}"
-                        )
                     }
 
                     var heightSectionFoodDescription by remember { mutableStateOf(0.dp) }
@@ -204,9 +198,7 @@ class UploadScreenFirstStep : Screen {
                     )
                     Column(
                         modifier = customModifier.onSizeChanged {
-                            heightSectionFoodDescription = with(localDensity) {
-                                it.height.toDp()
-                            }
+                            heightSectionFoodDescription = with(localDensity) { it.height.toDp() }
                         },
                         verticalArrangement = Arrangement.Top,
                     ) {
@@ -223,10 +215,9 @@ class UploadScreenFirstStep : Screen {
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             },
-                            onValueChange = {
-                                onEvent(UploadScreenEvent.OnFoodNameChanged(it))
-                            },
-                            modifier = Modifier.padding(top = 8.dp).fillMaxWidth()
+                            onValueChange = { onEvent(UploadScreenEvent.OnFoodNameChanged(it)) },
+                            modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+                            singleLine = true
                         )
                         Text(
                             text = stringResource(Res.string.description),
@@ -247,7 +238,7 @@ class UploadScreenFirstStep : Screen {
                             },
                             modifier = Modifier
                                 .padding(top = 8.dp)
-                                .heightIn(min = 80.dp)
+                                .heightIn(min = 120.dp, max = 120.dp)
                                 .fillMaxWidth()
                         )
                     }
@@ -257,10 +248,20 @@ class UploadScreenFirstStep : Screen {
                     ) {
                         Text(
                             text = buildAnnotatedString {
-                                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = mainTextColor)) {
+                                withStyle(
+                                    style = SpanStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        color = mainTextColor
+                                    )
+                                ) {
                                     append(stringResource(Res.string.cooking_duration))
                                 }
-                                withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = secondaryTextColor)) {
+                                withStyle(
+                                    style = SpanStyle(
+                                        fontWeight = FontWeight.Normal,
+                                        color = secondaryTextColor
+                                    )
+                                ) {
                                     append(stringResource(Res.string.cooking_duration_in_minutes))
                                 }
                             },
