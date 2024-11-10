@@ -1,11 +1,15 @@
 package id.deval.recipe.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -18,9 +22,11 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,12 +34,15 @@ import id.deval.recipe.theme.DefaultFilledButtonStyle
 import id.deval.recipe.theme.DefaultIconButtonColors
 import id.deval.recipe.theme.DefaultOutlineButtonStyle
 import id.deval.recipe.theme.DefaultTextButtonStyle
+import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.red
 import id.deval.recipe.theme.secondaryTextColor
 import id.deval.recipe.theme.white
+import kmm_recipe.composeapp.generated.resources.Onboarding
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.baseline_favorite_24
 import kmm_recipe.composeapp.generated.resources.baseline_favorite_border_24
+import kmm_recipe.composeapp.generated.resources.camera
 import kmm_recipe.composeapp.generated.resources.heart
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -108,17 +117,16 @@ object RecipeButton {
         padding: PaddingValues = ButtonDefaults.ContentPadding,
         startIcon: Painter? = null,
         endIcon: Painter? = null,
+        color: ButtonColors = DefaultFilledButtonStyle().copy(
+            containerColor = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
+            contentColor = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.tertiary,
+        ),
         text: StringResource? = null,
         textStyle: TextStyle = MaterialTheme.typography.headlineSmall.copy(
             color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.Bold
         ),
     ) {
-        val color = DefaultFilledButtonStyle().copy(
-            containerColor = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
-            contentColor = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.tertiary,
-        )
-
         Button(
             onClick = onClick,
             modifier = modifier,
@@ -285,12 +293,13 @@ object RecipeButton {
     fun LikeIconButton(
         onClick: () -> Unit,
         modifier: Modifier = Modifier,
-        checked : Boolean = false,
+        checked: Boolean = false,
         enabled: Boolean = true,
         color: IconButtonColors = DefaultIconButtonColors()
     ) {
-        val icon = if(checked) painterResource(Res.drawable.baseline_favorite_24) else painterResource(Res.drawable.baseline_favorite_border_24)
-        val iconColor = if(checked) red else white
+        val icon =
+            if (checked) painterResource(Res.drawable.baseline_favorite_24) else painterResource(Res.drawable.baseline_favorite_border_24)
+        val iconColor = if (checked) red else white
         IconButton(
             onClick = onClick,
             modifier = modifier.size(48.dp),
@@ -303,6 +312,38 @@ object RecipeButton {
                 modifier = Modifier.size(24.dp),
                 tint = iconColor
             )
+        }
+    }
+
+    @Composable
+    fun UploadImageButton(
+        onClick: () -> Unit,
+        onDeleteClick: () -> Unit,
+        pathImage: String?,
+        modifier: Modifier = Modifier,
+    ) {
+        Box(
+            modifier = modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            if (pathImage != null) {
+                Image(
+                    painter = painterResource(Res.drawable.Onboarding),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.wrapContentSize()
+                )
+            } else {
+                DefaultFilledChipButton(
+                    onClick = onClick,
+                    shape = RoundedCornerShape(8.dp),
+                    color = DefaultFilledButtonStyle().copy(
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        contentColor = mainTextColor,
+                    ),
+                    startIcon = painterResource(Res.drawable.camera)
+                )
+            }
         }
     }
 }

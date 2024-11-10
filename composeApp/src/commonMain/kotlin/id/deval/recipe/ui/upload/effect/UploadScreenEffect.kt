@@ -5,4 +5,5 @@ sealed interface UploadScreenEffect {
     data object NavigateToHome : UploadScreenEffect
     data object ShowDialog : UploadScreenEffect
     data object NavigateToDetail : UploadScreenEffect
+    data object NavigateToSecondStep : UploadScreenEffect
 }

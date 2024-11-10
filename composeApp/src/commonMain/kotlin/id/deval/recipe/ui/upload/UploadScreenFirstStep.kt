@@ -63,12 +63,18 @@ import androidx.compose.ui.unit.max
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.window.core.layout.WindowWidthSizeClass
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI.BoxUploadCoverPhoto
+import id.deval.recipe.components.RecipeCommonUI.HeaderUploadStep
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
+import id.deval.recipe.ui.navigation.MainNavigation
+import id.deval.recipe.ui.upload.effect.UploadScreenEffect
 import id.deval.recipe.ui.upload.event.UploadScreenEvent
 import id.deval.recipe.ui.upload.state.UploadScreenState
 import id.deval.recipe.util.RecipeSliderValue
@@ -93,6 +99,7 @@ import kmm_recipe.composeapp.generated.resources.second_step
 import kmm_recipe.composeapp.generated.resources.send_again
 import kmm_recipe.composeapp.generated.resources.separator_step
 import kmm_recipe.composeapp.generated.resources.up_to_mb
+import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -104,6 +111,21 @@ class UploadScreenFirstStep : Screen {
     override fun Content() {
         val uploadScreenViewModel by appRecipeModule.instance<UploadViewModel>()
         val uploadScreenState by uploadScreenViewModel.uploadScreenState.collectAsStateWithLifecycle()
+        val navigator = LocalNavigator.current
+
+        LaunchedEffect(Unit){
+            uploadScreenViewModel.uploadScreenEffect.collectLatest { effect ->
+                when(effect){
+                    is UploadScreenEffect.NavigateToSecondStep -> {
+                        navigator?.push(MainNavigation.UploadSecond.screen)
+                    }
+                    is UploadScreenEffect.ShowDialog -> {}
+                    is UploadScreenEffect.NavigateToDetail -> {}
+                    is UploadScreenEffect.NavigateToHome -> {}
+                    is UploadScreenEffect.ShowToast -> {}
+                }
+            }
+        }
 
         UploadScreenContent(
             uploadScreenState,
@@ -130,20 +152,7 @@ class UploadScreenFirstStep : Screen {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Text(
-                        text = stringResource(Res.string.cancel),
-                        modifier = Modifier,
-                        style = MaterialTheme.typography.headlineMedium.copy(
-                            color = MaterialTheme.colorScheme.secondary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    UploadStepText(Res.string.first_step)
-                }
+                HeaderUploadStep()
                 FlowRow(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState()),
@@ -372,7 +381,9 @@ class UploadScreenFirstStep : Screen {
                             modifier = Modifier.weight(1f)
                         )
                         RecipeButton.DefaultFilledButton(
-                            onClick = {},
+                            onClick = {
+                                onEvent(UploadScreenEvent.OnNextClicked(true))
+                            },
                             modifier = Modifier,
                             text = stringResource(Res.string.next),
                         )
@@ -382,72 +393,4 @@ class UploadScreenFirstStep : Screen {
         }
     }
 
-    @Composable
-    fun UploadStepText(
-        currentStep: StringResource
-    ) {
-        Text(
-            text = buildAnnotatedString {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = mainTextColor)) {
-                    append(stringResource(currentStep))
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Normal,
-                        color = secondaryTextColor
-                    )
-                ) {
-                    append(stringResource(Res.string.separator_step))
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Normal,
-                        color = secondaryTextColor
-                    )
-                ) {
-                    append(stringResource(Res.string.second_step))
-                }
-            },
-            style = MaterialTheme.typography.headlineMedium
-        )
-    }
-
-    @Composable
-    fun BoxUploadCoverPhoto(
-        modifier: Modifier
-    ) {
-        Box(
-            modifier = modifier,
-            contentAlignment = Alignment.Center
-        ) {
-            Spacer(modifier = Modifier)
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.SpaceAround,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.baseline_image_24),
-                    contentDescription = "image",
-                    modifier = Modifier.size(56.dp),
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    text = stringResource(Res.string.add_cover_photo),
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = mainTextColor
-                    ),
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                Text(
-                    text = stringResource(Res.string.up_to_mb),
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        color = secondaryTextColor
-                    ),
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
-        }
-    }
 }

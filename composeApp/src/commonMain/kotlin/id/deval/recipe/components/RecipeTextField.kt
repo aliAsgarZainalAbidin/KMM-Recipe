@@ -1,16 +1,27 @@
 package id.deval.recipe.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.focusGroup
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
+import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
@@ -18,7 +29,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,9 +40,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
+import id.deval.recipe.domain.model.RecipeStep
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
 import kmm_recipe.composeapp.generated.resources.Res
+import kmm_recipe.composeapp.generated.resources.drag_icon
+import org.jetbrains.compose.resources.painterResource
 
 object RecipeTextField {
 
@@ -217,11 +233,109 @@ object RecipeTextField {
                     },
                     colors = color
                 )
-                if(index < totalOtpCode - 1) {
+                if (index < totalOtpCode - 1) {
                     Spacer(
                         modifier = Modifier.weight(0.1f)
                     )
                 }
+            }
+        }
+    }
+
+    @Composable
+    fun DragableTextField(
+        modifier: Modifier,
+        onDragStarted: () -> Unit = {},
+        value: String,
+        onValueChange: (String) -> Unit
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 8.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                onClick = {},
+                modifier = modifier,
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.drag_icon),
+                    contentDescription = "dragable icon",
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+            Outlined(
+                value = value,
+                onValueChange = onValueChange,
+                singleLine = true
+            )
+        }
+    }
+
+    @Composable
+    fun DragableStepInputField(
+        modifier: Modifier,
+        numberSteps: String,
+        value: RecipeStep,
+        onDragStarted: () -> Unit = {},
+        onValueChange: (String) -> Unit
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 8.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.Top
+        ) {
+            Column(
+                modifier = Modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clip(RoundedCornerShape(100))
+                        .background(mainTextColor),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = numberSteps,
+                        style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onPrimary),
+                        modifier = Modifier,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                IconButton(
+                    onClick = {},
+                    modifier = modifier,
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.drag_icon),
+                        contentDescription = "dragable icon",
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+            ){
+                Outlined(
+                    value = value.description,
+                    onValueChange = onValueChange,
+                    singleLine = false,
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .heightIn(min = 120.dp, max = 120.dp),
+                    maxLines = 4
+                )
+                RecipeButton.UploadImageButton(
+                    onClick = {},
+                    onDeleteClick = {},
+                    pathImage = value.image
+                )
             }
         }
     }

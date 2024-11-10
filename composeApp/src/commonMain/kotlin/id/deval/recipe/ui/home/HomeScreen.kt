@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeLazyItem
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -190,11 +191,7 @@ class HomeScreen : Screen {
 //                    stateCategory = stateFilterCategory.value,
 //                    onEvent = onEvent
 //                )
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                        .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.tertiary)
-                )
+               RecipeCommonUI.RecipeSpacer()
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize()
                         .padding(start = 24.dp, end = 24.dp, bottom = 80.dp),

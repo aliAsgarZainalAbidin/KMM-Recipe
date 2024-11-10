@@ -17,11 +17,11 @@ object DataDummy {
             description = "A classic Italian pasta dish with a rich meat sauce.",
             ingredients = listOf("Spaghetti", "Ground beef", "Tomato sauce", "Onion", "Garlic", "Olive oil", "Salt", "Pepper"),
             steps = listOf(
-                RecipeStep("1", "Boil spaghetti in salted water until al dente.", null),
-                RecipeStep("2", "Heat olive oil, cook onions and garlic until soft.", null),
-                RecipeStep("3", "Add ground beef and cook until browned.", null),
-                RecipeStep("4", "Add tomato sauce, salt, and pepper. Simmer for 20 minutes.", null),
-                RecipeStep("5", "Serve sauce over spaghetti and enjoy.", null)
+                RecipeStep(1, "Boil spaghetti in salted water until al dente.", null),
+                RecipeStep(2, "Heat olive oil, cook onions and garlic until soft.", null),
+                RecipeStep(3, "Add ground beef and cook until browned.", null),
+                RecipeStep(4, "Add tomato sauce, salt, and pepper. Simmer for 20 minutes.", null),
+                RecipeStep(5, "Serve sauce over spaghetti and enjoy.", null)
             ),
             isLiked = true
         ),
@@ -36,10 +36,10 @@ object DataDummy {
             description = "A flavorful chicken curry with a spicy sauce.",
             ingredients = listOf("Chicken", "Coconut milk", "Curry powder", "Onion", "Garlic", "Ginger", "Salt", "Pepper"),
             steps = listOf(
-                RecipeStep("1",  "Sauté onion, garlic, and ginger in oil until fragrant.", null),
-                RecipeStep("2",  "Add chicken and cook until browned.", null),
-                RecipeStep("3",  "Stir in curry powder, coconut milk, salt, and pepper.", null),
-                RecipeStep("4",  "Simmer for 30 minutes until chicken is cooked through.", null)
+                RecipeStep(1,  "Sauté onion, garlic, and ginger in oil until fragrant.", null),
+                RecipeStep(2,  "Add chicken and cook until browned.", null),
+                RecipeStep(3,  "Stir in curry powder, coconut milk, salt, and pepper.", null),
+                RecipeStep(4,  "Simmer for 30 minutes until chicken is cooked through.", null)
             ),
             isLiked = false
         ),
@@ -54,10 +54,10 @@ object DataDummy {
             description = "Fluffy pancakes perfect for breakfast.",
             ingredients = listOf("Flour", "Milk", "Egg", "Sugar", "Salt", "Butter"),
             steps = listOf(
-                RecipeStep("1",  "Mix flour, sugar, and salt.", null),
-                RecipeStep("2",  "Add milk and egg, and stir until smooth.", null),
-                RecipeStep("3",  "Heat a pan with butter, pour batter, and cook until golden.", null),
-                RecipeStep("4",  "Flip and cook the other side until done.", null)
+                RecipeStep(1,  "Mix flour, sugar, and salt.", null),
+                RecipeStep(2,  "Add milk and egg, and stir until smooth.", null),
+                RecipeStep(3,  "Heat a pan with butter, pour batter, and cook until golden.", null),
+                RecipeStep(4,  "Flip and cook the other side until done.", null)
             ),
             isLiked = true
         ),
@@ -72,9 +72,9 @@ object DataDummy {
             description = "Crispy tacos with seasoned beef and fresh toppings.",
             ingredients = listOf("Taco shells", "Ground beef", "Cheese", "Lettuce", "Tomato", "Onion", "Sour cream"),
             steps = listOf(
-                RecipeStep("1",  "Cook ground beef with seasoning.", null),
-                RecipeStep("2",  "Fill taco shells with beef and toppings.", null),
-                RecipeStep("3",  "Serve with sour cream.", null)
+                RecipeStep(1,  "Cook ground beef with seasoning.", null),
+                RecipeStep(2,  "Fill taco shells with beef and toppings.", null),
+                RecipeStep(3,  "Serve with sour cream.", null)
             ),
             isLiked = false
         ),
@@ -89,9 +89,9 @@ object DataDummy {
             description = "A classic Caesar salad with crispy croutons and creamy dressing.",
             ingredients = listOf("Lettuce", "Croutons", "Parmesan cheese", "Caesar dressing"),
             steps = listOf(
-                RecipeStep("1",  "Chop lettuce and add to a bowl.", null),
-                RecipeStep("2",  "Add croutons and Parmesan cheese.", null),
-                RecipeStep("3",  "Toss with Caesar dressing and serve.", null)
+                RecipeStep(1,  "Chop lettuce and add to a bowl.", null),
+                RecipeStep(2,  "Add croutons and Parmesan cheese.", null),
+                RecipeStep(3,  "Toss with Caesar dressing and serve.", null)
             ),
             isLiked = true
         ),
@@ -106,10 +106,10 @@ object DataDummy {
             description = "A rich and moist chocolate cake for dessert lovers.",
             ingredients = listOf("Flour", "Cocoa powder", "Sugar", "Eggs", "Butter", "Baking powder", "Milk"),
             steps = listOf(
-                RecipeStep("1",  "Preheat oven to 350°F (175°C).", null),
-                RecipeStep("2",  "Mix dry ingredients together.", null),
-                RecipeStep("3",  "Add wet ingredients and stir until smooth.", null),
-                RecipeStep("4",  "Pour batter into a greased pan and bake for 30-35 mins.", null)
+                RecipeStep(1,  "Preheat oven to 350°F (175°C).", null),
+                RecipeStep(2,  "Mix dry ingredients together.", null),
+                RecipeStep(3,  "Add wet ingredients and stir until smooth.", null),
+                RecipeStep(4,  "Pour batter into a greased pan and bake for 30-35 mins.", null)
             ),
             isLiked = true
         ),
@@ -124,9 +124,9 @@ object DataDummy {
             description = "A quick and healthy vegetable stir fry.",
             ingredients = listOf("Broccoli", "Carrot", "Bell pepper", "Soy sauce", "Garlic", "Ginger"),
             steps = listOf(
-                RecipeStep("1",  "Heat oil in a wok, add garlic and ginger.", null),
-                RecipeStep("2",  "Add vegetables and stir fry until tender.", null),
-                RecipeStep("3",  "Add soy sauce and cook for another 2 minutes.", null)
+                RecipeStep(1,  "Heat oil in a wok, add garlic and ginger.", null),
+                RecipeStep(2,  "Add vegetables and stir fry until tender.", null),
+                RecipeStep(3,  "Add soy sauce and cook for another 2 minutes.", null)
             ),
             isLiked = false
         )

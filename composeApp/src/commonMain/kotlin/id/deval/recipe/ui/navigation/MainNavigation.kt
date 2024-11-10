@@ -4,6 +4,7 @@ import androidx.navigation.NamedNavArgument
 import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.ui.home.HomeScreen
 import id.deval.recipe.ui.upload.UploadScreenFirstStep
+import id.deval.recipe.ui.upload.UploadScreenSecondStep
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.edit
 import kmm_recipe.composeapp.generated.resources.home
@@ -21,6 +22,7 @@ sealed class MainNavigation(
 ) : Navigation {
     data object Home : MainNavigation("home", emptyList(), HomeScreen(),"Home", Res.drawable.home)
     data object Upload : MainNavigation("upload", emptyList(), UploadScreenFirstStep(),"Upload", Res.drawable.edit)
+    data object UploadSecond : MainNavigation("uploadSecond", emptyList(), UploadScreenSecondStep(),"Upload", Res.drawable.edit)
     data object Scan : MainNavigation("scan", emptyList(), HomeScreen(),"Scan", Res.drawable.scan)
     data object Notification :
         MainNavigation("notification", emptyList(), HomeScreen(),"Notification", Res.drawable.notification)

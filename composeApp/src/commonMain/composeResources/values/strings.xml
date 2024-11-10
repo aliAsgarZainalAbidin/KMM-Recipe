@@ -60,8 +60,9 @@
     <string name="ingredients">Ingredients</string>
     <string name="group">Group</string>
     <string name="enter_ingredient">Enter ingredient</string>
-    <string name="add_ingredient">+ Ingredient</string>
+    <string name="add_ingredient">Ingredient</string>
     <string name="steps">Steps</string>
+    <string name="add_step">Add Step</string>
     <string name="add_step_instruction">Tell a little about your food</string>
 
     <!-- Success Screen -->
