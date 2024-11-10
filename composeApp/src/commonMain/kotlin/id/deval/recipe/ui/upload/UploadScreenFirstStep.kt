@@ -113,12 +113,13 @@ class UploadScreenFirstStep : Screen {
         val uploadScreenState by uploadScreenViewModel.uploadScreenState.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.current
 
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             uploadScreenViewModel.uploadScreenEffect.collectLatest { effect ->
-                when(effect){
+                when (effect) {
                     is UploadScreenEffect.NavigateToSecondStep -> {
                         navigator?.push(MainNavigation.UploadSecond.screen)
                     }
+
                     is UploadScreenEffect.ShowDialog -> {}
                     is UploadScreenEffect.NavigateToDetail -> {}
                     is UploadScreenEffect.NavigateToHome -> {}
@@ -384,7 +385,6 @@ class UploadScreenFirstStep : Screen {
                             onClick = {
                                 onEvent(UploadScreenEvent.OnNextClicked(true))
                             },
-                            modifier = Modifier,
                             text = stringResource(Res.string.next),
                         )
                     }

@@ -53,7 +53,7 @@ object RecipeButton {
     @Composable
     fun DefaultFilledButton(
         onClick: () -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier.fillMaxWidth(),
         enabled: Boolean = true,
         shape: Shape = ButtonDefaults.shape,
         elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
@@ -71,7 +71,7 @@ object RecipeButton {
         Button(
             onClick = onClick,
             modifier = modifier
-                .fillMaxWidth()
+//                .fillMaxWidth()
                 .height(56.dp),
             colors = color,
             enabled = enabled,

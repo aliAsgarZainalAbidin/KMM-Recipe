@@ -6,9 +6,12 @@ import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -36,13 +39,17 @@ import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeCommonUI.HeaderUploadStep
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
+import id.deval.recipe.theme.DefaultFilledButtonStyle
+import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.ui.upload.event.UploadScreenEvent
 import id.deval.recipe.ui.upload.state.UploadScreenState
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.add_ingredient
 import kmm_recipe.composeapp.generated.resources.add_step
+import kmm_recipe.composeapp.generated.resources.back
 import kmm_recipe.composeapp.generated.resources.close
 import kmm_recipe.composeapp.generated.resources.ingredients
+import kmm_recipe.composeapp.generated.resources.next
 import kmm_recipe.composeapp.generated.resources.steps
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -66,16 +73,42 @@ class UploadScreenSecondStep : Screen {
         state: UploadScreenState,
         onEvent: (UploadScreenEvent) -> Unit
     ) {
+        val customModifier = Modifier.padding(start = 24.dp, end = 24.dp)
         Scaffold(
             modifier = Modifier.fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
-                .padding(top = 12.dp, bottom = 24.dp)
+                .padding(top = 12.dp, bottom = 24.dp),
+            bottomBar = {
+                Row(
+                    modifier = customModifier
+                        .background(MaterialTheme.colorScheme.surface)
+                        .fillMaxWidth(),
+                ){
+                    RecipeButton.DefaultFilledButton(
+                        onClick = {},
+                        text = stringResource(Res.string.back),
+                        color = DefaultFilledButtonStyle().copy(
+                            containerColor = MaterialTheme.colorScheme.tertiary,
+                            contentColor = mainTextColor,
+                        ),
+                        modifier = Modifier.weight(0.5f)
+                    )
+                    Spacer(
+                        modifier = Modifier.width(16.dp)
+                    )
+                    RecipeButton.DefaultFilledButton(
+                        onClick = {},
+                        text = stringResource(Res.string.next),
+                        modifier = Modifier.weight(0.5f),
+                    )
+                }
+            }
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize().padding(bottom = 64.dp)
             ) {
                 HeaderUploadStep(
-                    modifier = Modifier.padding(start = 24.dp, end = 24.dp)
+                    modifier = customModifier
                 )
                 Column(
                     modifier = Modifier.verticalScroll(
@@ -84,13 +117,13 @@ class UploadScreenSecondStep : Screen {
                 ) {
                     SectionIngredients(
                         state = state,
-                        modifier = Modifier.padding(start = 24.dp, end = 24.dp),
+                        modifier = customModifier,
                         onEvent = onEvent
                     )
                     RecipeCommonUI.RecipeSpacer()
                     SectionSteps(
                         state = state,
-                        modifier = Modifier.padding(start = 24.dp, end = 24.dp),
+                        modifier = customModifier,
                         onEvent = onEvent
                     )
                 }
