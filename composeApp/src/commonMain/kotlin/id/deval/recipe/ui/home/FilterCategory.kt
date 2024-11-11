@@ -5,7 +5,6 @@ import kmm_recipe.composeapp.generated.resources.all
 import kmm_recipe.composeapp.generated.resources.drink
 import kmm_recipe.composeapp.generated.resources.food
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.painterResource
 
 sealed class FilterCategory(
     val name : StringResource,

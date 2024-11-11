@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,12 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.ui.navigation.AppNavigation
-import id.deval.recipe.ui.navigation.Navigation
 import id.deval.recipe.ui.welcome.effect.WelcomeScreenEffect
 import id.deval.recipe.ui.welcome.event.WelcomeScreenEvent
 import id.deval.recipe.ui.welcome.state.WelcomeScreenState

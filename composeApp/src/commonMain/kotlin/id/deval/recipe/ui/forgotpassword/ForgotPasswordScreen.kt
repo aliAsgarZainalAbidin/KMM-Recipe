@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
@@ -25,7 +24,6 @@ import id.deval.recipe.ui.forgotpassword.effect.ForgotPasswordEffect
 import id.deval.recipe.ui.forgotpassword.event.ForgotPasswordEvent
 import id.deval.recipe.ui.forgotpassword.state.ForgotPasswordState
 import id.deval.recipe.ui.navigation.AppNavigation
-import id.deval.recipe.ui.navigation.Navigation
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.email_phone_hint
 import kmm_recipe.composeapp.generated.resources.enter_email_recovery

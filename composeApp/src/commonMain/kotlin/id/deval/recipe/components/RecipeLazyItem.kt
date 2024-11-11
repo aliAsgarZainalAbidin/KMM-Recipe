@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import id.deval.recipe.domain.model.Recipe
 import kmm_recipe.composeapp.generated.resources.Onboarding
 import kmm_recipe.composeapp.generated.resources.Res
-import kmm_recipe.composeapp.generated.resources.heart
 import org.jetbrains.compose.resources.painterResource
 
 object RecipeLazyItem {
