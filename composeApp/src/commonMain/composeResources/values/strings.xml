@@ -68,6 +68,7 @@
     <!-- Success Screen -->
     <string name="recipe_uploaded">Your recipe has been uploaded, you can see it on your profile</string>
     <string name="back_to_home">Back to Home</string>
+    <string name="upload_success">Upload Success</string>
 
     <!-- Common -->
     <string name="search">Search</string>

@@ -42,11 +42,15 @@ class UploadViewModel : ViewModel() {
             }
 
             is UploadScreenEvent.OnNextClicked -> {
-                onNextClicked(event.navigateToSecondStep)
+                onNextClicked()
             }
 
-            is UploadScreenEvent.OnBackClicked -> {}
-            is UploadScreenEvent.OnNavigateToHome -> {}
+            is UploadScreenEvent.OnBackClicked -> {
+                onBackClicked()
+            }
+            is UploadScreenEvent.NavigateToHome -> {
+                navigateToHome()
+            }
             is UploadScreenEvent.OnFoodNameChanged -> {
                 onFoodNameChanged(event.foodName)
             }
@@ -65,7 +69,24 @@ class UploadViewModel : ViewModel() {
             is UploadScreenEvent.OnDurationChanged -> {
                 onDurationChanged(event.duration)
             }
+            is UploadScreenEvent.ShowDialog -> {
+                showDialog(event.showDialog)
+            }
         }
+    }
+
+    private fun onBackClicked() {
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _uploadScreenEffect.emit(UploadScreenEffect.NavigateToFirstStep)
+            },
+            onError = {
+                Logger.d(
+                    tag = TAG,
+                    messageString = "Error on Back Clicked $it"
+                )
+            }
+        )
     }
 
     private fun onAddIngredient() {
@@ -96,14 +117,10 @@ class UploadViewModel : ViewModel() {
         }
     }
 
-    private fun onNextClicked(navigateToSecondStep: Boolean) {
+    private fun onNextClicked() {
         CoroutineScope(Dispatchers.Default).launchCatchError(
             block = {
-                if (navigateToSecondStep) {
-                    _uploadScreenEffect.emit(UploadScreenEffect.NavigateToSecondStep)
-                } else {
-                    _uploadScreenEffect.emit(UploadScreenEffect.ShowDialog)
-                }
+                _uploadScreenEffect.emit(UploadScreenEffect.NavigateToSecondStep)
             },
             onError = {
                 Logger.d(
@@ -166,6 +183,39 @@ class UploadViewModel : ViewModel() {
                 ingredients = updatedIngredient
             )
         }
+    }
+
+    private fun showDialog(showDialog : Boolean){
+        _uploadScreenState.update {
+            if (!showDialog){
+                CoroutineScope(Dispatchers.Default).launchCatchError(
+                    block = {
+                        _uploadScreenEffect.emit(UploadScreenEffect.NavigateToHome)
+                    },
+                    onError = {
+                        Logger.e(
+                            tag = TAG,
+                            messageString = it.toString()
+                        )
+                    }
+                )
+            }
+            it.copy(showDialog = showDialog)
+        }
+    }
+
+    private fun navigateToHome(){
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _uploadScreenEffect.emit(UploadScreenEffect.NavigateToHome)
+            },
+            onError = {
+                Logger.d(
+                    tag = TAG,
+                    messageString = "Error Navigate To Home $it"
+                )
+            }
+        )
     }
 
     companion object {

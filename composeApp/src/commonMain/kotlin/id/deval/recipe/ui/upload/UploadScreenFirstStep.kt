@@ -120,10 +120,12 @@ class UploadScreenFirstStep : Screen {
                         navigator?.push(MainNavigation.UploadSecond.screen)
                     }
 
-                    is UploadScreenEffect.ShowDialog -> {}
                     is UploadScreenEffect.NavigateToDetail -> {}
-                    is UploadScreenEffect.NavigateToHome -> {}
+                    is UploadScreenEffect.NavigateToHome -> {
+                        navigator?.pop()
+                    }
                     is UploadScreenEffect.ShowToast -> {}
+                    is UploadScreenEffect.NavigateToFirstStep -> {}
                 }
             }
         }
@@ -153,7 +155,9 @@ class UploadScreenFirstStep : Screen {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                HeaderUploadStep()
+                HeaderUploadStep(
+                    onCancel = { onEvent(UploadScreenEvent.NavigateToHome)}
+                )
                 FlowRow(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState()),
@@ -382,9 +386,7 @@ class UploadScreenFirstStep : Screen {
                             modifier = Modifier.weight(1f)
                         )
                         RecipeButton.DefaultFilledButton(
-                            onClick = {
-                                onEvent(UploadScreenEvent.OnNextClicked(true))
-                            },
+                            onClick = { onEvent(UploadScreenEvent.OnNextClicked) },
                             text = stringResource(Res.string.next),
                         )
                     }

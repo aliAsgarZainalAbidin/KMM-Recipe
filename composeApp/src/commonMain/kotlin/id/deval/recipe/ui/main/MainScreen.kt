@@ -33,6 +33,7 @@ import id.deval.recipe.ui.home.HomeScreen
 import id.deval.recipe.ui.main.effect.MainScreenEffect
 import id.deval.recipe.ui.main.event.MainScreenEvent
 import id.deval.recipe.ui.main.state.MainScreenState
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.navigation.MainNavigation
 import id.deval.recipe.ui.upload.UploadScreenFirstStep
 import kmm_recipe.composeapp.generated.resources.Res

@@ -9,4 +9,5 @@ data class UploadScreenState(
     val duration : String = "",
     val ingredients : List<String> = emptyList(),
     val steps : List<RecipeStep> = emptyList(),
+    val showDialog : Boolean = false
 )

@@ -1,6 +1,7 @@
 package id.deval.recipe.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
 import kmm_recipe.composeapp.generated.resources.Res
@@ -39,7 +42,9 @@ object RecipeCommonUI {
 
     @Composable
     fun HeaderUploadStep(
-        modifier : Modifier = Modifier
+        onCancel : () -> Unit,
+        modifier : Modifier = Modifier,
+        stringResource: StringResource = Res.string.first_step
     ) {
         Row(
             modifier = modifier.fillMaxWidth(),
@@ -47,13 +52,15 @@ object RecipeCommonUI {
         ) {
             Text(
                 text = stringResource(Res.string.cancel),
-                modifier = Modifier,
+                modifier = Modifier.clickable {
+                    onCancel()
+                },
                 style = MaterialTheme.typography.headlineMedium.copy(
                     color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.Bold
                 )
             )
-            UploadStepText(Res.string.first_step)
+            UploadStepText(stringResource)
         }
     }
 
@@ -134,4 +141,22 @@ object RecipeCommonUI {
                 .background(color = MaterialTheme.colorScheme.tertiary)
         )
     }
+
+    @Composable
+    fun RecipeDialog(
+        modifier : Modifier = Modifier,
+        onDismissRequest : () -> Unit,
+        content : @Composable () -> Unit = {}
+    ){
+        Dialog(
+            onDismissRequest = onDismissRequest
+        ){
+            Card(
+                modifier = modifier
+            ){
+                content()
+            }
+        }
+    }
+
 }
