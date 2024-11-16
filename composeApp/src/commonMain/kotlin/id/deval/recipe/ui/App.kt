@@ -92,6 +92,10 @@ fun App() {
                     Navigator(MainNavigation.Upload.screen)
                 }
 
+                MainNavigation.Scan.route -> {
+                    Navigator(MainNavigation.Scan.screen)
+                }
+
                 AppNavigation.Welcome.route -> {
                     Navigator(AppNavigation.Welcome.screen)
                 }
@@ -141,7 +145,7 @@ fun SampleCompose() {
 //                color = DefaultRedTextButtonStyle()
         )
         AnimatedVisibility(showContent) {
-            val greeting = remember { Greeting().greet() }
+            val greeting = remember { Greeting() }
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(painterResource(Res.drawable.compose_multiplatform), null)
                 Text("Compose: $greeting")

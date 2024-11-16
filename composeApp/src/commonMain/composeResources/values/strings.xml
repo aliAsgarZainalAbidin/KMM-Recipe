@@ -89,4 +89,6 @@
     <!-- Add a Filter -->
     <string name="add_filter">Add a Filter</string>
 
+    <!-- Scan Menu -->
+    <string name="scan_menu">Choose one option</string>
 </resources>

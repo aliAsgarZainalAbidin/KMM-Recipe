@@ -274,5 +274,3 @@ class UploadScreenSecondStep : Screen {
         }
     }
 }
-
-data class DraggableItem(val index: Int)

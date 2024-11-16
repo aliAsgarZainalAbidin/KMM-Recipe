@@ -26,6 +26,9 @@ voyagerVersion = "1.1.0-beta02"
 compose-bom = "2023.08.00"
 common-jetbrains-adaptive = "1.0.0-alpha03"
 common-jetbrains-window-size = "1.7.0"
+googleMlKit = "17.0.2"
+cameraX = "1.4.0"
+accomponistPermission = "0.36.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -67,6 +70,27 @@ kmp-voyager-bottomsheet-navigator = { group = "cafe.adriel.voyager", name = "voy
 kmp-voyager-tab-navigator = { group = "cafe.adriel.voyager", name = "voyager-tab-navigator", version.ref = "voyagerVersion"}
 kmp-voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyagerVersion"}
 
+kodein = { group = "org.kodein.di", name = "kodein-di", version.ref = "kodein"}
+
+#Logger KMP
+kermit-logger = { group = "co.touchlab", name = "kermit", version.ref = "kermit-logger"}
+
+#TEST LIBRARIES
+
+
+#ANDROID LIBRARIES
+#ML Android
+google-mlkit-objectdetection = { group = "com.google.mlkit", name = "object-detection", version.ref = "googleMlKit"}
+
+#CameraX Android
+android-camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX"}
+android-camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX"}
+android-camerax-mlkit = { group = "androidx.camera", name = "camera-mlkit-vision", version.ref = "cameraX"}
+
+#Permission Android  implementation "com.google.accompanist:accompanist-permissions:<version>"
+google-accompanist-permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accomponistPermission"}
+
+
 #Android Voyager
 android-voyager-koin = { group = "cafe.adriel.voyager", name = "voyager-koin", version.ref = "voyagerVersion"}
 android-voyager-hilt = { group = "cafe.adriel.voyager", name = "voyager-hilt", version.ref = "voyagerVersion"}
@@ -77,14 +101,9 @@ desktop-android-voyager-kodein = { group = "cafe.adriel.voyager", name = "voyage
 desktop-android-voyager-rxjava = { group = "cafe.adriel.voyager", name = "voyager-rxjava", version.ref = "voyagerVersion"}
 
 #Kodein
-kodein = { group = "org.kodein.di", name = "kodein-di", version.ref = "kodein"}
 
 #Compose Coil
 compose-coil = { group = "com.github.skydoves", name = "landscapist-coil", version.ref = "compose-coil"}
-
-#Logger KMP
-#co.touchlab:kermit:
-kermit-logger = { group = "co.touchlab", name = "kermit", version.ref = "kermit-logger"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

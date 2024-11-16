@@ -71,7 +71,6 @@ object RecipeButton {
         Button(
             onClick = onClick,
             modifier = modifier
-//                .fillMaxWidth()
                 .height(56.dp),
             colors = color,
             enabled = enabled,
@@ -91,6 +90,63 @@ object RecipeButton {
                 Text(
                     text = text,
                     color = if (enabled) color.contentColor else secondaryTextColor,
+                    fontWeight = FontWeight.Bold,
+                    style = textStyle
+                )
+            }
+            if (endIcon != null) {
+                Icon(
+                    painter = endIcon,
+                    contentDescription = null,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun FollowButton(
+        onClick: () -> Unit,
+        modifier: Modifier = Modifier.fillMaxWidth(),
+        isFollow: Boolean = true,
+        shape: Shape = ButtonDefaults.shape,
+        elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
+        border: BorderStroke? = null,
+        padding: PaddingValues = ButtonDefaults.ContentPadding,
+        startIcon: Painter? = null,
+        endIcon: Painter? = null,
+        text: String? = null,
+        textStyle: TextStyle = MaterialTheme.typography.headlineSmall.copy(
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.Bold
+        ),
+        color: ButtonColors = if (isFollow) DefaultFilledButtonStyle() else DefaultOutlineButtonStyle().copy(
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            contentColor = MaterialTheme.colorScheme.tertiary,
+        )
+    ) {
+        Button(
+            onClick = onClick,
+            modifier = modifier
+                .height(56.dp),
+            colors = color,
+            enabled = true,
+            shape = shape,
+            elevation = elevation,
+            border = border,
+            contentPadding = padding
+        ) {
+            if (startIcon != null) {
+                Icon(
+                    painter = startIcon,
+                    contentDescription = null,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+            }
+            if (text != null) {
+                Text(
+                    text = text,
+                    color = if (isFollow) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold,
                     style = textStyle
                 )

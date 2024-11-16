@@ -28,6 +28,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import co.touchlab.kermit.Logger
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
+import id.deval.recipe.shared.PlatformTarget
+import id.deval.recipe.shared.getPlatform
 import id.deval.recipe.theme.secondaryTextColor
 import id.deval.recipe.ui.home.HomeScreen
 import id.deval.recipe.ui.main.effect.MainScreenEffect
@@ -63,7 +65,9 @@ class MainScreen : Screen {
                         }
                     }
 
-                    is MainScreenEffect.OnScanSelected -> {}
+                    is MainScreenEffect.OnScanSelected -> {
+                        localNavigator.push(MainNavigation.Scan.screen)
+                    }
                 }
             }
         }
@@ -81,6 +85,8 @@ class MainScreen : Screen {
         navigator: Navigator,
         onEvent: (MainScreenEvent) -> Unit = {}
     ) {
+        val platform = getPlatform().name
+
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
@@ -99,7 +105,15 @@ class MainScreen : Screen {
                         RecipeButton.DefaultCircleFilledButton(
                             icon = painterResource(Res.drawable.scan),
                             onClick = {
-                                onEvent(MainScreenEvent.OnNavigateBackClicked)
+                                when(platform){
+                                    PlatformTarget.ANDROID -> {
+//                                        FeatureRequirePermission()
+                                    }
+                                    PlatformTarget.DESKTOP -> {}
+                                    PlatformTarget.IOS -> {}
+                                    PlatformTarget.WEB -> {}
+                                }
+                                onEvent(MainScreenEvent.OnScanSelected)
                             },
                             modifier = Modifier.padding(bottom = 50.dp)
                         )
@@ -114,10 +128,6 @@ class MainScreen : Screen {
                 when (state.selectedMenu) {
                     MainNavigation.Home -> {
                         Navigator(MainNavigation.Home.screen)
-                    }
-
-                    MainNavigation.Scan -> {
-                        navigator.parent?.push(MainNavigation.Scan.screen)
                     }
 
                     MainNavigation.Notification -> {

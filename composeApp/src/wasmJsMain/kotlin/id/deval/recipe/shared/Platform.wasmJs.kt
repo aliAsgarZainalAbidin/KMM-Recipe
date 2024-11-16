@@ -1,8 +1,7 @@
 package id.deval.recipe.shared
 
 class WasmPlatform: Platform {
-    override val name: String = "Web with Kotlin/Wasm"
+    override val name: PlatformTarget = PlatformTarget.WEB
 }
 
 actual fun getPlatform(): Platform = WasmPlatform()
-actual val num: Int = 2

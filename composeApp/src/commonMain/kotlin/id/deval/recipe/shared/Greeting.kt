@@ -4,6 +4,6 @@ class Greeting {
     private val platform = getPlatform()
 
     fun greet(): String {
-        return "Hello, ${platform.name}!, number : $num"
+        return "Hello, ${platform.name}!"
     }
 }

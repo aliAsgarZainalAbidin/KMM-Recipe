@@ -59,6 +59,16 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
+            implementation(libs.google.mlkit.objectdetection)
+
+            //CameraX
+            implementation(libs.android.camerax.core)
+            implementation(libs.android.camerax.camera2)
+            implementation(libs.android.camerax.mlkit)
+
+            //accompanist permission
+            implementation(libs.google.accompanist.permission)
+
             //Desktop + Android Voyager
 //            implementation(libs.desktop.android.voyager.kodein)
 //            implementation(libs.desktop.android.voyager.rxjava)
@@ -100,6 +110,7 @@ kotlin {
             implementation(libs.kmp.voyager.tab.navigator)
             implementation(libs.kmp.voyager.transitions)
 
+            //TEST LIBRARIES
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

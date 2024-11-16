@@ -33,7 +33,7 @@ class MainViewModel : ViewModel() {
                 onUploadSelected()
             }
             is MainScreenEvent.OnScanSelected -> {
-                onScanSelected(event.state)
+                onScanSelected()
             }
             is MainScreenEvent.OnNavigateBackClicked -> {
                 onNavigateBack()
@@ -42,15 +42,24 @@ class MainViewModel : ViewModel() {
     }
 
     private fun onMenuSelected(menu : MainNavigation){
-        _mainScreenState.update {
-            it.copy(selectedMenu = menu, lastMenu = it.copy().selectedMenu)
-        }
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _mainScreenState.update {
+                    it.copy(selectedMenu = menu, lastMenu = it.copy().selectedMenu)
+                }
+                _mainScreenEffect.emit(MainScreenEffect.OnMenuSelected(menu))
+            },
+            onError = {}
+        )
     }
 
-    private fun onScanSelected(state : Boolean){
-        _mainScreenState.update {
-            it.copy(isScanBottomDialogOpen = state)
-        }
+    private fun onScanSelected(){
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _mainScreenEffect.emit(MainScreenEffect.OnScanSelected)
+            },
+            onError = {}
+        )
     }
 
     private fun onNavigateBack(){
