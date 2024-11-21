@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 
 class HomeViewModel : ViewModel() {
     private var _homeScreenState: MutableStateFlow<HomeScreenState> = MutableStateFlow(
-        HomeScreenState(recipes = DataDummy.dummyRecipes, filteredRecipes = DataDummy.dummyRecipes)
+        HomeScreenState(recipes = DataDummy.recipes, filteredRecipes = DataDummy.recipes)
     )
     val homeScreenState: StateFlow<HomeScreenState> = _homeScreenState
 

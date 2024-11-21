@@ -20,7 +20,6 @@ navigation-compose = "2.7.0-alpha07"
 androidx-navigation-compose = "2.8.2"
 kodein = "7.22.0"
 compose-coil = "2.4.1"
-kermit-logger = "2.0.4"
 constraintlayout-compose = "1.0.1"
 voyagerVersion = "1.1.0-beta02"
 compose-bom = "2023.08.00"
@@ -29,6 +28,8 @@ common-jetbrains-window-size = "1.7.0"
 googleMlKit = "17.0.2"
 cameraX = "1.4.0"
 accomponistPermission = "0.36.0"
+kermit-logger = "2.0.4"
+datetime-kotlinx = "0.6.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -74,6 +75,9 @@ kodein = { group = "org.kodein.di", name = "kodein-di", version.ref = "kodein"}
 
 #Logger KMP
 kermit-logger = { group = "co.touchlab", name = "kermit", version.ref = "kermit-logger"}
+
+#LocalDateTime
+datetime-kotlinx = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime-kotlinx"}
 
 #TEST LIBRARIES
 

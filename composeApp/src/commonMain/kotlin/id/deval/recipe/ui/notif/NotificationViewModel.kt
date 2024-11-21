@@ -7,6 +7,7 @@ import id.deval.recipe.domain.model.User
 import id.deval.recipe.ui.notif.effect.NotificationEffect
 import id.deval.recipe.ui.notif.event.NotificationEvent
 import id.deval.recipe.ui.notif.state.NotificationState
+import id.deval.recipe.util.DataDummy
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -14,7 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 class NotificationViewModel : ViewModel() {
     private var _notificationState: MutableStateFlow<NotificationState> = MutableStateFlow(
-        NotificationState()
+        NotificationState(
+            notifications = DataDummy.notifications
+        )
     )
     val notificationState : StateFlow<NotificationState> = _notificationState
 
@@ -26,7 +29,9 @@ class NotificationViewModel : ViewModel() {
             is NotificationEvent.OnImageClicked -> {
                 onImageClicked(event.recipe)
             }
-            is NotificationEvent.OnFollowClicked -> {}
+            is NotificationEvent.OnFollowClicked -> {
+                onFollowClicked(event.user)
+            }
             is NotificationEvent.OnUsernameClicked -> {}
         }
     }

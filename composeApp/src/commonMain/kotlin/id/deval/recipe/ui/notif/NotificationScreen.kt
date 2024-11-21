@@ -26,10 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import co.touchlab.kermit.Logger
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.domain.model.NotificationModel
 import id.deval.recipe.domain.model.TypeNotification
+import id.deval.recipe.domain.model.toTodayNotification
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.ui.notif.event.NotificationEvent
 import id.deval.recipe.ui.notif.state.NotificationState
@@ -62,17 +64,37 @@ class NotificationScreen : Screen {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                item {
-                    HeadNotificationSection("Today")
+                val todayNotification = state.notifications.toTodayNotification()
+                if(todayNotification.isNotEmpty()){
+                    item {
+                        HeadNotificationSection("Today")
+                    }
+                    items(todayNotification){ notification ->
+                        when(notification.type){
+                            TypeNotification.FOLLOW -> {
+                                FollowNotificationItem(notification as NotificationModel.Follow, onEvent)
+                            }
+                            TypeNotification.LIKED -> {
+                                LikedNotificationItem(notification as NotificationModel.Liked, onEvent)
+                            }
+                        }
+                    }
                 }
 
-                items(state.notifications){ notification ->
-                    when(notification.type){
-                        TypeNotification.FOLLOW -> {
-                            FollowNotificationItem(notification as NotificationModel.Follow, onEvent)
-                        }
-                        TypeNotification.LIKED -> {
-                            LikedNotificationItem(notification as NotificationModel.Liked, onEvent)
+                val oldNotification = state.notifications.toTodayNotification(false)
+                if(oldNotification.isNotEmpty()){
+                    item {
+                        HeadNotificationSection("Lebih lama")
+                    }
+
+                    items(oldNotification){ notification ->
+                        when(notification.type){
+                            TypeNotification.FOLLOW -> {
+                                FollowNotificationItem(notification as NotificationModel.Follow, onEvent)
+                            }
+                            TypeNotification.LIKED -> {
+                                LikedNotificationItem(notification as NotificationModel.Liked, onEvent)
+                            }
                         }
                     }
                 }
@@ -86,7 +108,7 @@ class NotificationScreen : Screen {
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
-                .padding(24.dp)
+                .padding(top= 24.dp, bottom = 12.dp, start = 24.dp, end = 24.dp)
         ) {
             Text(
                 text = title,
@@ -102,16 +124,18 @@ class NotificationScreen : Screen {
         onEvent: (NotificationEvent) -> Unit
     ) {
         val user = notification.fromUser.first()
-
         Row(
             modifier = Modifier.fillMaxWidth()
-                .padding(vertical = 4.dp)
+                .padding(horizontal = 24.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(Res.drawable.Onboarding),
                 contentScale = ContentScale.Fit,
                 contentDescription = null,
                 modifier = Modifier.padding(end = 4.dp)
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(100))
             )
             Column(
                 modifier = Modifier.weight(1f)
@@ -136,7 +160,7 @@ class NotificationScreen : Screen {
                 )
             }
             RecipeButton.FollowButton(
-                text = notification.message,
+                text = if(notification.isFollowed) "Followed" else "Follow",
                 onClick = {},
                 isFollow = notification.isFollowed,
                 modifier = Modifier.height(39.dp)
@@ -151,6 +175,8 @@ class NotificationScreen : Screen {
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             when (notification.fromUser.size) {
                 1 -> {
@@ -159,6 +185,8 @@ class NotificationScreen : Screen {
                         contentScale = ContentScale.Fit,
                         contentDescription = null,
                         modifier = Modifier.padding(end = 4.dp)
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(100))
                     )
                 }
 

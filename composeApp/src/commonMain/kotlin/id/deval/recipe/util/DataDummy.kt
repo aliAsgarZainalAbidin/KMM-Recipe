@@ -1,11 +1,13 @@
 package id.deval.recipe.util
 
+import id.deval.recipe.domain.model.NotificationModel
 import id.deval.recipe.domain.model.Recipe
 import id.deval.recipe.domain.model.RecipeStep
+import id.deval.recipe.domain.model.User
 
 object DataDummy {
 
-    val dummyRecipes = listOf(
+    val recipes = listOf(
         Recipe(
             id = "1",
             name = "Spaghetti Bolognese",
@@ -129,6 +131,154 @@ object DataDummy {
                 RecipeStep(3,  "Add soy sauce and cook for another 2 minutes.", null)
             ),
             isLiked = false
+        )
+    )
+
+    val notifications = listOf(
+        NotificationModel.Follow(
+            id = 1,
+            fromUser = arrayListOf(User(
+                id = 101,
+                username = "chef_master",
+                totalRecipes = 25,
+                following = 150,
+                followers = 2000,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "followed you",
+            time = "2024-11-21T10:30:00",
+            isFollowed = true
+        ),
+        NotificationModel.Liked(
+            id = 2,
+            fromUser = arrayListOf(User(
+                id = 102,
+                username = "baking_queen",
+                totalRecipes = 40,
+                following = 300,
+                followers = 5000,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "liked your recipe",
+            time = "2024-11-21T11:00:00"
+        ),
+        NotificationModel.Follow(
+            id = 3,
+            fromUser = arrayListOf(User(
+                id = 103,
+                username = "foodie101",
+                totalRecipes = 10,
+                following = 120,
+                followers = 800,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "followed you",
+            time = "2024-11-10T11:15:00",
+            isFollowed = false
+        ),
+        NotificationModel.Liked(
+            id = 4,
+            fromUser = arrayListOf(User(
+                id = 104,
+                username = "grill_master",
+                totalRecipes = 30,
+                following = 200,
+                followers = 3000,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "liked your recipe",
+            time = "2024-11-10T11:45:00"
+        ),
+        NotificationModel.Follow(
+            id = 5,
+            fromUser = arrayListOf(User(
+                id = 105,
+                username = "vegan_vibes",
+                totalRecipes = 15,
+                following = 100,
+                followers = 1200,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "followed you",
+            time = "2024-11-10T12:00:00",
+            isFollowed = true
+        ),
+        NotificationModel.Liked(
+            id = 6,
+            fromUser = arrayListOf(User(
+                id = 106,
+                username = "dessert_lover",
+                totalRecipes = 50,
+                following = 400,
+                followers = 7000,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "liked your recipe",
+            time = "2024-11-19T12:30:00"
+        ),
+        NotificationModel.Follow(
+            id = 7,
+            fromUser = arrayListOf(User(
+                id = 107,
+                username = "spicy_kitchen",
+                totalRecipes = 20,
+                following = 180,
+                followers = 2500,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "followed you",
+            time = "2024-11-19T13:00:00",
+            isFollowed = false
+        ),
+        NotificationModel.Liked(
+            id = 8,
+            fromUser = arrayListOf(User(
+                id = 108,
+                username = "healthy_meals",
+                totalRecipes = 35,
+                following = 220,
+                followers = 4000,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "liked your recipe",
+            time = "2024-11-19T13:30:00"
+        ),
+        NotificationModel.Follow(
+            id = 9,
+            fromUser = arrayListOf(User(
+                id = 109,
+                username = "quick_bites",
+                totalRecipes = 12,
+                following = 90,
+                followers = 600,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "followed you",
+            time = "2024-11-19T14:00:00",
+            isFollowed = true
+        ),
+        NotificationModel.Liked(
+            id = 10,
+            fromUser = arrayListOf(User(
+                id = 110,
+                username = "fusion_chef",
+                totalRecipes = 45,
+                following = 350,
+                followers = 5500,
+                liked = arrayListOf(),
+                recipes = arrayListOf()
+            )),
+            message = "liked your recipe",
+            time = "2024-11-19T14:30:00"
         )
     )
 

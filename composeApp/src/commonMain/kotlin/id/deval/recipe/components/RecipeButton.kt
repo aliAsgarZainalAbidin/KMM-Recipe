@@ -120,7 +120,7 @@ object RecipeButton {
             color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.Bold
         ),
-        color: ButtonColors = if (isFollow) DefaultFilledButtonStyle() else DefaultOutlineButtonStyle().copy(
+        color: ButtonColors = if (!isFollow) DefaultFilledButtonStyle() else DefaultOutlineButtonStyle().copy(
             containerColor = MaterialTheme.colorScheme.tertiary,
             contentColor = MaterialTheme.colorScheme.tertiary,
         )
@@ -146,7 +146,7 @@ object RecipeButton {
             if (text != null) {
                 Text(
                     text = text,
-                    color = if (isFollow) color.contentColor else secondaryTextColor,
+                    color = if (!isFollow) color.contentColor else secondaryTextColor,
                     fontWeight = FontWeight.Bold,
                     style = textStyle
                 )

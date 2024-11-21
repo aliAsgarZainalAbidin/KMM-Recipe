@@ -9,4 +9,5 @@ actual fun ScanScreenContent(
     state: ScanScreenState,
     onEvent: (ScanScreenEvent) -> Unit
 ) {
+
 }

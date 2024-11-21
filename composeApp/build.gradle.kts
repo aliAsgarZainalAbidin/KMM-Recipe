@@ -103,6 +103,9 @@ kotlin {
             //Kermit Logger
             implementation(libs.kermit.logger)
 
+            //Date Time Kotlinx
+            implementation(libs.datetime.kotlinx)
+
             //Multiplatform Voyager
             implementation(libs.kmp.voyager.navigator)
             implementation(libs.kmp.voyager.screenmodel)
