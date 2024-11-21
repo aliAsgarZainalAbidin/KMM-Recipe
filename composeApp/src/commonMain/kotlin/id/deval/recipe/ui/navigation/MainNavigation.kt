@@ -4,6 +4,7 @@ import androidx.navigation.NamedNavArgument
 import cafe.adriel.voyager.core.screen.Screen
 import id.deval.recipe.ui.home.HomeScreen
 import id.deval.recipe.ui.notif.NotificationScreen
+import id.deval.recipe.ui.profile.ProfileScreen
 import id.deval.recipe.ui.scan.ScanScreen
 import id.deval.recipe.ui.upload.UploadScreenFirstStep
 import id.deval.recipe.ui.upload.UploadScreenSecondStep
@@ -28,5 +29,5 @@ sealed class MainNavigation(
     data object Scan : MainNavigation("scan", emptyList(), ScanScreen(),"Scan", Res.drawable.scan)
     data object Notification :
         MainNavigation("notification", emptyList(), NotificationScreen(),"Notification", Res.drawable.notification)
-    data object Profile : MainNavigation("profile", emptyList(), HomeScreen(),"Profile", Res.drawable.profile)
+    data object Profile : MainNavigation("profile", emptyList(), ProfileScreen(),"Profile", Res.drawable.profile)
 }

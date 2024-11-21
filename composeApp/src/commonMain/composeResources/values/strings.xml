@@ -91,4 +91,7 @@
 
     <!-- Scan Menu -->
     <string name="scan_menu">Choose one option</string>
+
+    <!-- Profile Menu   -->
+    <string name="follow">Follow</string>
 </resources>
