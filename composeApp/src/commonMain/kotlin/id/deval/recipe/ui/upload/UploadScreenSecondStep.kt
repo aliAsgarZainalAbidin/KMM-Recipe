@@ -34,6 +34,7 @@ import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.DefaultFilledButtonStyle
 import id.deval.recipe.theme.mainTextColor
+import id.deval.recipe.theme.white
 import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.upload.effect.UploadScreenEffect
 import id.deval.recipe.ui.upload.event.UploadScreenEvent
@@ -168,7 +169,7 @@ class UploadScreenSecondStep : Screen {
                     onDismissRequest = {}
                 ) {
                     Column(
-                        modifier = Modifier.padding(
+                        modifier = Modifier.background(white).padding(
                             top = 48.dp, bottom = 48.dp, start = 42.dp, end = 42.dp
                         ),
                         horizontalAlignment = Alignment.CenterHorizontally

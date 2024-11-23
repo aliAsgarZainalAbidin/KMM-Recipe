@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,8 +38,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
+import id.deval.recipe.theme.white
 import id.deval.recipe.ui.home.FilterCategory
 import id.deval.recipe.ui.home.event.HomeScreenEvent
 import kmm_recipe.composeapp.generated.resources.Res
@@ -62,8 +65,8 @@ object RecipeCommonUI {
 
     @Composable
     fun HeaderUploadStep(
-        onCancel : () -> Unit,
-        modifier : Modifier = Modifier,
+        onCancel: () -> Unit,
+        modifier: Modifier = Modifier,
         stringResource: StringResource = Res.string.first_step
     ) {
         Row(
@@ -154,7 +157,7 @@ object RecipeCommonUI {
     }
 
     @Composable
-    fun RecipeSpacer(){
+    fun RecipeSpacer() {
         Spacer(
             modifier = Modifier.height(8.dp)
                 .fillMaxWidth()
@@ -164,16 +167,16 @@ object RecipeCommonUI {
 
     @Composable
     fun RecipeDialog(
-        modifier : Modifier = Modifier,
-        onDismissRequest : () -> Unit,
-        content : @Composable () -> Unit = {}
-    ){
+        modifier: Modifier = Modifier,
+        onDismissRequest: () -> Unit,
+        content: @Composable () -> Unit = {}
+    ) {
         Dialog(
-            onDismissRequest = onDismissRequest
-        ){
+            onDismissRequest = onDismissRequest,
+        ) {
             Card(
                 modifier = modifier
-            ){
+            ) {
                 content()
             }
         }
@@ -182,10 +185,10 @@ object RecipeCommonUI {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun RecipeDurationSlider(
-        sliderState : SliderState,
-        startSliderValue : Float = 0f,
-        endSliderValue : Float = 1f
-    ){
+        sliderState: SliderState,
+        startSliderValue: Float = 0f,
+        endSliderValue: Float = 1f
+    ) {
         Column(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 8.dp)
