@@ -51,6 +51,7 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeCommonUI.BoxUploadCoverPhoto
 import id.deval.recipe.components.RecipeCommonUI.HeaderUploadStep
 import id.deval.recipe.components.RecipeTextField
@@ -97,6 +98,7 @@ class UploadScreenFirstStep : Screen {
                     is UploadScreenEffect.NavigateToHome -> {
                         navigator?.pop()
                     }
+
                     is UploadScreenEffect.ShowToast -> {}
                     is UploadScreenEffect.NavigateToFirstStep -> {}
                 }
@@ -129,7 +131,7 @@ class UploadScreenFirstStep : Screen {
                 modifier = Modifier.fillMaxSize()
             ) {
                 HeaderUploadStep(
-                    onCancel = { onEvent(UploadScreenEvent.NavigateToHome)}
+                    onCancel = { onEvent(UploadScreenEvent.NavigateToHome) }
                 )
                 FlowRow(
                     modifier = Modifier
@@ -233,128 +235,11 @@ class UploadScreenFirstStep : Screen {
                         modifier = customModifier,
                         verticalArrangement = Arrangement.Top,
                     ) {
-                        Text(
-                            text = buildAnnotatedString {
-                                withStyle(
-                                    style = SpanStyle(
-                                        fontWeight = FontWeight.Bold,
-                                        color = mainTextColor
-                                    )
-                                ) {
-                                    append(stringResource(Res.string.cooking_duration))
-                                }
-                                withStyle(
-                                    style = SpanStyle(
-                                        fontWeight = FontWeight.Normal,
-                                        color = secondaryTextColor
-                                    )
-                                ) {
-                                    append(stringResource(Res.string.cooking_duration_in_minutes))
-                                }
-                            },
-                            style = MaterialTheme.typography.headlineMedium,
-                            modifier = Modifier.padding(top = 24.dp)
+                        RecipeCommonUI.RecipeDurationSlider(
+                            sliderState,
+                            startSliderValue,
+                            endSliderValue
                         )
-                        Column(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(top = 8.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Text(
-                                    text = stringResource(Res.string.less_than_10),
-                                    style = MaterialTheme.typography.headlineSmall.copy(
-                                        color = if (sliderState.value >= startSliderValue)
-                                            MaterialTheme.colorScheme.primary
-                                        else
-                                            MaterialTheme.colorScheme.onSurface
-                                    ),
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Text(
-                                    text = stringResource(Res.string.equal_30),
-                                    style = MaterialTheme.typography.headlineSmall.copy(
-                                        color = if (sliderState.value >= endSliderValue.div(2))
-                                            MaterialTheme.colorScheme.primary
-                                        else
-                                            MaterialTheme.colorScheme.onSurface
-                                    ),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Text(
-                                    text = stringResource(Res.string.more_than_60),
-                                    style = MaterialTheme.typography.headlineSmall.copy(
-                                        color = if (sliderState.value >= endSliderValue)
-                                            MaterialTheme.colorScheme.primary
-                                        else
-                                            MaterialTheme.colorScheme.onSurface
-                                    ),
-                                    textAlign = TextAlign.End,
-                                    modifier = Modifier.weight(1f)
-                                )
-                            }
-                            Slider(
-                                state = sliderState,
-                                colors = SliderDefaults.colors().copy(
-                                    inactiveTickColor = Color.Transparent,
-                                    activeTickColor = Color.Transparent,
-                                    disabledActiveTickColor = Color.Transparent,
-                                    disabledInactiveTickColor = Color.Transparent
-                                ),
-                                modifier = Modifier.fillMaxWidth()
-                                    .padding(top = 8.dp),
-                                thumb = {
-                                    Box(
-                                        contentAlignment = Alignment.Center,
-                                        modifier = Modifier
-                                            .background(
-                                                MaterialTheme.colorScheme.primary,
-                                                CircleShape
-                                            )
-                                            .size(24.dp)
-                                            .clip(CircleShape)
-                                            .background(Color.Transparent)
-                                            .padding(2.dp),
-                                        content = {}
-                                    )
-                                },
-                                track = {
-                                    val fraction by remember {
-                                        derivedStateOf {
-                                            (sliderState.value - sliderState.valueRange.start) / (sliderState.valueRange.endInclusive - sliderState.valueRange.start)
-                                        }
-                                    }
-                                    Box(Modifier.fillMaxWidth()) {
-                                        Box(
-                                            Modifier
-                                                .fillMaxWidth(fraction)
-                                                .align(Alignment.CenterStart)
-                                                .height(8.dp)
-                                                .padding(end = 16.dp)
-                                                .background(
-                                                    MaterialTheme.colorScheme.primary,
-                                                    CircleShape
-                                                )
-                                        )
-                                        Box(
-                                            Modifier
-                                                .fillMaxWidth(1f - fraction)
-                                                .align(Alignment.CenterEnd)
-                                                .height(8.dp)
-                                                .padding(start = 16.dp)
-                                                .background(
-                                                    MaterialTheme.colorScheme.outline,
-                                                    CircleShape
-                                                )
-                                        )
-                                    }
-                                }
-                            )
-                        }
                         Spacer(
                             modifier = Modifier.weight(1f)
                         )

@@ -6,6 +6,7 @@ import id.deval.recipe.ui.home.effect.HomeScreenEffect
 import id.deval.recipe.ui.home.event.HomeScreenEvent
 import id.deval.recipe.ui.home.state.HomeScreenState
 import id.deval.recipe.util.DataDummy
+import id.deval.recipe.util.RecipeSliderValue
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -42,6 +43,18 @@ class HomeViewModel : ViewModel() {
 
             is HomeScreenEvent.OnCloseSearchField -> {
                 onSearchCloseClicked()
+            }
+
+            is HomeScreenEvent.OnFilterClicked -> {
+                onFilterClicked(event.state)
+            }
+
+            is HomeScreenEvent.OnDurationChanged -> {
+                onDurationFilterChanged(event.duration)
+            }
+
+            is HomeScreenEvent.OnFilterDoneClicked -> {
+                onFilterDoneClicked(event.duration, event.category, event.modalState)
             }
         }
     }
@@ -82,9 +95,35 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private fun onSearchCloseClicked(){
+    private fun onSearchCloseClicked() {
         _homeScreenState.update {
             it.copy(isSearching = false)
+        }
+    }
+
+    private fun onFilterClicked(state: Boolean) {
+        _homeScreenState.update {
+            it.copy(showBottomModalFilter = state)
+        }
+    }
+
+    private fun onDurationFilterChanged(duration: String) {
+        _homeScreenState.update {
+            it.copy()
+        }
+    }
+
+    private fun onFilterDoneClicked(
+        duration: RecipeSliderValue,
+        category: FilterCategory,
+        modalState: Boolean
+    ) {
+        _homeScreenState.update {
+            it.copy(
+                selectedDurationRecipe = duration,
+                selectedCategory = category,
+                showBottomModalFilter = modalState
+            )
         }
     }
 }
