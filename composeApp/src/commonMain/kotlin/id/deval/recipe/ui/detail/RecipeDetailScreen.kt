@@ -2,6 +2,7 @@ package id.deval.recipe.ui.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -110,20 +111,8 @@ class RecipeDetailScreen : Screen {
                         .height(state.imageSize.plus(32).dp)
                         .graphicsLayer {
                             translationY = scrollState.value * -0.5f
-                            Logger.d(
-                                tag = "Scroll State",
-                                messageString = "ScrollState : ${scrollState.value}, translation $translationY"
-                            )
                         },
                     contentScale = ContentScale.Crop
-                )
-
-                RecipeButton.BackButton(
-                    onClick = {
-                        onEvent(RecipeDetailEvent.OnNavigateBackClicked)
-                    },
-                    modifier = Modifier.padding(top = 16.dp, start = 24.dp),
-                    colorIcon = mainTextColor
                 )
 
                 Column(
@@ -219,6 +208,21 @@ class RecipeDetailScreen : Screen {
                         SectionSteps(state)
                     }
                 }
+
+                RecipeButton.BackButton(
+                    onClick = {
+                        onEvent(RecipeDetailEvent.OnNavigateBackClicked)
+                    },
+                    modifier = Modifier.padding(top = 16.dp, start = 24.dp).clickable {
+                        Logger.d(
+                            "Navigate Back Button Clicked"
+                        )
+                    }
+                        .graphicsLayer {
+                            translationY = scrollState.value * -0.5f
+                        },
+                    colorIcon = mainTextColor
+                )
             }
         }
     }
