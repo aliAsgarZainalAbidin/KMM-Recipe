@@ -34,7 +34,6 @@ import org.kodein.di.instance
 @Preview
 fun App() {
 
-    val currentScreen by remember { mutableStateOf<Navigation>(AppNavigation.Main) }
     val appViewModel by appRecipeModule.instance<AppViewModel>()
     val appState by appViewModel.appScreenState.collectAsStateWithLifecycle()
 

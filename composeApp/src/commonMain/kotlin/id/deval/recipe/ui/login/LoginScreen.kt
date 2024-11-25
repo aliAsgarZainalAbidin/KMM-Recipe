@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,6 +28,9 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
+import id.deval.recipe.shared.Platform
+import id.deval.recipe.shared.PlatformTarget
+import id.deval.recipe.shared.getPlatform
 import id.deval.recipe.theme.DefaultRedFilledButtonStyle
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.ui.login.effect.LoginScreenEffect
@@ -85,6 +89,7 @@ class LoginScreen : Screen {
         state: LoginScreenState,
         onEvent: (LoginScreenEvent) -> Unit = {}
     ) {
+
         Scaffold(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -166,6 +171,8 @@ class LoginScreen : Screen {
                 RecipeButton.DefaultFilledButton(
                     onClick = {},
                     modifier = Modifier
+                        .widthIn(max = 327.dp)
+                        .fillMaxWidth()
                         .padding(horizontal = 24.dp),
                     text = stringResource(Res.string.login),
                 )
@@ -177,6 +184,8 @@ class LoginScreen : Screen {
                 RecipeButton.DefaultFilledButton(
                     onClick = {},
                     modifier = Modifier
+                        .fillMaxWidth()
+                        .widthIn(max = 327.dp)
                         .padding(top = 24.dp, start = 24.dp, end = 24.dp),
                     text = stringResource(Res.string.Google),
                     startIcon = painterResource(Res.drawable.google),
