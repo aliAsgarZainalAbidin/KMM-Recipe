@@ -74,7 +74,6 @@ class MainScreen : Screen {
 
         MainScreenContent(
             mainScreenState,
-            localNavigator,
             mainScreenViewModel::onEvent
         )
     }
@@ -82,7 +81,6 @@ class MainScreen : Screen {
     @Composable
     fun MainScreenContent(
         state: MainScreenState,
-        navigator: Navigator,
         onEvent: (MainScreenEvent) -> Unit = {}
     ) {
         val platform = getPlatform().name

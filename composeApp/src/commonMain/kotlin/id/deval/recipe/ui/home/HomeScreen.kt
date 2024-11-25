@@ -44,6 +44,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeLazyItem
@@ -52,9 +54,14 @@ import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.DefaultFilledButtonStyle
 import id.deval.recipe.theme.DefaultOutlineButtonStyle
 import id.deval.recipe.theme.mainTextColor
+import id.deval.recipe.ui.app.AppViewModel
+import id.deval.recipe.ui.app.event.AppEvent
 import id.deval.recipe.ui.home.effect.HomeScreenEffect
 import id.deval.recipe.ui.home.event.HomeScreenEvent
 import id.deval.recipe.ui.home.state.HomeScreenState
+import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.ui.recipe.RecipeViewModel
+import id.deval.recipe.ui.recipe.event.RecipeDetailEvent
 import id.deval.recipe.ui.upload.event.UploadScreenEvent
 import id.deval.recipe.util.RecipeSliderValue
 import kmm_recipe.composeapp.generated.resources.Res
@@ -77,11 +84,18 @@ class HomeScreen : Screen {
     override fun Content() {
         val homeScreenViewModel by appRecipeModule.instance<HomeViewModel>()
         val homeScreenState by homeScreenViewModel.homeScreenState.collectAsStateWithLifecycle()
+        val localNavigator = LocalNavigator.currentOrThrow
+
+        val recipeViewModel by appRecipeModule.instance<RecipeViewModel>()
 
         LaunchedEffect(Unit) {
             homeScreenViewModel.homeScreenEffect.collectLatest { effect ->
                 when (effect) {
-                    is HomeScreenEffect.NavigateToDetail -> {}
+                    is HomeScreenEffect.NavigateToDetail -> {
+                        recipeViewModel.onEvent(RecipeDetailEvent.OnRecipeClicked(effect.recipe))
+                        localNavigator.parent?.push(AppNavigation.RecipeDetail.screen)
+                    }
+
                     is HomeScreenEffect.OnChangedSearchQuery -> {}
                     is HomeScreenEffect.OnChangedFilterCategory -> {}
                 }
@@ -207,7 +221,8 @@ class HomeScreen : Screen {
                     items(state.filteredRecipes) {
                         if (it != null) {
                             RecipeLazyItem.RecipeDefaultItem(
-                                modifier = Modifier.padding(vertical = 4.dp),
+                                modifier = Modifier
+                                    .padding(vertical = 4.dp),
                                 recipe = it,
                                 onClick = {
                                     onEvent(HomeScreenEvent.OnRecipeClicked(it))
@@ -225,7 +240,7 @@ class HomeScreen : Screen {
                     }
                 }
 
-                if(state.showBottomModalFilter){
+                if (state.showBottomModalFilter) {
                     FilterBottomModal(Modifier, state, onEvent)
                 }
             }
@@ -307,7 +322,7 @@ class HomeScreen : Screen {
                 onEvent(HomeScreenEvent.OnFilterClicked(false))
             },
             sheetState = rememberModalBottomSheetState()
-        ){
+        ) {
             Column(
                 modifier = modifier.fillMaxSize()
                     .padding(horizontal = 24.dp, vertical = 12.dp),
@@ -354,7 +369,13 @@ class HomeScreen : Screen {
                     RecipeButton.DefaultFilledButton(
                         modifier = Modifier.weight(1f),
                         onClick = {
-                            onEvent(HomeScreenEvent.OnFilterDoneClicked(sliderValue,tempSelectedCategory, false))
+                            onEvent(
+                                HomeScreenEvent.OnFilterDoneClicked(
+                                    sliderValue,
+                                    tempSelectedCategory,
+                                    false
+                                )
+                            )
                         },
                         text = stringResource(Res.string.done)
                     )

@@ -1,4 +1,4 @@
-package id.deval.recipe.ui
+package id.deval.recipe.ui.app
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -20,7 +20,6 @@ import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.shared.Greeting
 import id.deval.recipe.theme.RecipeAppTheme
-import id.deval.recipe.ui.main.MainViewModel
 import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.navigation.MainNavigation
 import id.deval.recipe.ui.navigation.Navigation
@@ -36,49 +35,19 @@ import org.kodein.di.instance
 fun App() {
 
     val currentScreen by remember { mutableStateOf<Navigation>(AppNavigation.Main) }
+    val appViewModel by appRecipeModule.instance<AppViewModel>()
+    val appState by appViewModel.appScreenState.collectAsStateWithLifecycle()
 
     RecipeAppTheme {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            val mainScreenViewModel by appRecipeModule.instance<MainViewModel>()
-            val mainScreenState by mainScreenViewModel.mainScreenState.collectAsStateWithLifecycle()
 
             /*TODO()
             *   startDestination base on already login or not
             *   please make DataStorage or SharedPreference account to check
             * */
-//            NavHost(
-//                navController = navigator,
-//                startDestination = AppNavigation.Main.route,
-//                modifier = Modifier.fillMaxSize()
-//            ){
-//                composable(AppNavigation.Splash.route){
-//
-//                }
-//                composable(AppNavigation.Login.route){
-//                    LoginScreen(navigator)
-//                }
-//                composable(AppNavigation.Main.route){
-//                    SampleCompose()
-//                }
-//                composable(AppNavigation.Welcome.route){
-//                    WelcomeScreen(navigator)
-//                }
-//                composable(AppNavigation.SignUp.route){
-//                    SignupScreen(navigator)
-//                }
-//                composable(AppNavigation.Otp.route){
-//                    OtpScreen(navigator)
-//                }
-//                composable(AppNavigation.ForgotPassword.route){
-//                    ForgotPasswordScreen(navigator)
-//                }
-//                composable(AppNavigation.ResetPassword.route){
-//                    ResetPasswordScreen(navigator)
-//                }
-//            }
-            when (currentScreen.route) {
+            when (appState.currentScreen.route) {
                 AppNavigation.Splash.route -> {}
                 AppNavigation.Login.route -> {
                     Navigator(AppNavigation.Login.screen)
@@ -88,9 +57,9 @@ fun App() {
                     Navigator(AppNavigation.Main.screen)
                 }
 
-                MainNavigation.Upload.route -> {
-                    Navigator(MainNavigation.Upload.screen)
-                }
+//                MainNavigation.Upload.route -> {
+//                    Navigator(MainNavigation.Upload.screen)
+//                }
 
                 MainNavigation.Scan.route -> {
                     Navigator(MainNavigation.Scan.screen)
@@ -114,6 +83,10 @@ fun App() {
 
                 AppNavigation.ResetPassword.route -> {
                     Navigator(AppNavigation.ResetPassword.screen)
+                }
+
+                AppNavigation.RecipeDetail.route -> {
+                    Navigator(AppNavigation.RecipeDetail.screen)
                 }
             }
         }

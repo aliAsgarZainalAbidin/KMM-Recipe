@@ -2,7 +2,7 @@ package id.deval.recipe
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
-import id.deval.recipe.ui.App
+import id.deval.recipe.ui.app.App
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)

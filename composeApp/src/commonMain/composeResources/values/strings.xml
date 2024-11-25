@@ -94,4 +94,6 @@
 
     <!-- Profile Menu   -->
     <string name="follow">Follow</string>
+
+    <string name="likes">Likes</string>
 </resources>

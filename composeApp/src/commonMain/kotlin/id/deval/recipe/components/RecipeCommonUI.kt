@@ -157,10 +157,13 @@ object RecipeCommonUI {
     }
 
     @Composable
-    fun RecipeSpacer() {
+    fun RecipeSpacer(
+        modifier: Modifier = Modifier
+            .height(8.dp)
+            .fillMaxWidth()
+    ) {
         Spacer(
-            modifier = Modifier.height(8.dp)
-                .fillMaxWidth()
+            modifier = modifier
                 .background(color = MaterialTheme.colorScheme.tertiary)
         )
     }

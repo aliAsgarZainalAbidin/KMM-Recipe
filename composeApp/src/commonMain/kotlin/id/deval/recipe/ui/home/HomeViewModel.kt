@@ -1,12 +1,16 @@
 package id.deval.recipe.ui.home
 
 import androidx.lifecycle.ViewModel
+import co.touchlab.kermit.Logger
 import id.deval.recipe.domain.model.Recipe
 import id.deval.recipe.ui.home.effect.HomeScreenEffect
 import id.deval.recipe.ui.home.event.HomeScreenEvent
 import id.deval.recipe.ui.home.state.HomeScreenState
 import id.deval.recipe.util.DataDummy
 import id.deval.recipe.util.RecipeSliderValue
+import id.deval.recipe.util.launchCatchError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -84,9 +88,20 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun onRecipeClicked(recipe: Recipe) {
-        _homeScreenState.update {
-            it.copy(selectedRecipe = recipe)
-        }
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _homeScreenState.update {
+                    it.copy(selectedRecipe = recipe)
+                }
+                _homeScreenEffect.emit(HomeScreenEffect.NavigateToDetail(recipe))
+            },
+            onError = {
+                Logger.d(
+                    tag = TAG,
+                    messageString = "Error onRecipeClicked: ${it.message}"
+                )
+            }
+        )
     }
 
     private fun onSearchQueryChanged(query: String) {
@@ -125,5 +140,9 @@ class HomeViewModel : ViewModel() {
                 showBottomModalFilter = modalState
             )
         }
+    }
+
+    companion object{
+        const val TAG = "HomeViewModel"
     }
 }

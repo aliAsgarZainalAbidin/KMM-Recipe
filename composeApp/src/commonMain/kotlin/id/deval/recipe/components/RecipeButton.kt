@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -40,6 +41,7 @@ import id.deval.recipe.theme.secondaryTextColor
 import id.deval.recipe.theme.white
 import kmm_recipe.composeapp.generated.resources.Onboarding
 import kmm_recipe.composeapp.generated.resources.Res
+import kmm_recipe.composeapp.generated.resources.back
 import kmm_recipe.composeapp.generated.resources.baseline_favorite_24
 import kmm_recipe.composeapp.generated.resources.baseline_favorite_border_24
 import kmm_recipe.composeapp.generated.resources.camera
@@ -367,6 +369,28 @@ object RecipeButton {
                 contentDescription = null,
                 modifier = Modifier.size(24.dp),
                 tint = iconColor
+            )
+        }
+    }
+
+    @Composable
+    fun BackButton(
+        onClick: () -> Unit,
+        modifier: Modifier = Modifier,
+        color : IconButtonColors = DefaultIconButtonColors(),
+        colorIcon : Color = white
+    ){
+        IconButton(
+            onClick = onClick,
+            modifier = modifier.size(48.dp),
+            colors = color,
+            enabled = true
+        ) {
+            Icon(
+                painter = painterResource(Res.drawable.back),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+                tint = colorIcon
             )
         }
     }
