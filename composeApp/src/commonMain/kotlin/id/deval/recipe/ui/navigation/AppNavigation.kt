@@ -6,7 +6,7 @@ import id.deval.recipe.ui.forgotpassword.ForgotPasswordScreen
 import id.deval.recipe.ui.login.LoginScreen
 import id.deval.recipe.ui.main.MainScreen
 import id.deval.recipe.ui.otp.OtpScreen
-import id.deval.recipe.ui.recipe.RecipeDetailScreen
+import id.deval.recipe.ui.detail.RecipeDetailScreen
 import id.deval.recipe.ui.resetpassword.ResetPasswordScreen
 import id.deval.recipe.ui.signup.SignUpScreen
 import id.deval.recipe.ui.welcome.WelcomeScreen

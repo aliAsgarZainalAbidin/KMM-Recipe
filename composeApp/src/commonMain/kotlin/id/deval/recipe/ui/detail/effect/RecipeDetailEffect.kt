@@ -1,4 +1,4 @@
-package id.deval.recipe.ui.recipe.effect
+package id.deval.recipe.ui.detail.effect
 
 import id.deval.recipe.domain.model.User
 

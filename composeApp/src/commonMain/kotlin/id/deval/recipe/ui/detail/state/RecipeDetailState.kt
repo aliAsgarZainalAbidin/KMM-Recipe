@@ -1,4 +1,4 @@
-package id.deval.recipe.ui.recipe.state
+package id.deval.recipe.ui.detail.state
 
 import id.deval.recipe.domain.model.Recipe
 

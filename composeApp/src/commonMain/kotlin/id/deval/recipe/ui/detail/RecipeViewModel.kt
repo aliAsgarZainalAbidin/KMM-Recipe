@@ -1,12 +1,12 @@
-package id.deval.recipe.ui.recipe
+package id.deval.recipe.ui.detail
 
 import androidx.lifecycle.ViewModel
 import co.touchlab.kermit.Logger
 import id.deval.recipe.domain.model.Recipe
 import id.deval.recipe.domain.model.User
-import id.deval.recipe.ui.recipe.effect.RecipeDetailEffect
-import id.deval.recipe.ui.recipe.event.RecipeDetailEvent
-import id.deval.recipe.ui.recipe.state.RecipeDetailState
+import id.deval.recipe.ui.detail.effect.RecipeDetailEffect
+import id.deval.recipe.ui.detail.event.RecipeDetailEvent
+import id.deval.recipe.ui.detail.state.RecipeDetailState
 import id.deval.recipe.util.launchCatchError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

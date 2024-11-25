@@ -1,4 +1,4 @@
-package id.deval.recipe.ui.recipe
+package id.deval.recipe.ui.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,13 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -41,20 +39,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import co.touchlab.kermit.Logger
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.di.appRecipeModule
+import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.white
-import id.deval.recipe.ui.recipe.effect.RecipeDetailEffect
-import id.deval.recipe.ui.recipe.event.RecipeDetailEvent
-import id.deval.recipe.ui.recipe.state.RecipeDetailState
+import id.deval.recipe.ui.detail.effect.RecipeDetailEffect
+import id.deval.recipe.ui.detail.event.RecipeDetailEvent
+import id.deval.recipe.ui.detail.state.RecipeDetailState
 import kmm_recipe.composeapp.generated.resources.Onboarding
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.description
-import kmm_recipe.composeapp.generated.resources.done
-import kmm_recipe.composeapp.generated.resources.heart
 import kmm_recipe.composeapp.generated.resources.heart_2
+import kmm_recipe.composeapp.generated.resources.ingredients
 import kmm_recipe.composeapp.generated.resources.likes
+import kmm_recipe.composeapp.generated.resources.steps
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -99,22 +99,27 @@ class RecipeDetailScreen : Screen {
             modifier = Modifier.fillMaxSize()
         ) {
             Box {
-                RecipeButton.BackButton(
-                    onClick = {
-                        onEvent(RecipeDetailEvent.OnNavigateBackClicked)
-                    },
-                    modifier = Modifier.padding(top = 16.dp, start = 24.dp)
-                )
                 Image(
                     painter = painterResource(Res.drawable.Onboarding),
                     contentDescription = "onboarding",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(state.imageSize.dp)
+                        .height(state.imageSize.plus(32).dp)
                         .graphicsLayer {
-                            translationY = scrollState.value * 0.5f
+                            translationY = scrollState.value * -0.5f
+                            Logger.d(
+                                tag = "Scroll State",
+                                messageString = "ScrollState : ${scrollState.value}, translation $translationY"
+                            )
                         },
                     contentScale = ContentScale.Crop
+                )
+
+                RecipeButton.BackButton(
+                    onClick = {
+                        onEvent(RecipeDetailEvent.OnNavigateBackClicked)
+                    },
+                    modifier = Modifier.padding(top = 16.dp, start = 24.dp)
                 )
 
                 Column(
@@ -128,10 +133,10 @@ class RecipeDetailScreen : Screen {
                     Column(
                         modifier = Modifier.fillMaxSize()
                             .clip(RoundedCornerShape(topEnd = 24.dp, topStart = 24.dp))
-                            .background(MaterialTheme.colorScheme.onSurface)
+                            .background(MaterialTheme.colorScheme.surface)
                             .padding(horizontal = 24.dp, vertical = 12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                    ){
+                    ) {
                         RecipeCommonUI.RecipeSpacer(
                             modifier = Modifier.height(5.dp).width(40.dp)
                         )
@@ -146,13 +151,15 @@ class RecipeDetailScreen : Screen {
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = MaterialTheme.colorScheme.onSurface
                             ),
-                            modifier = Modifier.padding(top = 8.dp)
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                            textAlign = TextAlign.Start
                         )
                         Row(
-                            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Row(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier,
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Start
                             ) {
@@ -169,7 +176,7 @@ class RecipeDetailScreen : Screen {
                                 )
                             }
                             Row(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier,
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Start
                             ) {
@@ -198,15 +205,12 @@ class RecipeDetailScreen : Screen {
                                 )
                             }
                         }
-                        RecipeCommonUI.RecipeSpacer(
-                            modifier = Modifier.fillMaxWidth().height(2.dp)
-                                .padding(vertical = 16.dp)
-                        )
+                        RecipeCommonUI.RecipeSpacer(modifier = Modifier.fillMaxWidth().height(2.dp))
                         SectionDescription(state)
-                        RecipeCommonUI.RecipeSpacer(
-                            modifier = Modifier.fillMaxWidth().height(2.dp)
-                                .padding(vertical = 16.dp)
-                        )
+                        RecipeCommonUI.RecipeSpacer(modifier = Modifier.fillMaxWidth().height(2.dp))
+                        SectionIngredients(state)
+                        RecipeCommonUI.RecipeSpacer(modifier = Modifier.fillMaxWidth().height(2.dp))
+                        SectionSteps(state)
                     }
                 }
             }
@@ -216,21 +220,66 @@ class RecipeDetailScreen : Screen {
     @Composable
     fun SectionDescription(
         state: RecipeDetailState
-    ){
+    ) {
         Column(
             modifier = Modifier.fillMaxWidth()
                 .padding(vertical = 16.dp)
-        ){
+        ) {
             Text(
                 text = stringResource(Res.string.description),
                 style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
             Text(
-                text = state.recipe?.description ?: "",
-                style = MaterialTheme.typography.bodyMedium,
+                text = state.recipe?.description ?: "null",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = mainTextColor
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Justify
             )
         }
     }
+
+    @Composable
+    fun SectionIngredients(
+        state: RecipeDetailState
+    ) {
+        Column(
+            modifier = Modifier.padding(vertical = 16.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.ingredients),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            repeat(state.recipe?.ingredients?.size ?: 0) { index ->
+                RecipeCommonUI.IngredientItem(state.recipe?.ingredients?.get(index) ?: "")
+            }
+        }
+    }
+
+    @Composable
+    fun SectionSteps(
+        state: RecipeDetailState
+    ) {
+        Column(
+            modifier = Modifier.padding(vertical = 16.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.steps),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            repeat(state.recipe?.steps?.size ?: 0) { index ->
+                state.recipe?.steps?.get(index).let { step ->
+                    if (step != null) {
+                        RecipeCommonUI.StepItem(index.plus(1).toString(), step)
+                    }
+                }
+            }
+        }
+    }
+
+
 }

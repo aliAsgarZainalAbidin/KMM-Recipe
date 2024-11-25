@@ -19,11 +19,11 @@ object DataDummy {
             description = "A classic Italian pasta dish with a rich meat sauce.",
             ingredients = listOf("Spaghetti", "Ground beef", "Tomato sauce", "Onion", "Garlic", "Olive oil", "Salt", "Pepper"),
             steps = listOf(
-                RecipeStep(1, "Boil spaghetti in salted water until al dente.", null),
-                RecipeStep(2, "Heat olive oil, cook onions and garlic until soft.", null),
-                RecipeStep(3, "Add ground beef and cook until browned.", null),
-                RecipeStep(4, "Add tomato sauce, salt, and pepper. Simmer for 20 minutes.", null),
-                RecipeStep(5, "Serve sauce over spaghetti and enjoy.", null)
+                RecipeStep(1, "Boil spaghetti in salted water until al dente. Boil spaghetti in salted water until al dente. Boil spaghetti in salted water until al dente. Boil spaghetti in salted water until al dente. Boil spaghetti in salted water until al dente. Boil spaghetti in salted water until al dente. Boil spaghetti in salted water until al dente. ", null),
+                RecipeStep(2, "Heat olive oil, cook onions and garlic until soft. Heat olive oil, cook onions and garlic until soft. Heat olive oil, cook onions and garlic until soft. Heat olive oil, cook onions and garlic until soft. Heat olive oil, cook onions and garlic until soft. ", null),
+                RecipeStep(3, "Add ground beef and cook until browned. Add ground beef and cook until browned. Add ground beef and cook until browned. Add ground beef and cook until browned. Add ground beef and cook until browned. ", null),
+                RecipeStep(4, "Add tomato sauce, salt, and pepper. Simmer for 20 minutes. Add tomato sauce, salt, and pepper. Simmer for 20 minutes. Add tomato sauce, salt, and pepper. Simmer for 20 minutes. Add tomato sauce, salt, and pepper. Simmer for 20 minutes. ", null),
+                RecipeStep(5, "Serve sauce over spaghetti and enjoy. Serve sauce over spaghetti and enjoy. Serve sauce over spaghetti and enjoy. Serve sauce over spaghetti and enjoy. Serve sauce over spaghetti and enjoy. ", null)
             ),
             isLiked = true
         ),

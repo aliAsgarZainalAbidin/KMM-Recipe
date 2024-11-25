@@ -1,4 +1,4 @@
-package id.deval.recipe.ui.recipe.event
+package id.deval.recipe.ui.detail.event
 
 import id.deval.recipe.domain.model.Recipe
 import id.deval.recipe.domain.model.User

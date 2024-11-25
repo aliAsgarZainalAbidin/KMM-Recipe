@@ -8,7 +8,7 @@ import id.deval.recipe.ui.main.MainViewModel
 import id.deval.recipe.ui.notif.NotificationViewModel
 import id.deval.recipe.ui.otp.OtpViewModel
 import id.deval.recipe.ui.profile.ProfileViewModel
-import id.deval.recipe.ui.recipe.RecipeViewModel
+import id.deval.recipe.ui.detail.RecipeViewModel
 import id.deval.recipe.ui.resetpassword.ResetPasswordViewModel
 import id.deval.recipe.ui.scan.ScanViewModel
 import id.deval.recipe.ui.signup.SignupViewModel

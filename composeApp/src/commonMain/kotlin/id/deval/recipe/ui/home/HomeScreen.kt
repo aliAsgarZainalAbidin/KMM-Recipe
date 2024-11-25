@@ -1,17 +1,12 @@
 package id.deval.recipe.ui.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -23,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -39,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -52,17 +45,13 @@ import id.deval.recipe.components.RecipeLazyItem
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.DefaultFilledButtonStyle
-import id.deval.recipe.theme.DefaultOutlineButtonStyle
 import id.deval.recipe.theme.mainTextColor
-import id.deval.recipe.ui.app.AppViewModel
-import id.deval.recipe.ui.app.event.AppEvent
 import id.deval.recipe.ui.home.effect.HomeScreenEffect
 import id.deval.recipe.ui.home.event.HomeScreenEvent
 import id.deval.recipe.ui.home.state.HomeScreenState
 import id.deval.recipe.ui.navigation.AppNavigation
-import id.deval.recipe.ui.recipe.RecipeViewModel
-import id.deval.recipe.ui.recipe.event.RecipeDetailEvent
-import id.deval.recipe.ui.upload.event.UploadScreenEvent
+import id.deval.recipe.ui.detail.RecipeViewModel
+import id.deval.recipe.ui.detail.event.RecipeDetailEvent
 import id.deval.recipe.util.RecipeSliderValue
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.add_filter

@@ -1,5 +1,6 @@
 package id.deval.recipe.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,8 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -19,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -31,25 +35,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import id.deval.recipe.components.RecipeTextField.Outlined
+import id.deval.recipe.domain.model.RecipeStep
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
 import id.deval.recipe.theme.white
 import id.deval.recipe.ui.home.FilterCategory
 import id.deval.recipe.ui.home.event.HomeScreenEvent
+import kmm_recipe.composeapp.generated.resources.Onboarding
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.add_cover_photo
+import kmm_recipe.composeapp.generated.resources.baseline_check_24
 import kmm_recipe.composeapp.generated.resources.baseline_image_24
 import kmm_recipe.composeapp.generated.resources.cancel
 import kmm_recipe.composeapp.generated.resources.cooking_duration
 import kmm_recipe.composeapp.generated.resources.cooking_duration_in_minutes
+import kmm_recipe.composeapp.generated.resources.drag_icon
 import kmm_recipe.composeapp.generated.resources.equal_30
 import kmm_recipe.composeapp.generated.resources.first_step
 import kmm_recipe.composeapp.generated.resources.less_than_10
@@ -373,6 +385,92 @@ object RecipeCommonUI {
                     ),
                     enabled = stateCategory == categories[index]
                 )
+            }
+        }
+    }
+
+    @Composable
+    fun IngredientItem(
+        name: String,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(100))
+                        .background(color = MaterialTheme.colorScheme.primary.copy(0.1f))
+                        .size(24.dp)
+                )
+                Icon(
+                    painter = painterResource(Res.drawable.baseline_check_24),
+                    modifier = Modifier.size(12.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                    contentDescription = "checklist"
+                )
+            }
+            Text(
+                text = name,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = mainTextColor
+                ),
+                modifier = Modifier.padding(start = 8.dp)
+            )
+        }
+    }
+
+
+    @Composable
+    fun StepItem(
+        numberSteps: String,
+        value: RecipeStep,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.Top
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(24.dp)
+                    .clip(RoundedCornerShape(100))
+                    .background(mainTextColor),
+                contentAlignment = Alignment.Center
+            ) {
+                androidx.compose.material3.Text(
+                    text = numberSteps,
+                    style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onPrimary),
+                    modifier = Modifier,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(start = 16.dp)
+            ) {
+                Text(
+                    text = value.description,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = mainTextColor
+                    ),
+                    lineHeight = 24.sp,
+                    modifier = Modifier,
+                    textAlign = TextAlign.Justify
+                )
+                if (value.image != null) {
+                    Image(
+                        painterResource(Res.drawable.Onboarding),
+                        modifier = Modifier.fillMaxWidth().height(155.dp),
+                        contentDescription = "image step",
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
         }
     }
