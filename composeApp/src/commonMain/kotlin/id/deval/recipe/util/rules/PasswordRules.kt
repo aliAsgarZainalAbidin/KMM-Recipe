@@ -1,5 +1,7 @@
 package id.deval.recipe.util.rules
 
+import id.deval.recipe.domain.model.PasswordState
+
 interface PasswordRules {
     private fun isPasswordAtleastSix(password : String) : Boolean {
         return password.length >= 6

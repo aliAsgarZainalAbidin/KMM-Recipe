@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.mainTextColor
@@ -29,6 +33,7 @@ import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.otp.effect.OtpScreenEffect
 import id.deval.recipe.ui.otp.event.OtpScreenEvent
 import id.deval.recipe.ui.otp.state.OtpScreenState
+import id.deval.recipe.util.rules.AdaptiveLayoutRule
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.check_email
 import kmm_recipe.composeapp.generated.resources.code_expires_in
@@ -81,11 +86,24 @@ class OtpScreen : Screen {
         state: OtpScreenState,
         onEvent: (OtpScreenEvent) -> Unit
     ) {
+        val customModifier = RecipeCommonUI.AdaptiveModifier(
+            compactModifier = Modifier.fillMaxWidth(),
+            mediumModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+            ),
+            expandedModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+            )
+        )
+
         Scaffold(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
                 modifier = Modifier.fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -103,7 +121,7 @@ class OtpScreen : Screen {
                 )
                 RecipeTextField.OtpTextField(
                     value = state.otp,
-                    modifier = Modifier.padding(
+                    modifier = customModifier.padding(
                         top = 32.dp
                     ),
                     onValueChange = {
@@ -137,13 +155,13 @@ class OtpScreen : Screen {
                         onEvent(OtpScreenEvent.OnVerifyClicked(state.otp))
                     },
                     text = stringResource(Res.string.verify),
-                    modifier = Modifier.padding(top = 32.dp),
+                    modifier = customModifier.padding(top = 32.dp),
                     enabled = state.isEnabledVerifyButton
                 )
                 RecipeButton.DefaultTextButton(
                     onClick = {},
                     text = stringResource(Res.string.send_again),
-                    modifier = Modifier.padding(top = 16.dp),
+                    modifier = customModifier.padding(top = 16.dp),
                     enabled = state.isEnabledResendButton
                 )
             }

@@ -1,4 +1,4 @@
-package id.deval.recipe.util.rules
+package id.deval.recipe.domain.model
 
 data class PasswordState(
     val isPassAtleastSix : Boolean = false,

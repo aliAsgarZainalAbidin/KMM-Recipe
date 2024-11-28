@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -23,20 +25,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
-import id.deval.recipe.shared.Platform
-import id.deval.recipe.shared.PlatformTarget
-import id.deval.recipe.shared.getPlatform
 import id.deval.recipe.theme.DefaultRedFilledButtonStyle
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.ui.login.effect.LoginScreenEffect
 import id.deval.recipe.ui.login.event.LoginScreenEvent
 import id.deval.recipe.ui.login.state.LoginScreenState
 import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.util.rules.AdaptiveLayoutRule
 import kmm_recipe.composeapp.generated.resources.Google
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.dont_have_account
@@ -64,15 +64,17 @@ class LoginScreen : Screen {
         val loginScreenState by loginViewModel.loginScreenState.collectAsStateWithLifecycle()
         val navigator = LocalNavigator.currentOrThrow
 
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             loginViewModel.loginScreenEffect.collectLatest { effect ->
-                when(effect){
+                when (effect) {
                     is LoginScreenEffect.NavigateToSignUp -> {
                         navigator.push(AppNavigation.SignUp.screen)
                     }
+
                     is LoginScreenEffect.NavigateToForgotPassword -> {
                         navigator.push(AppNavigation.ForgotPassword.screen)
                     }
+
                     else -> {}
                 }
             }
@@ -89,12 +91,24 @@ class LoginScreen : Screen {
         state: LoginScreenState,
         onEvent: (LoginScreenEvent) -> Unit = {}
     ) {
+        val customModifier = RecipeCommonUI.AdaptiveModifier(
+            compactModifier = Modifier.fillMaxWidth(),
+            mediumModifier = Modifier.widthIn(
+                max = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+                min = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp
+            ),
+            expandedModifier = Modifier.widthIn(
+                max = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp,
+                min = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp
+            )
+        )
 
         Scaffold(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -124,7 +138,7 @@ class LoginScreen : Screen {
                     onValueChange = {
                         onEvent(LoginScreenEvent.OnEmailChanged(it))
                     },
-                    modifier = Modifier
+                    modifier = customModifier
                         .padding(top = 32.dp, start = 24.dp, end = 24.dp)
                 )
                 RecipeTextField.Outlined(
@@ -144,11 +158,11 @@ class LoginScreen : Screen {
                     onValueChange = {
                         onEvent(LoginScreenEvent.OnPasswordChanged(it))
                     },
-                    modifier = Modifier
+                    modifier = customModifier
                         .padding(top = 16.dp, start = 24.dp, end = 24.dp)
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = customModifier
                 ) {
                     Spacer(
                         modifier = Modifier.weight(1.0f)
@@ -170,10 +184,8 @@ class LoginScreen : Screen {
                 )
                 RecipeButton.DefaultFilledButton(
                     onClick = {},
-                    modifier = Modifier
-                        .widthIn(max = 327.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp),
+                    modifier = customModifier
+                        .padding(start = 24.dp, end = 24.dp, top = 12.dp),
                     text = stringResource(Res.string.login),
                 )
                 Text(
@@ -183,9 +195,7 @@ class LoginScreen : Screen {
                 )
                 RecipeButton.DefaultFilledButton(
                     onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .widthIn(max = 327.dp)
+                    modifier = customModifier
                         .padding(top = 24.dp, start = 24.dp, end = 24.dp),
                     text = stringResource(Res.string.Google),
                     startIcon = painterResource(Res.drawable.google),

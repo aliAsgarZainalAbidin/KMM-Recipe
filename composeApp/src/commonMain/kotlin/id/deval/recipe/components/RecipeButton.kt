@@ -2,6 +2,8 @@ package id.deval.recipe.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -45,7 +46,6 @@ import kmm_recipe.composeapp.generated.resources.back
 import kmm_recipe.composeapp.generated.resources.baseline_favorite_24
 import kmm_recipe.composeapp.generated.resources.baseline_favorite_border_24
 import kmm_recipe.composeapp.generated.resources.camera
-import kmm_recipe.composeapp.generated.resources.heart
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -374,16 +374,40 @@ object RecipeButton {
     }
 
     @Composable
-    fun BackButton(
+    fun CircleBackButton(
         onClick: () -> Unit,
         modifier: Modifier = Modifier,
-        color : IconButtonColors = DefaultIconButtonColors(),
-        colorIcon : Color = white
-    ){
+        color: IconButtonColors = DefaultIconButtonColors(),
+        colorIcon: Color = white
+    ) {
         IconButton(
             onClick = onClick,
             modifier = modifier.size(48.dp),
             colors = color,
+            enabled = true
+        ) {
+            Icon(
+                painter = painterResource(Res.drawable.back),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+                tint = colorIcon
+            )
+        }
+    }
+
+    @Composable
+    fun BackButton(
+        onClick: () -> Unit,
+        modifier: Modifier = Modifier,
+        color: IconButtonColors = DefaultIconButtonColors(),
+        colorIcon: Color = mainTextColor
+    ) {
+        IconButton(
+            onClick = onClick,
+            modifier = modifier.size(48.dp),
+            colors = color.copy(
+                containerColor = Color.Transparent
+            ),
             enabled = true
         ) {
             Icon(

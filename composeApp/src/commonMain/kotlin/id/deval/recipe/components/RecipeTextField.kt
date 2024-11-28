@@ -1,5 +1,6 @@
 package id.deval.recipe.components
 
+import androidx.annotation.IntRange
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -26,15 +28,24 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -184,7 +195,7 @@ object RecipeTextField {
     @Composable
     fun OtpTextField(
         value: String,
-        totalOtpCode: Int = 4,
+        @IntRange(from = 4, to = 6) totalOtpCode: Int = 4,
         onValueChange: (String) -> Unit,
         modifier: Modifier = Modifier,
     ) {
@@ -200,6 +211,14 @@ object RecipeTextField {
             focusedPrefixColor = mainTextColor
         )
 
+        val focusRequester = List(totalOtpCode) { FocusRequester() }
+        val enabledState = listOf(false, false, false, false)
+        val keyboardController = LocalSoftwareKeyboardController.current
+
+        LaunchedEffect(Unit) {
+            focusRequester.first().requestFocus()
+        }
+
         Row(
             modifier = modifier,
             verticalAlignment = Alignment.CenterVertically
@@ -210,11 +229,11 @@ object RecipeTextField {
                     else -> value[index].toString()
                 }
 
-
                 OutlinedTextField(
-                    value = char,
+                    value = TextFieldValue(text = char, selection = TextRange(char.length)),
                     maxLines = 1,
                     minLines = 1,
+                    enabled = if(index == value.length || (value.length == totalOtpCode && index == totalOtpCode.minus(1))) true else false,
                     textStyle = TextStyle(
                         textAlign = TextAlign.Center,
                         color = mainTextColor,
@@ -223,12 +242,38 @@ object RecipeTextField {
                     ),
                     shape = RoundedCornerShape(20.dp),
                     keyboardOptions = keyboardOptions,
-                    modifier = Modifier.weight(0.3f),
+                    modifier = Modifier.weight(0.3f)
+                        .focusRequester(focusRequester[index]),
                     onValueChange = { s ->
                         if (value.isEmpty() || index >= value.length) {
-                            onValueChange(value + s)
+                            onValueChange(value + s.text)
+                            keyboardController?.hide()
                         } else {
-                            onValueChange(value.replaceRange(index, index + 1, s))
+                            if (index < value.length && index != totalOtpCode) {
+                                val updatedOtp = if (s.text.isEmpty()) {
+                                    focusRequester[2].requestFocus()
+                                    value.replaceRange(
+                                        index, index + 1,
+                                        ""
+                                    )
+                                } else {
+                                    value.replaceRange(
+                                        index, index + 1,
+                                        s.text.last().toString()
+                                    )
+                                }
+                                onValueChange(updatedOtp)
+                            }
+                        }
+
+                        if(s.text.isEmpty()){
+                            if (index - 1 != -1){
+                                focusRequester[index - 1].requestFocus()
+                            }
+                        } else {
+                            if (index + 1 != totalOtpCode) {
+                                focusRequester[index + 1].requestFocus()
+                            }
                         }
                     },
                     colors = color
@@ -321,7 +366,7 @@ object RecipeTextField {
             }
             Column(
                 modifier = Modifier
-            ){
+            ) {
                 Outlined(
                     value = value.description,
                     onValueChange = onValueChange,

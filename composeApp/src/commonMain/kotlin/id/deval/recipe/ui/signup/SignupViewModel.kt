@@ -41,6 +41,10 @@ class SignupViewModel : ViewModel(), PasswordRules {
             is SignupScreenEvent.OnSignupClicked -> {
                 onSignupClicked(event.email, event.password)
             }
+
+            is SignupScreenEvent.OnNavigateBackClicked -> {
+                onNavigateBackClicked()
+            }
         }
     }
 
@@ -82,6 +86,21 @@ class SignupViewModel : ViewModel(), PasswordRules {
                 * request signup API
                 * */
                 _signupScreenEffect.emit(SignupScreenEffect.NavigateToOtp)
+            },
+            onError = {
+                _signupScreenEffect.emit(SignupScreenEffect.ShowToast(it.message ?: "Error"))
+                Logger.e(
+                    TAG,
+                    it
+                )
+            }
+        )
+    }
+
+    private fun onNavigateBackClicked(){
+        CoroutineScope(Dispatchers.Default).launchCatchError(
+            block = {
+                _signupScreenEffect.emit(SignupScreenEffect.NavigateBack)
             },
             onError = {
                 _signupScreenEffect.emit(SignupScreenEffect.ShowToast(it.message ?: "Error"))

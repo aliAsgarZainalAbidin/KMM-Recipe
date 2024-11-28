@@ -29,14 +29,12 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.window.core.layout.WindowWidthSizeClass
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import id.deval.recipe.components.RecipeButton
 import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeCommonUI.BoxUploadCoverPhoto
 import id.deval.recipe.components.RecipeCommonUI.HeaderUploadStep
-import id.deval.recipe.components.RecipeCommonUI.CheckWindowSizeClass
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.ui.navigation.MainNavigation
@@ -115,7 +113,7 @@ class UploadScreenFirstStep : Screen {
                     horizontalArrangement = Arrangement.Center,
                     maxItemsInEachRow = 2
                 ) {
-                    val customModifier = RecipeCommonUI.AdaptiveModifier(
+                    val sectionModifier = RecipeCommonUI.AdaptiveModifier(
                         compactModifier = Modifier.fillMaxWidth(),
                         mediumModifier = Modifier.weight(0.5f),
                         expandedModifier = Modifier.weight(0.5f),
@@ -152,7 +150,7 @@ class UploadScreenFirstStep : Screen {
                     val localDensity = LocalDensity.current
 
                     BoxUploadCoverPhoto(
-                        modifier = customModifier
+                        modifier = sectionModifier
                             .padding(8.dp)
                             .heightIn(
                                 min = heightSectionFoodDescription,
@@ -165,7 +163,7 @@ class UploadScreenFirstStep : Screen {
                             )
                     )
                     Column(
-                        modifier = customModifier.onSizeChanged {
+                        modifier = sectionModifier.onSizeChanged {
                             heightSectionFoodDescription = with(localDensity) { it.height.toDp() }
                         },
                         verticalArrangement = Arrangement.Top,
@@ -211,7 +209,7 @@ class UploadScreenFirstStep : Screen {
                         )
                     }
                     Column(
-                        modifier = customModifier,
+                        modifier = sectionModifier,
                         verticalArrangement = Arrangement.Top,
                     ) {
                         RecipeCommonUI.RecipeDurationSlider(
