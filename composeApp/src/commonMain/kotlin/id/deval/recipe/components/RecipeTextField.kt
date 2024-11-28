@@ -2,6 +2,7 @@ package id.deval.recipe.components
 
 import androidx.annotation.IntRange
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.gestures.draggable
@@ -29,16 +30,21 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
@@ -54,6 +60,7 @@ import co.touchlab.kermit.Logger
 import id.deval.recipe.domain.model.RecipeStep
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
+import id.deval.recipe.util.isPhoneNumberValid
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.drag_icon
 import org.jetbrains.compose.resources.painterResource
@@ -212,12 +219,6 @@ object RecipeTextField {
         )
 
         val focusRequester = List(totalOtpCode) { FocusRequester() }
-        val enabledState = listOf(false, false, false, false)
-        val keyboardController = LocalSoftwareKeyboardController.current
-
-        LaunchedEffect(Unit) {
-            focusRequester.first().requestFocus()
-        }
 
         Row(
             modifier = modifier,
@@ -226,14 +227,13 @@ object RecipeTextField {
             repeat(totalOtpCode) { index ->
                 val char = when {
                     value.isEmpty() || index >= value.length -> ""
-                    else -> value[index].toString()
+                    else -> if (value[index].isDigit()) value[index].toString() else ""
                 }
 
                 OutlinedTextField(
                     value = TextFieldValue(text = char, selection = TextRange(char.length)),
                     maxLines = 1,
                     minLines = 1,
-                    enabled = if(index == value.length || (value.length == totalOtpCode && index == totalOtpCode.minus(1))) true else false,
                     textStyle = TextStyle(
                         textAlign = TextAlign.Center,
                         color = mainTextColor,
@@ -247,11 +247,9 @@ object RecipeTextField {
                     onValueChange = { s ->
                         if (value.isEmpty() || index >= value.length) {
                             onValueChange(value + s.text)
-                            keyboardController?.hide()
                         } else {
                             if (index < value.length && index != totalOtpCode) {
                                 val updatedOtp = if (s.text.isEmpty()) {
-                                    focusRequester[2].requestFocus()
                                     value.replaceRange(
                                         index, index + 1,
                                         ""
@@ -271,8 +269,8 @@ object RecipeTextField {
                                 focusRequester[index - 1].requestFocus()
                             }
                         } else {
-                            if (index + 1 != totalOtpCode) {
-                                focusRequester[index + 1].requestFocus()
+                            if (value.length + 1 != totalOtpCode && "\\d".toRegex().matches(s.text)) {
+                                focusRequester[value.length + 1].requestFocus()
                             }
                         }
                     },
