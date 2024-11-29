@@ -60,19 +60,7 @@ class SignUpScreen : Screen {
 
         LaunchedEffect(Unit) {
             signupViewModel.signupScreenEffect.collectLatest { effect ->
-                when (effect) {
-                    is SignupScreenEffect.ShowToast -> {
-
-                    }
-
-                    is SignupScreenEffect.NavigateToOtp -> {
-                        navigator?.push(AppNavigation.Otp.screen)
-                    }
-
-                    is SignupScreenEffect.NavigateBack -> {
-                        navigator?.pop()
-                    }
-                }
+               signupViewModel.onEffect(effect, navigator)
             }
         }
 

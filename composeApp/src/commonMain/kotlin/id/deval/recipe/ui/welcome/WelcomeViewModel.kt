@@ -1,6 +1,8 @@
 package id.deval.recipe.ui.welcome
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.welcome.effect.WelcomeScreenEffect
 import id.deval.recipe.ui.welcome.event.WelcomeScreenEvent
 import id.deval.recipe.ui.welcome.state.WelcomeScreenState
@@ -42,5 +44,17 @@ class WelcomeViewModel : ViewModel() {
 
             }
         )
+    }
+
+    fun onEffect(effect: WelcomeScreenEffect, navigator: Navigator? = null): WelcomeScreenEffect {
+        when (effect) {
+            is WelcomeScreenEffect.NavigateToMain -> {
+                navigator?.replaceAll(AppNavigation.Main.screen)
+            }
+
+            is WelcomeScreenEffect.NavigateToLogin -> {
+                navigator?.replaceAll(AppNavigation.Login.screen)
+            }
+        }
     }
 }

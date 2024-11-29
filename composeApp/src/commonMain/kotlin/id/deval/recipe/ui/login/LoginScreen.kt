@@ -66,17 +66,7 @@ class LoginScreen : Screen {
 
         LaunchedEffect(Unit) {
             loginViewModel.loginScreenEffect.collectLatest { effect ->
-                when (effect) {
-                    is LoginScreenEffect.NavigateToSignUp -> {
-                        navigator.push(AppNavigation.SignUp.screen)
-                    }
-
-                    is LoginScreenEffect.NavigateToForgotPassword -> {
-                        navigator.push(AppNavigation.ForgotPassword.screen)
-                    }
-
-                    else -> {}
-                }
+                loginViewModel.onEffect(effect, navigator)
             }
         }
 

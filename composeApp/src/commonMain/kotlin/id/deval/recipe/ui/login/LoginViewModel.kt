@@ -1,10 +1,12 @@
 package id.deval.recipe.ui.login
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
 import id.deval.recipe.ui.login.effect.LoginScreenEffect
 import id.deval.recipe.ui.login.event.LoginScreenEvent
 import id.deval.recipe.ui.login.state.LoginScreenState
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.util.launchCatchError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -103,6 +105,20 @@ class LoginViewModel : ViewModel() {
                 )
             }
         )
+    }
+
+    fun onEffect(effect: LoginScreenEffect?, navigator: Navigator? = null) {
+        when (effect) {
+            is LoginScreenEffect.NavigateToSignUp -> {
+                navigator?.push(AppNavigation.SignUp.screen)
+            }
+
+            is LoginScreenEffect.NavigateToForgotPassword -> {
+                navigator?.push(AppNavigation.ForgotPassword.screen)
+            }
+
+            else -> {}
+        }
     }
 
     companion object {

@@ -45,11 +45,7 @@ class ForgotPasswordScreen : Screen {
 
         LaunchedEffect(Unit) {
             forgotPasswordViewModel.forgotPasswordEffect.collectLatest { effect ->
-                when (effect) {
-                    is ForgotPasswordEffect.NavigateToOtp -> {
-                        navigator?.push(AppNavigation.Otp.screen)
-                    }
-                }
+                forgotPasswordViewModel.onEffect(effect, navigator)
             }
         }
 

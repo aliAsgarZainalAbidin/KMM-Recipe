@@ -45,16 +45,8 @@ class WelcomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit) {
-            welcomeScreenViewModel.welcomeScreenEffect.collect { latestEffect ->
-                when (latestEffect) {
-                    is WelcomeScreenEffect.NavigateToMain -> {
-                        navigator.replaceAll(AppNavigation.Main.screen)
-                    }
-
-                    is WelcomeScreenEffect.NavigateToLogin -> {
-                        navigator.replaceAll(AppNavigation.Login.screen)
-                    }
-                }
+            welcomeScreenViewModel.welcomeScreenEffect.collect { effect ->
+                welcomeScreenViewModel.onEffect(effect, navigator)
             }
         }
 

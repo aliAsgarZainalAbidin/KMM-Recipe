@@ -1,10 +1,12 @@
 package id.deval.recipe.ui.forgotpassword
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
 import id.deval.recipe.ui.forgotpassword.effect.ForgotPasswordEffect
 import id.deval.recipe.ui.forgotpassword.event.ForgotPasswordEvent
 import id.deval.recipe.ui.forgotpassword.state.ForgotPasswordState
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.util.isEmailValid
 import id.deval.recipe.util.launchCatchError
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +34,14 @@ class ForgotPasswordViewModel : ViewModel() {
 
             is ForgotPasswordEvent.SignInClicked -> {
                 onSignInClicked()
+            }
+        }
+    }
+
+    fun onEffect(effect: ForgotPasswordEffect, navigator: Navigator? = null) {
+        when (effect) {
+            is ForgotPasswordEffect.NavigateToOtp -> {
+                navigator?.push(AppNavigation.Otp.screen)
             }
         }
     }

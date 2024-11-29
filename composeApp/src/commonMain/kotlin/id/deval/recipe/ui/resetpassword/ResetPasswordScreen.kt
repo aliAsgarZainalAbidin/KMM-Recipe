@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.theme.mainTextColor
@@ -30,6 +34,7 @@ import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.resetpassword.effect.ResetPasswordEffect
 import id.deval.recipe.ui.resetpassword.event.ResetPasswordEvent
 import id.deval.recipe.ui.resetpassword.state.ResetPasswordState
+import id.deval.recipe.util.rules.AdaptiveLayoutRule
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.baseline_check_24
 import kmm_recipe.composeapp.generated.resources.done
@@ -55,14 +60,7 @@ class ResetPasswordScreen : Screen {
 
         LaunchedEffect(Unit){
             resetPasswordViewModel.resetPasswordEffect.collectLatest { effect ->
-                when(effect){
-                    is ResetPasswordEffect.ShowToast -> {
-
-                    }
-                    is ResetPasswordEffect.NavigateToMain -> {
-                        navigator?.replaceAll(AppNavigation.Main.screen)
-                    }
-                }
+                resetPasswordViewModel.onEffect(effect, navigator)
             }
         }
 
@@ -77,9 +75,22 @@ class ResetPasswordScreen : Screen {
         state : ResetPasswordState,
         onEvent : (ResetPasswordEvent) -> Unit
     ){
+        val customModifier = RecipeCommonUI.AdaptiveModifier(
+            compactModifier = Modifier.fillMaxWidth(),
+            mediumModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp
+            ),
+            expandedModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp,
+            )
+        )
+
         Scaffold {
             Column(
                 modifier = Modifier.fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
@@ -111,7 +122,7 @@ class ResetPasswordScreen : Screen {
                     onValueChange = {
                         onEvent(ResetPasswordEvent.OnPasswordChanged(it))
                     },
-                    modifier = Modifier
+                    modifier = customModifier
                         .padding(top = 24.dp)
                 )
                 Text(
@@ -119,13 +130,12 @@ class ResetPasswordScreen : Screen {
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = mainTextColor
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = customModifier
                         .padding(top = 24.dp),
                     textAlign = TextAlign.Start
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = customModifier
                         .padding(top = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
@@ -147,7 +157,7 @@ class ResetPasswordScreen : Screen {
                     )
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = customModifier
                         .padding(top = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
@@ -177,6 +187,7 @@ class ResetPasswordScreen : Screen {
                     onClick = {
                         onEvent(ResetPasswordEvent.OnDoneClicked)
                     },
+                    modifier = customModifier.padding(top = 24.dp)
                 )
             }
         }

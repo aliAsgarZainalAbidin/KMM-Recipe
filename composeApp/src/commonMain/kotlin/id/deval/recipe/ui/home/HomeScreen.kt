@@ -44,6 +44,7 @@ import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeLazyItem
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
+import id.deval.recipe.domain.model.FilterCategory
 import id.deval.recipe.theme.DefaultFilledButtonStyle
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.ui.home.effect.HomeScreenEffect
@@ -79,15 +80,7 @@ class HomeScreen : Screen {
 
         LaunchedEffect(Unit) {
             homeScreenViewModel.homeScreenEffect.collectLatest { effect ->
-                when (effect) {
-                    is HomeScreenEffect.NavigateToDetail -> {
-                        recipeViewModel.onEvent(RecipeDetailEvent.OnRecipeClicked(effect.recipe))
-                        localNavigator.parent?.push(AppNavigation.RecipeDetail.screen)
-                    }
-
-                    is HomeScreenEffect.OnChangedSearchQuery -> {}
-                    is HomeScreenEffect.OnChangedFilterCategory -> {}
-                }
+                homeScreenViewModel.onEffect(effect, localNavigator, recipeViewModel)
             }
         }
 

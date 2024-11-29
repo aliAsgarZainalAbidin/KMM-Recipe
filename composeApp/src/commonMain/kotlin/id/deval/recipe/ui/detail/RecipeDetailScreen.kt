@@ -70,15 +70,7 @@ class RecipeDetailScreen : Screen {
 
         LaunchedEffect(Unit) {
             recipeViewModel.recipeDetailEffect.collectLatest { effect ->
-                when (effect) {
-                    is RecipeDetailEffect.OnNavigateBack -> {
-                        navigator.pop()
-                    }
-
-                    is RecipeDetailEffect.OnRecipeOwnerClicked -> {
-
-                    }
-                }
+                recipeViewModel.onEffect(effect, navigator)
             }
         }
 

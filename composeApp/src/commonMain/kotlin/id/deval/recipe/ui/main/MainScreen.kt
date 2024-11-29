@@ -54,21 +54,7 @@ class MainScreen : Screen {
 
         LaunchedEffect(Unit) {
             mainScreenViewModel.mainScreenEffect.collectLatest { effect ->
-                when (effect) {
-                    is MainScreenEffect.OnMenuSelected -> {
-                        when (effect.menu) {
-                            MainNavigation.Upload -> {
-                                localNavigator.push(MainNavigation.Upload.screen)
-                            }
-
-                            else -> {}
-                        }
-                    }
-
-                    is MainScreenEffect.OnScanSelected -> {
-                        localNavigator.push(MainNavigation.Scan.screen)
-                    }
-                }
+                mainScreenViewModel.onEffect(effect, localNavigator)
             }
         }
 

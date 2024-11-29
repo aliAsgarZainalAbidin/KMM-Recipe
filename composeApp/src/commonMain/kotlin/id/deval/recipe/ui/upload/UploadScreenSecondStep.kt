@@ -69,13 +69,7 @@ class UploadScreenSecondStep : Screen {
             uploadScreenViewModel.uploadScreenEffect.collectLatest { effect ->
                 when (effect) {
                     is UploadScreenEffect.NavigateToHome -> {
-                        navigator?.popUntil {
-                            Logger.d(
-                                tag = "CHECK Screen",
-                                messageString = "Main Screen in stack ? ${it == AppNavigation.Main.screen}"
-                            )
-                            it == AppNavigation.Main.screen
-                        }
+                        navigator?.popUntil { it == AppNavigation.Main.screen }
                     }
                     is UploadScreenEffect.NavigateToFirstStep -> {
                         navigator?.pop()

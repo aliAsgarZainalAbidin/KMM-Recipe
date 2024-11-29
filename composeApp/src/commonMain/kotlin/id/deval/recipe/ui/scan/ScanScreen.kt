@@ -44,11 +44,7 @@ class ScanScreen : Screen {
 
         LaunchedEffect(Unit){
             scanViewModel.scanScreenEffect.collectLatest { effect ->
-                when(effect){
-                    is ScanScreenEffect.OnScanTypeSelected -> {
-
-                    }
-                }
+                scanViewModel.onEffect(effect)
             }
         }
 

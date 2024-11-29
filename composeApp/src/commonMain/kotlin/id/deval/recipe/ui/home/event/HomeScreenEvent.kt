@@ -1,7 +1,7 @@
 package id.deval.recipe.ui.home.event
 
 import id.deval.recipe.domain.model.Recipe
-import id.deval.recipe.ui.home.FilterCategory
+import id.deval.recipe.domain.model.FilterCategory
 import id.deval.recipe.util.RecipeSliderValue
 
 sealed interface HomeScreenEvent {

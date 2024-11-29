@@ -1,7 +1,9 @@
 package id.deval.recipe.ui.otp
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.otp.effect.OtpScreenEffect
 import id.deval.recipe.ui.otp.event.OtpScreenEvent
 import id.deval.recipe.ui.otp.state.OtpScreenState
@@ -86,6 +88,26 @@ class OtpViewModel : ViewModel() {
     private fun enabledResendOtp(){
         _otpScreenState.update {
             it.copy(isEnabledResendButton = true)
+        }
+    }
+
+    fun onEffect(effect: OtpScreenEffect, navigator: Navigator? = null) {
+        when (effect) {
+            is OtpScreenEffect.NavigateToMain -> {
+                navigator?.replaceAll(AppNavigation.Main.screen)
+            }
+
+            is OtpScreenEffect.ShowToast -> {
+
+            }
+
+            is OtpScreenEffect.OnResendOtp -> {
+
+            }
+
+            is OtpScreenEffect.NavigateToResetPassword -> {
+                navigator?.push(AppNavigation.ResetPassword.screen)
+            }
         }
     }
 

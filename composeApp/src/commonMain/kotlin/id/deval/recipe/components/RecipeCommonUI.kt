@@ -46,7 +46,7 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import id.deval.recipe.domain.model.RecipeStep
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
-import id.deval.recipe.ui.home.FilterCategory
+import id.deval.recipe.domain.model.FilterCategory
 import id.deval.recipe.ui.home.event.HomeScreenEvent
 import kmm_recipe.composeapp.generated.resources.Onboarding
 import kmm_recipe.composeapp.generated.resources.Res

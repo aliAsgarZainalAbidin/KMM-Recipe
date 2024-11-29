@@ -20,6 +20,14 @@ class ScanViewModel : ViewModel() {
     private var _scanScreenEffect : MutableSharedFlow<ScanScreenEffect> = MutableSharedFlow()
     val scanScreenEffect : MutableSharedFlow<ScanScreenEffect> = _scanScreenEffect
 
+    fun onEffect(effect : ScanScreenEffect){
+        when(effect){
+            is ScanScreenEffect.OnScanTypeSelected -> {
+
+            }
+        }
+    }
+
     fun onEvent(event : ScanScreenEvent){
         when(event){
             is ScanScreenEvent.OnScanTypeSelected -> {

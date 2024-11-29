@@ -1,6 +1,7 @@
 package id.deval.recipe.ui.detail
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
 import id.deval.recipe.domain.model.Recipe
 import id.deval.recipe.domain.model.User
@@ -24,6 +25,18 @@ class RecipeViewModel : ViewModel() {
     private var _recipeDetailEffect: MutableSharedFlow<RecipeDetailEffect> = MutableSharedFlow()
     val recipeDetailEffect: SharedFlow<RecipeDetailEffect> = _recipeDetailEffect
 
+
+    fun onEffect(effect: RecipeDetailEffect, navigator: Navigator? =null){
+        when (effect) {
+            is RecipeDetailEffect.OnNavigateBack -> {
+                navigator?.pop()
+            }
+
+            is RecipeDetailEffect.OnRecipeOwnerClicked -> {
+
+            }
+        }
+    }
 
     fun onEvent(event: RecipeDetailEvent) {
         when (event) {

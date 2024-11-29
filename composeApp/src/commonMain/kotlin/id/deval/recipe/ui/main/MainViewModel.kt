@@ -1,6 +1,7 @@
 package id.deval.recipe.ui.main
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
 import id.deval.recipe.ui.main.effect.MainScreenEffect
 import id.deval.recipe.ui.main.event.MainScreenEvent
@@ -80,5 +81,23 @@ class MainViewModel : ViewModel() {
                 )
             }
         )
+    }
+
+    fun onEffect(effect: MainScreenEffect, localNavigator: Navigator? = null) {
+        when (effect) {
+            is MainScreenEffect.OnMenuSelected -> {
+                when (effect.menu) {
+                    MainNavigation.Upload -> {
+                        localNavigator?.push(MainNavigation.Upload.screen)
+                    }
+
+                    else -> {}
+                }
+            }
+
+            is MainScreenEffect.OnScanSelected -> {
+                localNavigator?.push(MainNavigation.Scan.screen)
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package id.deval.recipe.ui.home
+package id.deval.recipe.domain.model
 
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.all

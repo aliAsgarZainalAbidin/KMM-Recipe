@@ -1,11 +1,16 @@
 package id.deval.recipe.ui.home
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
+import id.deval.recipe.domain.model.FilterCategory
 import id.deval.recipe.domain.model.Recipe
+import id.deval.recipe.ui.detail.RecipeViewModel
+import id.deval.recipe.ui.detail.event.RecipeDetailEvent
 import id.deval.recipe.ui.home.effect.HomeScreenEffect
 import id.deval.recipe.ui.home.event.HomeScreenEvent
 import id.deval.recipe.ui.home.state.HomeScreenState
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.util.DataDummy
 import id.deval.recipe.util.RecipeSliderValue
 import id.deval.recipe.util.launchCatchError
@@ -139,6 +144,18 @@ class HomeViewModel : ViewModel() {
                 selectedCategory = category,
                 showBottomModalFilter = modalState
             )
+        }
+    }
+
+    fun onEffect(effect: HomeScreenEffect, localNavigator: Navigator? = null, recipeViewModel: RecipeViewModel) {
+        when (effect) {
+            is HomeScreenEffect.NavigateToDetail -> {
+                recipeViewModel.onEvent(RecipeDetailEvent.OnRecipeClicked(effect.recipe))
+                localNavigator?.parent?.push(AppNavigation.RecipeDetail.screen)
+            }
+
+            is HomeScreenEffect.OnChangedSearchQuery -> {}
+            is HomeScreenEffect.OnChangedFilterCategory -> {}
         }
     }
 

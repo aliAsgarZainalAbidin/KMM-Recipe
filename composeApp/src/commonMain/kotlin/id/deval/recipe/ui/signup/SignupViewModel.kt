@@ -1,7 +1,9 @@
 package id.deval.recipe.ui.signup
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.signup.effect.SignupScreenEffect
 import id.deval.recipe.ui.signup.event.SignupScreenEvent
 import id.deval.recipe.ui.signup.state.SignupScreenState
@@ -44,6 +46,22 @@ class SignupViewModel : ViewModel(), PasswordRules {
 
             is SignupScreenEvent.OnNavigateBackClicked -> {
                 onNavigateBackClicked()
+            }
+        }
+    }
+
+    fun onEffect(effect: SignupScreenEffect, navigator: Navigator? = null) {
+        when (effect) {
+            is SignupScreenEffect.ShowToast -> {
+
+            }
+
+            is SignupScreenEffect.NavigateToOtp -> {
+                navigator?.push(AppNavigation.Otp.screen)
+            }
+
+            is SignupScreenEffect.NavigateBack -> {
+                navigator?.pop()
             }
         }
     }

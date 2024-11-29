@@ -55,23 +55,7 @@ class OtpScreen : Screen {
 
         LaunchedEffect(Unit) {
             otpViewModel.otpScreenEffect.collectLatest { effect ->
-                when (effect) {
-                    is OtpScreenEffect.NavigateToMain -> {
-                        navigator?.replaceAll(AppNavigation.Main.screen)
-                    }
-
-                    is OtpScreenEffect.ShowToast -> {
-
-                    }
-
-                    is OtpScreenEffect.OnResendOtp -> {
-
-                    }
-
-                    is OtpScreenEffect.NavigateToResetPassword -> {
-                        navigator?.push(AppNavigation.ResetPassword.screen)
-                    }
-                }
+                otpViewModel.onEffect(effect, navigator)
             }
         }
 

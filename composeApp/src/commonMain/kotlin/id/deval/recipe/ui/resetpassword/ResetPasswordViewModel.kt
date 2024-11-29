@@ -1,7 +1,9 @@
 package id.deval.recipe.ui.resetpassword
 
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
+import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.resetpassword.effect.ResetPasswordEffect
 import id.deval.recipe.ui.resetpassword.event.ResetPasswordEvent
 import id.deval.recipe.ui.resetpassword.state.ResetPasswordState
@@ -22,6 +24,17 @@ class ResetPasswordViewModel : ViewModel(), PasswordRules {
 
     private val _resetPasswordEffect: MutableSharedFlow<ResetPasswordEffect> = MutableSharedFlow()
     val resetPasswordEffect: SharedFlow<ResetPasswordEffect> = _resetPasswordEffect
+
+    fun onEffect(effect : ResetPasswordEffect, navigator : Navigator? = null){
+        when(effect){
+            is ResetPasswordEffect.ShowToast -> {
+
+            }
+            is ResetPasswordEffect.NavigateToMain -> {
+                navigator?.replaceAll(AppNavigation.Main.screen)
+            }
+        }
+    }
 
     fun onEvent(event: ResetPasswordEvent) {
         when (event) {
