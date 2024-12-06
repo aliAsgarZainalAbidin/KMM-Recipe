@@ -3,7 +3,9 @@ package id.deval.recipe.ui.forgotpassword
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -18,12 +20,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.components.RecipeTextField
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.ui.forgotpassword.effect.ForgotPasswordEffect
 import id.deval.recipe.ui.forgotpassword.event.ForgotPasswordEvent
 import id.deval.recipe.ui.forgotpassword.state.ForgotPasswordState
 import id.deval.recipe.ui.navigation.AppNavigation
+import id.deval.recipe.util.rules.AdaptiveLayoutRule
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.email_phone_hint
 import kmm_recipe.composeapp.generated.resources.enter_email_recovery
@@ -60,6 +64,18 @@ class ForgotPasswordScreen : Screen {
         state: ForgotPasswordState,
         onEvent: (ForgotPasswordEvent) -> Unit
     ) {
+        val customModifier = RecipeCommonUI.AdaptiveModifier(
+            compactModifier = Modifier.fillMaxWidth(),
+            mediumModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp
+            ),
+            expandedModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp
+            )
+        )
+
         Scaffold(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -95,7 +111,7 @@ class ForgotPasswordScreen : Screen {
                             contentDescription = "email icon"
                         )
                     },
-                    modifier = Modifier.padding(top = 32.dp)
+                    modifier = customModifier.padding(top = 32.dp)
                 )
                 Spacer(
                     modifier = Modifier.weight(1.0f)
@@ -105,7 +121,8 @@ class ForgotPasswordScreen : Screen {
                         onEvent(ForgotPasswordEvent.SignInClicked)
                     },
                     text = stringResource(Res.string.sign_in),
-                    enabled = state.isEnabledSignIn
+                    enabled = state.isEnabledSignIn,
+                    modifier = customModifier
                 )
             }
         }

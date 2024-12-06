@@ -46,7 +46,7 @@ class WelcomeViewModel : ViewModel() {
         )
     }
 
-    fun onEffect(effect: WelcomeScreenEffect, navigator: Navigator? = null): WelcomeScreenEffect {
+    fun onEffect(effect: WelcomeScreenEffect, navigator: Navigator? = null) {
         when (effect) {
             is WelcomeScreenEffect.NavigateToMain -> {
                 navigator?.replaceAll(AppNavigation.Main.screen)
