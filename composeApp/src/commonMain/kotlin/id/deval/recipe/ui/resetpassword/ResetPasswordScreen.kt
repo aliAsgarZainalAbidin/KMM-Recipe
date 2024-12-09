@@ -105,7 +105,7 @@ class ResetPasswordScreen : Screen {
                     modifier = Modifier.padding(top = 8.dp)
                 )
 
-                RecipeTextField.Outlined(
+                RecipeTextField.OutlinedPassword(
                     value = state.password,
                     placeholder = {
                         Text(

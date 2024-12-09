@@ -126,7 +126,7 @@ class SignUpScreen : Screen {
                         modifier = customModifier
                             .padding(top = 32.dp)
                     )
-                    RecipeTextField.Outlined(
+                    RecipeTextField.OutlinedPassword(
                         value = state.password,
                         placeholder = {
                             Text(

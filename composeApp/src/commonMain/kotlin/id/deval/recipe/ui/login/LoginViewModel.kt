@@ -1,6 +1,7 @@
 package id.deval.recipe.ui.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cafe.adriel.voyager.navigator.Navigator
 import co.touchlab.kermit.Logger
 import id.deval.recipe.ui.login.effect.LoginScreenEffect
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 
 class LoginViewModel : ViewModel() {
 
@@ -46,7 +48,27 @@ class LoginViewModel : ViewModel() {
             is LoginScreenEvent.OnSignUpClicked -> {
                 onSignUpClicked()
             }
-            is LoginScreenEvent.OnForgotPasswordClicked -> {}
+            is LoginScreenEvent.OnForgotPasswordClicked -> {
+                onForgotPasswordClicked()
+            }
+        }
+    }
+
+    fun onEffect(effect: LoginScreenEffect?, navigator: Navigator? = null) {
+        when (effect) {
+            is LoginScreenEffect.NavigateToSignUp -> {
+                navigator?.push(AppNavigation.SignUp.screen)
+            }
+
+            is LoginScreenEffect.NavigateToForgotPassword -> {
+                navigator?.push(AppNavigation.ForgotPassword.screen)
+            }
+
+            is LoginScreenEffect.NavigateToMain -> {
+                navigator?.replaceAll(AppNavigation.Main.screen)
+            }
+
+            else -> {}
         }
     }
 
@@ -79,10 +101,6 @@ class LoginViewModel : ViewModel() {
                 * request login API
                 * */
 
-                Logger.d(
-                    tag = TAG,
-                    messageString = "email : $email, password : $password"
-                )
                 if (email == "admin" && password == "admin") {
                     _loginScreenEffect.emit(LoginScreenEffect.NavigateToMain)
                 } else {
@@ -111,23 +129,20 @@ class LoginViewModel : ViewModel() {
         )
     }
 
-    fun onEffect(effect: LoginScreenEffect?, navigator: Navigator? = null) {
-        when (effect) {
-            is LoginScreenEffect.NavigateToSignUp -> {
-                navigator?.push(AppNavigation.SignUp.screen)
+    private fun onForgotPasswordClicked(){
+        viewModelScope.launchCatchError(
+            block = {
+                _loginScreenEffect.emit(LoginScreenEffect.NavigateToForgotPassword)
+            },
+            onError = {
+                Logger.e(
+                    TAG,
+                    it
+                )
             }
-
-            is LoginScreenEffect.NavigateToForgotPassword -> {
-                navigator?.push(AppNavigation.ForgotPassword.screen)
-            }
-
-            is LoginScreenEffect.NavigateToMain -> {
-                navigator?.replaceAll(AppNavigation.Main.screen)
-            }
-
-            else -> {}
-        }
+        )
     }
+
 
     companion object {
         const val TAG = "LoginViewModel"
