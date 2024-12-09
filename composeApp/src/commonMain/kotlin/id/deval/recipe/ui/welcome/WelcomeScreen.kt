@@ -67,7 +67,7 @@ class WelcomeScreen : Screen {
         onEvent : (WelcomeScreenEvent) -> Unit = {}
     ) {
         val customModifier = RecipeCommonUI.AdaptiveModifier(
-            compactModifier = Modifier.fillMaxSize(),
+            compactModifier = Modifier.fillMaxWidth(),
             mediumModifier = Modifier.widthIn(
                 min = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
                 max = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
@@ -83,7 +83,7 @@ class WelcomeScreen : Screen {
         ) {
             Column(
                 modifier = Modifier.fillMaxSize()
-                    .padding(bottom = 72.dp),
+                    .padding(bottom = 32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(

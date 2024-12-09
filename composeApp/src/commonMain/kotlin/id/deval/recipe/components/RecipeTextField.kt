@@ -2,6 +2,7 @@ package id.deval.recipe.components
 
 import androidx.annotation.IntRange
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,7 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +37,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -43,7 +49,10 @@ import id.deval.recipe.domain.model.RecipeStep
 import id.deval.recipe.theme.mainTextColor
 import id.deval.recipe.theme.secondaryTextColor
 import kmm_recipe.composeapp.generated.resources.Res
+import kmm_recipe.composeapp.generated.resources.baseline_visibility_24
+import kmm_recipe.composeapp.generated.resources.baseline_visibility_off_24
 import kmm_recipe.composeapp.generated.resources.drag_icon
+import kmm_recipe.composeapp.generated.resources.lock
 import org.jetbrains.compose.resources.painterResource
 
 object RecipeTextField {
@@ -245,8 +254,8 @@ object RecipeTextField {
                             }
                         }
 
-                        if(s.text.isEmpty()){
-                            if (index - 1 != -1){
+                        if (s.text.isEmpty()) {
+                            if (index - 1 != -1) {
                                 focusRequester[index - 1].requestFocus()
                             }
                         } else {
@@ -362,6 +371,92 @@ object RecipeTextField {
                 )
             }
         }
+    }
+
+    @Composable
+    fun OutlinedPassword(
+        value: String,
+        onValueChange: (String) -> Unit,
+        modifier: Modifier = Modifier,
+        enabled: Boolean = true,
+        readOnly: Boolean = false,
+        textStyle: TextStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = mainTextColor
+        ),
+        label: @Composable (() -> Unit)? = null,
+        placeholder: @Composable (() -> Unit)? = null,
+        leadingIcon: @Composable (() -> Unit)? = null,
+        trailingIcon: @Composable (() -> Unit)? = null,
+        prefix: @Composable (() -> Unit)? = {
+            Icon(
+                painter = painterResource(Res.drawable.lock),
+                contentDescription = "password icon"
+            )
+        },
+        supportingText: @Composable (() -> Unit)? = null,
+        isError: Boolean = false,
+        keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Send
+        ),
+        keyboardActions: KeyboardActions = KeyboardActions.Default,
+        singleLine: Boolean = false,
+        maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+        minLines: Int = 1,
+        interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+        shape: Shape = RoundedCornerShape(100),
+        colors: TextFieldColors = TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+            focusedTextColor = mainTextColor,
+            unfocusedTextColor = mainTextColor,
+            focusedPlaceholderColor = secondaryTextColor,
+            unfocusedPlaceholderColor = secondaryTextColor,
+            unfocusedPrefixColor = secondaryTextColor,
+            focusedPrefixColor = mainTextColor
+        ),
+    ) {
+        var stateShow by remember { mutableStateOf(true) }
+        val showPasswordIcon = @Composable {
+            Icon(
+                painter = if (stateShow)
+                    painterResource(Res.drawable.baseline_visibility_24)
+                else
+                    painterResource(Res.drawable.baseline_visibility_off_24),
+                contentDescription = "show password icon",
+                modifier = Modifier.clickable {
+                    stateShow = !stateShow
+                }
+            )
+        }
+        val visualtransformation =
+            if (stateShow) PasswordVisualTransformation('*') else VisualTransformation.None
+
+        OutlinedTextField(
+            value = value,
+            onValueChange,
+            modifier.fillMaxWidth(),
+            enabled,
+            readOnly,
+            textStyle,
+            label,
+            placeholder,
+            leadingIcon,
+            trailingIcon,
+            prefix,
+            showPasswordIcon,
+            supportingText,
+            isError,
+            visualtransformation,
+            keyboardOptions,
+            keyboardActions,
+            singleLine,
+            maxLines,
+            minLines,
+            interactionSource,
+            shape,
+            colors,
+        )
     }
 
 

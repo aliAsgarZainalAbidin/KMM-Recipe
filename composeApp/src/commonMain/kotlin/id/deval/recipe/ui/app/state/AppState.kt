@@ -4,5 +4,5 @@ import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.navigation.Navigation
 
 data class AppState(
-    val currentScreen: Navigation = AppNavigation.Welcome,
+    val currentScreen: Navigation = AppNavigation.Login,
 )

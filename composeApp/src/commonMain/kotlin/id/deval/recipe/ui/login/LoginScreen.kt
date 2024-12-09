@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +22,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
@@ -131,18 +135,12 @@ class LoginScreen : Screen {
                     modifier = customModifier
                         .padding(top = 32.dp, start = 24.dp, end = 24.dp)
                 )
-                RecipeTextField.Outlined(
+                RecipeTextField.OutlinedPassword(
                     value = state.password,
                     placeholder = {
                         Text(
                             text = stringResource(Res.string.password_hint),
                             style = MaterialTheme.typography.bodyMedium
-                        )
-                    },
-                    prefix = {
-                        Icon(
-                            painter = painterResource(Res.drawable.lock),
-                            contentDescription = "password icon"
                         )
                     },
                     onValueChange = {
@@ -195,7 +193,7 @@ class LoginScreen : Screen {
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth()
-                        .padding(top = 24.dp, bottom = 12.dp),
+                        .padding(top = 24.dp, bottom = 24.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
