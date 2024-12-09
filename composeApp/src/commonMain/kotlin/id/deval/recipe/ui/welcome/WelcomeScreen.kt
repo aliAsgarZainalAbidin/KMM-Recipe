@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,11 +24,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import id.deval.recipe.components.RecipeButton
+import id.deval.recipe.components.RecipeCommonUI
 import id.deval.recipe.di.appRecipeModule
 import id.deval.recipe.ui.navigation.AppNavigation
 import id.deval.recipe.ui.welcome.effect.WelcomeScreenEffect
 import id.deval.recipe.ui.welcome.event.WelcomeScreenEvent
 import id.deval.recipe.ui.welcome.state.WelcomeScreenState
+import id.deval.recipe.util.rules.AdaptiveLayoutRule
 import kmm_recipe.composeapp.generated.resources.Onboarding
 import kmm_recipe.composeapp.generated.resources.Res
 import kmm_recipe.composeapp.generated.resources.get_started
@@ -62,12 +66,24 @@ class WelcomeScreen : Screen {
         state: WelcomeScreenState,
         onEvent : (WelcomeScreenEvent) -> Unit = {}
     ) {
+        val customModifier = RecipeCommonUI.AdaptiveModifier(
+            compactModifier = Modifier.fillMaxSize(),
+            mediumModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.mediumRule.dp,
+            ),
+            expandedModifier = Modifier.widthIn(
+                min = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp,
+                max = AdaptiveLayoutRule.LargeComponentWidth.expandedRule.dp,
+            )
+        )
+
         Scaffold(
             modifier = Modifier.fillMaxSize()
-                .padding(bottom = 72.dp)
         ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .padding(bottom = 72.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
@@ -98,7 +114,7 @@ class WelcomeScreen : Screen {
                     onClick = {
                         onEvent(WelcomeScreenEvent.OnGetStartedClicked(false))
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = customModifier
                         .padding(start = 24.dp, end = 24.dp),
                     text = stringResource(Res.string.get_started),
                     textStyle = MaterialTheme.typography.headlineSmall.copy(

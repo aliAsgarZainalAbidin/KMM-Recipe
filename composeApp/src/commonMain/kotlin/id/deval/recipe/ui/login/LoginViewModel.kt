@@ -39,7 +39,7 @@ class LoginViewModel : ViewModel() {
             }
 
             is LoginScreenEvent.OnLoginClicked -> {
-                onLoginClicked(event.email, event.password)
+                onLoginClicked(event.email.trim(), event.password.trim())
             }
 
             is LoginScreenEvent.OnGoogleLoginClicked -> {}
@@ -79,6 +79,10 @@ class LoginViewModel : ViewModel() {
                 * request login API
                 * */
 
+                Logger.d(
+                    tag = TAG,
+                    messageString = "email : $email, password : $password"
+                )
                 if (email == "admin" && password == "admin") {
                     _loginScreenEffect.emit(LoginScreenEffect.NavigateToMain)
                 } else {
@@ -115,6 +119,10 @@ class LoginViewModel : ViewModel() {
 
             is LoginScreenEffect.NavigateToForgotPassword -> {
                 navigator?.push(AppNavigation.ForgotPassword.screen)
+            }
+
+            is LoginScreenEffect.NavigateToMain -> {
+                navigator?.replaceAll(AppNavigation.Main.screen)
             }
 
             else -> {}

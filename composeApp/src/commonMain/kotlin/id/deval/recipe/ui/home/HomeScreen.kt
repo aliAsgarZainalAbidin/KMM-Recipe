@@ -300,6 +300,7 @@ class HomeScreen : Screen {
         var tempSelectedCategory by remember { mutableStateOf(state.selectedCategory) }
 
         ModalBottomSheet(
+//            modifier = Modifier.fillMaxSize(),
             onDismissRequest = {
                 onEvent(HomeScreenEvent.OnFilterClicked(false))
             },

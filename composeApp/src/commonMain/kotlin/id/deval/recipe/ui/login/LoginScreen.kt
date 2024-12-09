@@ -173,7 +173,9 @@ class LoginScreen : Screen {
                     modifier = Modifier.weight(1.0f)
                 )
                 RecipeButton.DefaultFilledButton(
-                    onClick = {},
+                    onClick = {
+                        onEvent(LoginScreenEvent.OnLoginClicked(state.email, state.password))
+                    },
                     modifier = customModifier
                         .padding(start = 24.dp, end = 24.dp, top = 12.dp),
                     text = stringResource(Res.string.login),
